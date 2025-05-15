@@ -2,27 +2,27 @@
   <nav>
     <router-link to="/">首页</router-link>
     <router-link to="/questions">题库管理</router-link>
-    <router-link to="/auth" v-if="!isAuthenticated">登录</router-link>
+    <router-link to="/login" v-if="!isAuthenticated">登录</router-link>
     <button v-else @click="logout">退出</button>
   </nav>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import { useStore } from "vuex";
+import { useAuthStore } from "../stores/auth";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "NavBar",
   setup() {
-    const store = useStore();
+    const authStore = useAuthStore();
     const router = useRouter();
 
-    const isAuthenticated = computed(() => store.state.auth.isAuthenticated);
+    const isAuthenticated = computed(() => authStore.isAuthenticated());
 
     const logout = () => {
-      store.dispatch("auth/logout");
-      router.push("/auth");
+      authStore.clearToken();
+      router.push("/login");
     };
 
     return {

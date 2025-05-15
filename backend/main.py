@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from .database import engine
+from .app.models import base
+from .app.api import auth, question, exam
 
-from app.api import question, auth
-from database.database import engine, Base
+base.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# CORS配置
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,14 +16,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 包含路由
-app.include_router(auth.router, prefix="/api", tags=["auth"])
-app.include_router(question.router,
-                   prefix="/api/questions",
-                   tags=["questions"])
+app.include_router(auth.router)
+app.include_router(question.router)
+app.include_router(exam.router)
 
 
-@app.on_event("startup")
-async def startup():
-    # 创建数据库表
-    Base.metadata.create_all(bind=engine)
+@app.get("/")
+def read_root():
+    return {"message": "AI Education Platform"}
