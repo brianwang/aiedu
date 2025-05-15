@@ -1,19 +1,10 @@
-from datetime import datetime, timedelta
-from typing import Optional
-
-from fastapi import FastAPI, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from jose import JWTError, jwt
-from passlib.context import CryptContext
-from pydantic import BaseModel
 
-# JWT配置
-SECRET_KEY = "your-secret-key-here"  # 生产环境应该使用环境变量
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+from app.api import question, auth
+from database.database import engine, Base
 
-app = FastAPI(title="AI Edu Platform API")
+app = FastAPI()
 
 # CORS配置
 app.add_middleware(
@@ -24,132 +15,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 密码哈希上下文
-pwd_context = CryptContext(
-    schemes=["argon2", "bcrypt", "pbkdf2_sha256"], deprecated="auto")
-
-# OAuth2密码流
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-# 用户模型
+# 包含路由
+app.include_router(auth.router, prefix="/api", tags=["auth"])
+app.include_router(question.router,
+                   prefix="/api/questions",
+                   tags=["questions"])
 
 
-class UserBase(BaseModel):
-    username: str
-    email: Optional[str] = None
-    full_name: Optional[str] = None
-
-
-class UserCreate(UserBase):
-    password: str
-
-
-class User(UserBase):
-    disabled: Optional[bool] = None
-
-
-class UserInDB(User):
-    hashed_password: str
-
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-
-class TokenData(BaseModel):
-    username: Optional[str] = None
-
-
-# 模拟数据库
-fake_users_db = {
-    "testuser": {
-        "username": "testuser",
-        "email": "test@example.com",
-        "full_name": "Test User",
-        "disabled": False,
-        "hashed_password": pwd_context.hash("testpassword")
-    }
-}
-
-# 工具函数
-
-
-def verify_password(plain_password: str, hashed_password: str):
-    return pwd_context.verify(plain_password, hashed_password)
-
-
-def get_user(db, username: str):
-    if username in db:
-        user_dict = db[username]
-        return UserInDB(**user_dict)
-
-
-def authenticate_user(fake_db, username: str, password: str):
-    user = get_user(fake_db, username)
-    if not user:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
-    return user
-
-
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-# 路由
-
-
-@app.get("/")
-async def root():
-    return {"message": "Welcome to AI Edu Platform API"}
-
-
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
-
-
-@app.post("/token", response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = authenticate_user(
-        fake_users_db, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
-
-
-@app.get("/users/me/", response_model=User)
-async def read_users_me(token: str = Depends(oauth2_scheme)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        token_data = TokenData(username=username)
-    except JWTError:
-        raise credentials_exception
-    user = get_user(fake_users_db, username=token_data.username)
-    if user is None:
-        raise credentials_exception
-    return user
+@app.on_event("startup")
+async def startup():
+    # 创建数据库表
+    Base.metadata.create_all(bind=engine)

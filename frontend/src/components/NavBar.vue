@@ -1,72 +1,61 @@
-<script setup lang="ts">
-import { NMenu, NButton, NSpace, NAvatar, NDropdown } from "naive-ui";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-
-const router = useRouter();
-const isLoggedIn = ref(false); // 实际应用中应从状态管理获取
-const isTeacher = ref(true); // 实际应用中应从状态管理获取
-
-const menuOptions = [
-  {
-    label: "首页",
-    key: "home",
-  },
-  {
-    label: "课程",
-    key: "courses",
-  },
-  {
-    label: "教师",
-    key: "teachers",
-  },
-  {
-    label: "社区",
-    key: "community",
-  },
-];
-
-const handleMenuSelect = (key: string) => {
-  router.push(`/${key === "home" ? "" : key}`);
-};
-
-const goToAuth = () => {
-  router.push("/auth");
-};
-
-const goToDashboard = () => {
-  if (isTeacher.value) {
-    router.push("/teacher-dashboard");
-  } else {
-    router.push("/member");
-  }
-};
-</script>
-
 <template>
-  <div class="nav-bar">
-    <NSpace justify="space-between" align="center">
-      <NMenu
-        mode="horizontal"
-        :options="menuOptions"
-        @update:value="handleMenuSelect"
-      />
-      <NSpace>
-        <NButton v-if="isLoggedIn" type="info" @click="goToDashboard">
-          <NAvatar round size="small" src="https://example.com/avatar.jpg" />
-          <span style="margin-left: 8px">{{
-            isTeacher ? "教师后台" : "会员中心"
-          }}</span>
-        </NButton>
-        <NButton v-else type="primary" @click="goToAuth"> 登录/注册 </NButton>
-      </NSpace>
-    </NSpace>
-  </div>
+  <nav>
+    <router-link to="/">首页</router-link>
+    <router-link to="/questions">题库管理</router-link>
+    <router-link to="/auth" v-if="!isAuthenticated">登录</router-link>
+    <button v-else @click="logout">退出</button>
+  </nav>
 </template>
 
+<script lang="ts">
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
+export default defineComponent({
+  name: "NavBar",
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const isAuthenticated = computed(() => store.state.auth.isAuthenticated);
+
+    const logout = () => {
+      store.dispatch("auth/logout");
+      router.push("/auth");
+    };
+
+    return {
+      isAuthenticated,
+      logout,
+    };
+  },
+});
+</script>
+
 <style scoped>
-.nav-bar {
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #eee;
+nav {
+  padding: 1rem;
+  background: #f0f0f0;
+  margin-bottom: 2rem;
+}
+
+nav a {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: #333;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+  font-weight: bold;
+}
+
+button {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: inherit;
 }
 </style>
