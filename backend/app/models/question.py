@@ -5,7 +5,8 @@ from typing import List, Optional
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 
-from database.database import Base
+from database import Base
+
 
 class QuestionType(str, Enum):
     SINGLE_CHOICE = "single_choice"
@@ -13,6 +14,7 @@ class QuestionType(str, Enum):
     FILL_BLANK = "fill_blank"
     SHORT_ANSWER = "short_answer"
     ESSAY = "essay"
+
 
 class Question(Base):
     __tablename__ = "questions"
@@ -25,20 +27,26 @@ class Question(Base):
     explanation = Column(Text, nullable=True)
     difficulty = Column(Integer, default=1)
     created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = Column(DateTime,
+                        default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
     category_id = Column(Integer, ForeignKey("question_categories.id"))
-    
+
     category = relationship("QuestionCategory", back_populates="questions")
+
 
 class QuestionCategory(Base):
     __tablename__ = "question_categories"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
-    parent_id = Column(Integer, ForeignKey("question_categories.id"), nullable=True)
-    
+    parent_id = Column(Integer,
+                       ForeignKey("question_categories.id"),
+                       nullable=True)
+
     questions = relationship("Question", back_populates="category")
     children = relationship("QuestionCategory")
+
 
 class ExamPaper(Base):
     __tablename__ = "exam_papers"
@@ -49,7 +57,10 @@ class ExamPaper(Base):
     total_score = Column(Integer, default=100)
     time_limit = Column(Integer)  # in minutes
     created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = Column(DateTime,
+                        default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
 
 class ExamQuestion(Base):
     __tablename__ = "exam_questions"
@@ -59,6 +70,6 @@ class ExamQuestion(Base):
     question_id = Column(Integer, ForeignKey("questions.id"))
     score = Column(Integer, default=10)
     sequence = Column(Integer)
-    
+
     exam = relationship("ExamPaper")
     question = relationship("Question")

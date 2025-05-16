@@ -42,7 +42,7 @@ class QuestionResponse(QuestionBase):
     options: Optional[List[str]] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class QuestionCategoryBase(BaseModel):
@@ -58,4 +58,4 @@ class QuestionCategoryResponse(QuestionCategoryBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

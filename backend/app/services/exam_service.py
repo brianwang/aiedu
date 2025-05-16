@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from ..models import Exam, ExamResult
-from ..schemas import ExamCreate, ExamResultCreate
+from app.models.exam import Exam, ExamResult
+from app.schemas.exam import ExamCreate, ExamResultCreate
 
 
 def create_exam(db: Session, exam: ExamCreate):

@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from app.models.user import User
 from app.models.question import Question
-from database.database import Base
+from backend.database import Base
 from config import settings
 
 config = context.config

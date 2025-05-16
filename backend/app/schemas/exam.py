@@ -29,11 +29,11 @@ class Exam(ExamCreate):
     id: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ExamResult(ExamResultCreate):
     id: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
