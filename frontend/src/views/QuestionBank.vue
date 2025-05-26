@@ -107,7 +107,14 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from "vue";
-import { useApi } from "@/composables/useApi";
+import {
+  createQuestion,
+  getQuestion,
+  updateQuestion,
+  deleteQuestion,
+  getQuestionsByCategory,
+  createCategory,
+} from "@/api/question";
 
 interface Question {
   id: number;
@@ -128,7 +135,6 @@ interface Category {
 export default defineComponent({
   name: "QuestionBank",
   setup() {
-    const { get, post, put, del } = useApi();
     const questions = ref<Question[]>([]);
     const categories = ref<Category[]>([]);
     const selectedCategory = ref("");
@@ -172,11 +178,12 @@ export default defineComponent({
     };
 
     const fetchQuestions = async () => {
-      questions.value = await get("/questions/");
+      questions.value = await getQuestionsByCategory();
     };
 
     const fetchCategories = async () => {
-      categories.value = await get("/questions/categories/");
+      // TODO: 需要实现获取分类列表的API方法
+      categories.value = [];
     };
 
     const addOption = () => {
@@ -202,21 +209,26 @@ export default defineComponent({
 
     const deleteQuestion = async (id: number) => {
       if (confirm("确定删除此题?")) {
-        await del(`/questions/${id}`);
+        await deleteQuestion(id);
         await fetchQuestions();
       }
     };
 
     const submitQuestion = async () => {
-      const data = { ...questionForm.value };
-      if (!hasOptions.value) {
-        delete data.options;
-      }
+      const data = {
+        question_type: questionForm.value.question_type,
+        content: questionForm.value.content,
+        answer: questionForm.value.answer,
+        difficulty: questionForm.value.difficulty,
+        category_id: questionForm.value.category_id,
+        explanation: questionForm.value.explanation || undefined,
+        options: hasOptions.value ? questionForm.value.options : undefined,
+      };
 
       if (currentQuestion.value) {
-        await put(`/questions/${currentQuestion.value.id}`, data);
+        await updateQuestion(currentQuestion.value.id, data);
       } else {
-        await post("/questions/", data);
+        await createQuestion(data);
       }
 
       resetForm();

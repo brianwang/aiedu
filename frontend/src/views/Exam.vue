@@ -1,6 +1,15 @@
 <template>
   <div class="exam-container">
-    <h1>{{ exam.title }}</h1>
+    <div class="exam-header">
+      <h1>{{ exam.title }}</h1>
+      <div v-if="examStatus === 'not_started'" class="exam-status">
+        考试未开始，距离开始还有: {{ formatTime(timeLeft) }}
+      </div>
+      <div v-else-if="examStatus === 'in_progress'" class="exam-status">
+        考试进行中，剩余时间: {{ formatTime(timeLeft) }}
+      </div>
+      <div v-else class="exam-status">考试已结束</div>
+    </div>
     <div
       v-for="(question, index) in exam.questions"
       :key="question.id"
@@ -80,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 import { submitExamResult } from "../api/exam";
@@ -107,48 +116,77 @@ export default defineComponent({
     const authStore = useAuthStore();
 
     const exam = reactive<Exam>({
-      id: "exam-001",
-      title: "数学期末考试",
-      questions: [
-        {
-          id: "q1",
-          type: "choice",
-          content: "1. 一元二次方程x²-2x-3=0的解是？",
-          options: [
-            { label: "A. x=1", value: "1" },
-            { label: "B. x=3", value: "3" },
-            { label: "C. x=-1", value: "-1" },
-            { label: "D. x=3或x=-1", value: "3,-1" },
-          ],
-          answer: "3,-1",
-          score: 5,
-        },
-        {
-          id: "q2",
-          type: "true_false",
-          content: "2. 判断：π是一个有理数。",
-          answer: "false",
-          score: 2,
-        },
-        {
-          id: "q3",
-          type: "fill_blank",
-          content: "3. 函数f(x)=2x+1，当x=3时，f(x)=____。",
-          answer: "7",
-          score: 3,
-        },
-        {
-          id: "q4",
-          type: "essay",
-          content: "4. 请简述微积分基本定理的主要内容。",
-          answer: "",
-          score: 10,
-        },
-      ],
+      id: "",
+      title: "",
+      questions: [],
+      start_time: "",
+      end_time: "",
+      duration: 0,
+    });
+
+    const timeLeft = ref(0);
+    const timer = ref<NodeJS.Timeout>();
+    const examStatus = ref<"not_started" | "in_progress" | "ended">(
+      "not_started"
+    );
+
+    const updateExamStatus = () => {
+      const now = new Date();
+      const start = new Date(exam.start_time);
+      const end = new Date(exam.end_time);
+
+      if (now < start) {
+        examStatus.value = "not_started";
+        timeLeft.value = Math.floor((start.getTime() - now.getTime()) / 1000);
+      } else if (now > end) {
+        examStatus.value = "ended";
+        timeLeft.value = 0;
+      } else {
+        examStatus.value = "in_progress";
+        timeLeft.value = Math.floor((end.getTime() - now.getTime()) / 1000);
+      }
+    };
+
+    const startTimer = () => {
+      timer.value = setInterval(() => {
+        timeLeft.value--;
+        if (timeLeft.value <= 0) {
+          clearInterval(timer.value);
+          if (examStatus.value === "in_progress") {
+            submitExam();
+          }
+        }
+      }, 1000);
+    };
+
+    onMounted(async () => {
+      const examId = router.currentRoute.value.params.examId as string;
+      try {
+        const response = await getExam(examId);
+        Object.assign(exam, response.data);
+        updateExamStatus();
+        if (examStatus.value === "in_progress") {
+          startTimer();
+        }
+      } catch (error) {
+        console.error("获取考试失败:", error);
+      }
+    });
+
+    onUnmounted(() => {
+      if (timer.value) {
+        clearInterval(timer.value);
+      }
     });
 
     const answers = ref<(string | null)[]>(
-      Array(exam.questions.length).fill(null)
+      Array(exam.questions.length).fill(null))
+
+    const formatTime = (seconds: number) => {
+      const mins = Math.floor(seconds / 60)
+      const secs = seconds % 60
+      return `${mins}分${secs}秒`
+    }
     );
 
     const getQuestionType = (type: string) => {
@@ -208,6 +246,19 @@ export default defineComponent({
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+}
+
+.exam-header {
+  margin-bottom: 20px;
+}
+
+.exam-status {
+  font-size: 16px;
+  color: #666;
+  margin-top: 10px;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
 }
 
 .question-item {

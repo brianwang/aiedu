@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel
 
@@ -15,6 +16,9 @@ class ExamCreate(BaseModel):
     title: str
     questions: List[QuestionBase]
     created_by: str
+    start_time: datetime
+    end_time: datetime
+    duration: int
 
 
 class ExamResultCreate(BaseModel):

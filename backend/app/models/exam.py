@@ -10,6 +10,9 @@ class Exam(Base):
     title = Column(String)
     questions = Column(JSON)
     created_by = Column(String, ForeignKey("users.id"))
+    start_time = Column(DateTime)
+    end_time = Column(DateTime)
+    duration = Column(Integer)  # in minutes
 
     creator = relationship("User", back_populates="exams")
 
