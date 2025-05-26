@@ -8,25 +8,15 @@ interface LoginResponse {
   token_type: string;
 }
 
-export const login = async (
-  username: string,
-  password: string
-): Promise<string> => {
-  const formData = new FormData();
-  formData.append("username", username);
-  formData.append("password", password);
-
-  const response: AxiosResponse<LoginResponse> = await axios.post(
-    `/api/token`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  return response.data.access_token;
+export const login = async (credentials: {
+  username: string;
+  password: string;
+}): Promise<AxiosResponse<{ access_token: string }>> => {
+  return axios.post("/api/login", credentials, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 export const logout = async (): Promise<void> => {

@@ -12,11 +12,17 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from app.models.user import User
 from app.models.question import Question
-from backend.database import Base
+from database import Base
 from config import settings
+from configparser import ConfigParser
 
-config = context.config
-fileConfig(config.config_file_name)
+config = ConfigParser()
+
+context_config = context.config
+# print
+config.read(context_config.config_file_name)
+
+fileConfig(context_config.config_file_name)
 
 target_metadata = Base.metadata
 

@@ -40,11 +40,14 @@ export default defineComponent({
       try {
         loading.value = true;
         error.value = "";
-        const token = await login(form.username, form.password);
-        authStore.setToken(token);
-        router.push("/");
+        const { data } = await login({
+          username: form.username,
+          password: form.password,
+        });
+        authStore.setToken(data.access_token);
+        router.push("/test");
       } catch (err) {
-        error.value = err.message || "登录失败";
+        error.value = (err as Error).message || "登录失败";
       } finally {
         loading.value = false;
       }

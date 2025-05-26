@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from .base import Base
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
 from datetime import datetime
+from .question import Question
 
 
 class Exam(Base):
@@ -10,7 +11,6 @@ class Exam(Base):
 
     id = Column(String, primary_key=True, index=True)
     title = Column(String)
-    questions = Column(JSON)
     created_by = Column(String, ForeignKey("users.id"))
     start_time = Column(DateTime)
     end_time = Column(DateTime)
@@ -45,16 +45,3 @@ class ExamPaper(Base):
     updated_at = Column(DateTime,
                         default=datetime.utcnow,
                         onupdate=datetime.utcnow)
-
-
-class ExamQuestion(Base):
-    __tablename__ = "exam_questions"
-
-    id = Column(Integer, primary_key=True, index=True)
-    exam_id = Column(Integer, ForeignKey("exam_papers.id"))
-    # question_id = Column(Integer, ForeignKey("questions.id"))
-    score = Column(Integer, default=10)
-    sequence = Column(Integer)
-
-    exam = relationship("ExamPaper")
-    question = relationship("Question")

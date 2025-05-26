@@ -46,3 +46,16 @@ class QuestionCategory(Base):
 
     questions = relationship("Question", back_populates="category")
     children = relationship("QuestionCategory")
+
+
+class ExamQuestion(Base):
+    __tablename__ = "exam_questions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    exam_id = Column(Integer, ForeignKey("exam_papers.id"))
+    # question_id = Column(Integer, ForeignKey("questions.id"))
+    score = Column(Integer, default=10)
+    sequence = Column(Integer)
+
+    exam = relationship("ExamPaper")
+    question = relationship("Question", back_populates="exams")
