@@ -45,6 +45,26 @@ class QuestionResponse(QuestionBase):
         from_attributes = True
 
 
+class ExamPaperBase(BaseModel):
+    title: str
+    description: Optional[str] = None
+    total_score: int = 100
+    time_limit: Optional[int] = None  # in minutes
+
+
+class ExamPaperCreate(ExamPaperBase):
+    pass
+
+
+class ExamPaperResponse(ExamPaperBase):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
 class QuestionCategoryBase(BaseModel):
     name: str
     parent_id: Optional[int] = None

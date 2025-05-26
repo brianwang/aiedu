@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_URL || "/";
 
 interface LoginResponse {
   access_token: string;
@@ -17,11 +17,11 @@ export const login = async (
   formData.append("password", password);
 
   const response: AxiosResponse<LoginResponse> = await axios.post(
-    `${API_URL}/api/token`,
+    `/api/token`,
     formData,
     {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
     }
   );

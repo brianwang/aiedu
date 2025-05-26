@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-
+from typing import List, Optional
 from database import get_db
-from app.models.question import Question, QuestionType, QuestionCategory, ExamPaper, ExamQuestion
+from app.schemas.question import ExamPaperCreate
+from app.models.exam import ExamPaper, ExamQuestion
+from app.models.question import Question, QuestionType, QuestionCategory
 from app.schemas.question import (QuestionCreate, QuestionUpdate,
                                   QuestionResponse, QuestionCategoryCreate,
                                   QuestionCategoryResponse, ExamPaperCreate)
@@ -78,7 +80,7 @@ def delete_question(question_id: int, db: Session = Depends(get_db)):
     return {"message": "Question deleted successfully"}
 
 
-@router.post("/exams/", response_model=ExamPaper)
+@router.post("/exams/", response_model=ExamPaperCreate)
 def create_exam(exam: ExamPaperCreate, db: Session = Depends(get_db)):
     return create_exam_paper(db, **exam.dict())
 

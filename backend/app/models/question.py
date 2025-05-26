@@ -46,30 +46,3 @@ class QuestionCategory(Base):
 
     questions = relationship("Question", back_populates="category")
     children = relationship("QuestionCategory")
-
-
-class ExamPaper(Base):
-    __tablename__ = "exam_papers"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(200), nullable=False)
-    description = Column(Text, nullable=True)
-    total_score = Column(Integer, default=100)
-    time_limit = Column(Integer)  # in minutes
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime,
-                        default=datetime.utcnow,
-                        onupdate=datetime.utcnow)
-
-
-class ExamQuestion(Base):
-    __tablename__ = "exam_questions"
-
-    id = Column(Integer, primary_key=True, index=True)
-    exam_id = Column(Integer, ForeignKey("exam_papers.id"))
-    question_id = Column(Integer, ForeignKey("questions.id"))
-    score = Column(Integer, default=10)
-    sequence = Column(Integer)
-
-    exam = relationship("ExamPaper")
-    question = relationship("Question")

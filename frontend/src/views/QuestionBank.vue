@@ -113,7 +113,7 @@ import {
   updateQuestion,
   deleteQuestion,
   getQuestionsByCategory,
-  createCategory,
+  getCategories,
 } from "@/api/question";
 
 interface Question {
@@ -178,12 +178,13 @@ export default defineComponent({
     };
 
     const fetchQuestions = async () => {
-      questions.value = await getQuestionsByCategory();
+      const response = await getQuestionsByCategory();
+      questions.value = response.data;
     };
 
     const fetchCategories = async () => {
-      // TODO: 需要实现获取分类列表的API方法
-      categories.value = [];
+      const response = await getCategories();
+      categories.value = response.data;
     };
 
     const addOption = () => {

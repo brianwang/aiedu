@@ -88,7 +88,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent, reactive, ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
@@ -106,139 +106,125 @@ interface Question {
 interface Exam {
   id: string;
   title: string;
+  start_time: string;
+  end_time: string;
+  duration: number; // 考试时长，单位为秒
   questions: Question[];
 }
 
-export default defineComponent({
-  name: "ExamView",
-  setup() {
-    const router = useRouter();
-    const authStore = useAuthStore();
+const router = useRouter();
+const authStore = useAuthStore();
 
-    const exam = reactive<Exam>({
-      id: "",
-      title: "",
-      questions: [],
-      start_time: "",
-      end_time: "",
-      duration: 0,
-    });
-
-    const timeLeft = ref(0);
-    const timer = ref<NodeJS.Timeout>();
-    const examStatus = ref<"not_started" | "in_progress" | "ended">(
-      "not_started"
-    );
-
-    const updateExamStatus = () => {
-      const now = new Date();
-      const start = new Date(exam.start_time);
-      const end = new Date(exam.end_time);
-
-      if (now < start) {
-        examStatus.value = "not_started";
-        timeLeft.value = Math.floor((start.getTime() - now.getTime()) / 1000);
-      } else if (now > end) {
-        examStatus.value = "ended";
-        timeLeft.value = 0;
-      } else {
-        examStatus.value = "in_progress";
-        timeLeft.value = Math.floor((end.getTime() - now.getTime()) / 1000);
-      }
-    };
-
-    const startTimer = () => {
-      timer.value = setInterval(() => {
-        timeLeft.value--;
-        if (timeLeft.value <= 0) {
-          clearInterval(timer.value);
-          if (examStatus.value === "in_progress") {
-            submitExam();
-          }
-        }
-      }, 1000);
-    };
-
-    onMounted(async () => {
-      const examId = router.currentRoute.value.params.examId as string;
-      try {
-        const response = await getExam(examId);
-        Object.assign(exam, response.data);
-        updateExamStatus();
-        if (examStatus.value === "in_progress") {
-          startTimer();
-        }
-      } catch (error) {
-        console.error("获取考试失败:", error);
-      }
-    });
-
-    onUnmounted(() => {
-      if (timer.value) {
-        clearInterval(timer.value);
-      }
-    });
-
-    const answers = ref<(string | null)[]>(
-      Array(exam.questions.length).fill(null))
-
-    const formatTime = (seconds: number) => {
-      const mins = Math.floor(seconds / 60)
-      const secs = seconds % 60
-      return `${mins}分${secs}秒`
-    }
-    );
-
-    const getQuestionType = (type: string) => {
-      const typeMap: Record<string, string> = {
-        choice: "单选题",
-        true_false: "判断题",
-        fill_blank: "填空题",
-        essay: "问答题",
-      };
-      return typeMap[type] || type;
-    };
-
-    const calculateScore = () => {
-      let totalScore = 0;
-      exam.questions.forEach((question, index) => {
-        if (answers.value[index] === question.answer) {
-          totalScore += question.score;
-        }
-      });
-      return totalScore;
-    };
-
-    const submitExam = async () => {
-      const score = calculateScore();
-      const result = {
-        examId: exam.id,
-        studentId: authStore.user?.id || "",
-        answers: answers.value,
-        score,
-        totalScore: exam.questions.reduce((sum, q) => sum + q.score, 0),
-      };
-
-      try {
-        await submitExamResult(result);
-        router.push({
-          name: "exam-result",
-          params: { examId: exam.id },
-          query: { score },
-        });
-      } catch (error) {
-        console.error("提交考试失败:", error);
-      }
-    };
-
-    return {
-      exam,
-      answers,
-      getQuestionType,
-      submitExam,
-    };
-  },
+const exam = reactive<Exam>({
+  id: "",
+  title: "",
+  questions: [],
+  start_time: "",
+  end_time: "",
+  duration: 0,
 });
+
+const timeLeft = ref(0);
+const timer = ref<NodeJS.Timeout>();
+const examStatus = ref<"not_started" | "in_progress" | "ended">("not_started");
+
+const updateExamStatus = () => {
+  const now = new Date();
+  const start = new Date(exam.start_time);
+  const end = new Date(exam.end_time);
+
+  if (now < start) {
+    examStatus.value = "not_started";
+    timeLeft.value = Math.floor((start.getTime() - now.getTime()) / 1000);
+  } else if (now > end) {
+    examStatus.value = "ended";
+    timeLeft.value = 0;
+  } else {
+    examStatus.value = "in_progress";
+    timeLeft.value = Math.floor((end.getTime() - now.getTime()) / 1000);
+  }
+};
+
+const startTimer = () => {
+  timer.value = setInterval(() => {
+    timeLeft.value--;
+    if (timeLeft.value <= 0) {
+      clearInterval(timer.value);
+      if (examStatus.value === "in_progress") {
+        submitExam();
+      }
+    }
+  }, 1000);
+};
+
+onMounted(async () => {
+  const examId = router.currentRoute.value.params.examId as string;
+  try {
+    const response = await getExam(examId);
+    Object.assign(exam, response.data);
+    updateExamStatus();
+    if (examStatus.value === "in_progress") {
+      startTimer();
+    }
+  } catch (error) {
+    console.error("获取考试失败:", error);
+  }
+});
+
+onUnmounted(() => {
+  if (timer.value) {
+    clearInterval(timer.value);
+  }
+});
+
+const answers = ref<(string | null)[]>();
+const formatTime = (seconds: number) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}分${secs}秒`;
+};
+
+const getQuestionType = (type: string) => {
+  const typeMap: Record<string, string> = {
+    choice: "单选题",
+    true_false: "判断题",
+    fill_blank: "填空题",
+    essay: "问答题",
+  };
+  return typeMap[type] || type;
+};
+
+const calculateScore = () => {
+  let totalScore = 0;
+  exam.questions.forEach((question, index) => {
+    if (answers.value[index] === question.answer) {
+      totalScore += question.score;
+    }
+  });
+  return totalScore;
+};
+
+const submitExam = async () => {
+  const score = calculateScore();
+  const result = {
+    examId: exam.id,
+    studentId: authStore.user?.id || "",
+    answers: answers.value,
+    score,
+    totalScore: exam.questions.reduce((sum, q) => sum + q.score, 0),
+  };
+
+  try {
+    await submitExamResult(result);
+    router.push({
+      name: "exam-result",
+      params: { examId: exam.id },
+      query: { score },
+    });
+  } catch (error) {
+    console.error("提交考试失败:", error);
+  }
+};
 </script>
 
 <style scoped>

@@ -52,13 +52,22 @@ export const deleteQuestion = async (
 };
 
 export const getQuestionsByCategory = async (
-  categoryId: number,
+  categoryId?: number,
   skip = 0,
   limit = 100
 ): Promise<AxiosResponse<Question[]>> => {
-  return axios.get(`/api/questions/category/${categoryId}`, {
+  const url = categoryId
+    ? `/api/questions/category/${categoryId}`
+    : "/api/questions";
+  return axios.get(url, {
     params: { skip, limit },
   });
+};
+
+export const getCategories = async (): Promise<
+  AxiosResponse<QuestionCategory[]>
+> => {
+  return axios.get("/api/questions/categories");
 };
 
 export const createCategory = async (
