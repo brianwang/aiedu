@@ -9,7 +9,7 @@ from .question import Question
 class Exam(Base):
     __tablename__ = "exams"
 
-    id = Column(String, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True, autoincrement=True)
     title = Column(String)
     created_by = Column(String, ForeignKey("users.id"))
     start_time = Column(DateTime)
@@ -22,7 +22,7 @@ class Exam(Base):
 class ExamResult(Base):
     __tablename__ = "exam_results"
 
-    id = Column(String, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True, autoincrement=True)
     exam_id = Column(String, ForeignKey("exams.id"))
     student_id = Column(String, ForeignKey("users.id"))
     answers = Column(JSON)

@@ -30,6 +30,13 @@ def read_question(question_id: int, db: Session = Depends(get_db)):
     return db_question
 
 
+@router.get("", response_model=list[QuestionResponse])
+def read_questions(skip: int = 0,
+                   limit: int = 100,
+                   db: Session = Depends(get_db)):
+    return db.query(Question).offset(skip).limit(limit).all()
+
+
 @router.get("/category/{category_id}", response_model=list[QuestionResponse])
 def read_questions_by_category(category_id: int,
                                skip: int = 0,
@@ -47,6 +54,11 @@ def create_new_category(category: QuestionCategoryCreate,
     return create_category(db,
                            name=category.name,
                            parent_id=category.parent_id)
+
+
+@router.get("/categories", response_model=list[QuestionCategoryResponse])
+def read_categories(db: Session = Depends(get_db)):
+    return db.query(QuestionCategory).all()
 
 
 @router.put("/{question_id}", response_model=QuestionResponse)
