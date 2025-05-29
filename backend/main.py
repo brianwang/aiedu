@@ -6,8 +6,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database import engine
-from app.models.base import Base
+from database import engine, Base
 from app.api import auth, question, exam
 
 Base.metadata.create_all(bind=engine)

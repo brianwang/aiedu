@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import Login from "../views/Login.vue";
-import Exam from "../views/Exam.vue";
+import Home from "@/views/Home.vue";
+import Login from "@/views/Login.vue";
+import Exam from "@/views/Exam.vue";
 import { useAuthStore } from "../stores/auth";
+import Register from "@/views/Register.vue";
+import QuestionBank from "@/views/QuestionBank.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,6 +20,18 @@ const router = createRouter({
       name: "login",
       component: Login,
       meta: { guestOnly: true },
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: Register,
+      meta: { guestOnly: true },
+    },
+    {
+      path: "/questions",
+      name: "questions",
+      component: QuestionBank,
+      meta: { requiresAuth: true },
     },
     {
       path: "/exam/:id",

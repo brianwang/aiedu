@@ -19,7 +19,7 @@ class QuestionType(str, Enum):
 class Question(Base):
     __tablename__ = "questions"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     question_type = Column(String(50), nullable=False)
     content = Column(Text, nullable=False)
     options = Column(JSON, nullable=True)  # For choice questions
@@ -31,6 +31,8 @@ class Question(Base):
                         default=datetime.utcnow,
                         onupdate=datetime.utcnow)
     category_id = Column(Integer, ForeignKey("question_categories.id"))
+    exam_id = Column(Integer, ForeignKey("exam_papers.id"))
+    exams = relationship("ExamQuestion", back_populates="question")
 
     category = relationship("QuestionCategory", back_populates="questions")
 
@@ -38,7 +40,7 @@ class Question(Base):
 class QuestionCategory(Base):
     __tablename__ = "question_categories"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String(100), nullable=False)
     parent_id = Column(Integer,
                        ForeignKey("question_categories.id"),
@@ -51,7 +53,7 @@ class QuestionCategory(Base):
 class ExamPaper(Base):
     __tablename__ = "exam_papers"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     title = Column(String(200), nullable=False)
     description = Column(Text, nullable=True)
     total_score = Column(Integer, default=100)
@@ -65,9 +67,9 @@ class ExamPaper(Base):
 class ExamQuestion(Base):
     __tablename__ = "exam_questions"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     exam_id = Column(Integer, ForeignKey("exam_papers.id"))
-    # question_id = Column(Integer, ForeignKey("questions.id"))
+    question_id = Column(Integer, ForeignKey("questions.id"))
     score = Column(Integer, default=10)
     sequence = Column(Integer)
 

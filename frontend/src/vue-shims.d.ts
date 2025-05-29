@@ -20,10 +20,13 @@ declare module "vue-router" {
 
   interface Router {
     beforeEach(guard: (to: any, from: any, next: any) => void): void;
+    push(to: string): void;
+    push(to: { name: string }): void;
   }
 
   export function createRouter(options: RouterOptions): Router;
   export function createWebHistory(base?: string): any;
   export function createWebHashHistory(base?: string): any;
   export function createMemoryHistory(base?: string): any;
+  export function useRouter(): Router;
 }

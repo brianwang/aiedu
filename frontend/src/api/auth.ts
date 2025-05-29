@@ -40,7 +40,7 @@ export const register = async (
 ): Promise<
   AxiosResponse<{ message: string; user_id: number; email: string }>
 > => {
-  return axios.post("/api/auth/register", data, {
+  return axios.post("/api/register", data, {
     headers: {
       "Content-Type": "application/json",
     },

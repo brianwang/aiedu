@@ -59,6 +59,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { register } from "@/api/auth";
 import { useToast } from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-default.css";
 
 const router = useRouter();
 const toast = useToast();

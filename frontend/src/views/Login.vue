@@ -13,6 +13,7 @@
       <button type="submit" :disabled="loading">
         {{ loading ? "登录中..." : "登录" }}
       </button>
+      <button @click="gotoRegister">注册</button>
       <p v-if="error" class="error-message">{{ error }}</p>
     </form>
   </div>
@@ -52,12 +53,16 @@ export default defineComponent({
         loading.value = false;
       }
     };
+    const gotoRegister = () => {
+      router.push("/register");
+    };
 
     return {
       form,
       loading,
       error,
       handleLogin,
+      gotoRegister,
     };
   },
 });

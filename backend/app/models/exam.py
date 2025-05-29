@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, JSON, ForeignKey
 from sqlalchemy.orm import relationship
-from .base import Base
+from database import Base
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
 from datetime import datetime
 from .question import Question
