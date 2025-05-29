@@ -22,13 +22,13 @@ context_config = context.config
 # print
 config.read(context_config.config_file_name)
 
-fileConfig(context_config.config_file_name)
+# fileConfig(context_config.config_file_name)
 
 target_metadata = Base.metadata
 
 
 def run_migrations_offline() -> None:
-    url = settings.DATABASE_URL
+    url = config.get('alembic', 'sqlalchemy.url')
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -41,8 +41,9 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
+    # print(config.get('alembic', 'sqlalchemy.url'))
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        {"sqlalchemy.url": config.get("alembic", 'sqlalchemy.url')},
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )

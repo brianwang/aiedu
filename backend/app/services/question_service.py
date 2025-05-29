@@ -2,9 +2,8 @@ from datetime import datetime
 from typing import List, Optional
 
 from sqlalchemy.orm import Session
-from app.models.exam import ExamPaper
 
-from app.models.question import Question, QuestionType, QuestionCategory, ExamQuestion
+from app.models.question import Question, QuestionType, QuestionCategory, ExamQuestion, ExamPaper
 
 
 def create_question(db: Session,

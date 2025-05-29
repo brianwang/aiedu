@@ -73,15 +73,45 @@ async def simple_login(form_data: LoginForm, db: Session = Depends(get_db)):
                             })
 
 
-@router.post("/register")
-async def register_user(username: str,
-                        password: str,
-                        email: str,
+class RegisterForm(BaseModel):
+    username: str = Field(..., min_length=3, max_length=50)
+    email: str = Field(
+        ..., regex=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+    password: str = Field(..., min_length=8, max_length=100)
+    confirm_password: str = Field(...)
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "username": "newuser",
+                "email": "user@example.com",
+                "password": "strongpassword",
+                "confirm_password": "strongpassword"
+            }
+        }
+
+
+@router.post("/register", status_code=status.HTTP_201_CREATED)
+async def register_user(form_data: RegisterForm,
                         db: Session = Depends(get_db)):
+    if form_data.password != form_data.confirm_password:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Passwords do not match")
+
     auth_service = AuthService(db)
     try:
-        user = auth_service.create_user(username, password, email)
-        return {"message": "User created successfully", "user_id": user.id}
-    except Exception as e:
+        user = auth_service.create_user(username=form_data.username,
+                                        password=form_data.password,
+                                        email=form_data.email)
+        return {
+            "message": "User created successfully",
+            "user_id": user.id,
+            "email": user.email
+        }
+    except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=str(e))
+    except Exception as e:
+        logger.error(f"Registration error: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Internal server error")

@@ -3,8 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from database import get_db
 from app.schemas.question import ExamPaperCreate
-from app.models.exam import ExamPaper
-from app.models.question import Question, QuestionType, QuestionCategory, ExamQuestion
+from app.models.question import Question, QuestionType, QuestionCategory, ExamQuestion, ExamPaper
 from app.schemas.question import (QuestionCreate, QuestionUpdate,
                                   QuestionResponse, QuestionCategoryCreate,
                                   QuestionCategoryResponse, ExamPaperCreate)

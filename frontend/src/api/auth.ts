@@ -27,3 +27,22 @@ export const refreshToken = async (): Promise<string> => {
   // Add token refresh logic if needed
   return "";
 };
+
+interface RegisterData {
+  username: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+}
+
+export const register = async (
+  data: RegisterData
+): Promise<
+  AxiosResponse<{ message: string; user_id: number; email: string }>
+> => {
+  return axios.post("/api/auth/register", data, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
