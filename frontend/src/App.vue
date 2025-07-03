@@ -6,7 +6,7 @@ import NavBar from "./components/NavBar.vue";
 <template>
   <div class="app">
     <NavBar />
-    <main>
+    <main class="main-content">
       <RouterView />
     </main>
   </div>
@@ -17,10 +17,20 @@ import NavBar from "./components/NavBar.vue";
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: var(--bg-secondary);
 }
 
-main {
+.main-content {
   flex: 1;
-  padding: 2rem;
+  padding: var(--spacing-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: var(--spacing-md);
+  }
 }
 </style>
