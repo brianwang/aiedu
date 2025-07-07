@@ -5,6 +5,9 @@ import Exam from "@/views/Exam.vue";
 import { useAuthStore } from "../stores/auth";
 import Register from "@/views/Register.vue";
 import QuestionBank from "@/views/QuestionBank.vue";
+import AIStudy from "@/views/AIStudy.vue";
+import MemberCenter from "@/views/MemberCenter.vue";
+import TeacherDashboard from "@/views/TeacherDashboard.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,19 +42,49 @@ const router = createRouter({
       component: Exam,
       meta: { requiresAuth: true },
     },
+    {
+      path: "/ai-study",
+      name: "ai-study",
+      component: AIStudy,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/member-center",
+      name: "member-center",
+      component: MemberCenter,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/teacher-dashboard",
+      name: "teacher-dashboard",
+      component: TeacherDashboard,
+      meta: { requiresAuth: true, requiresTeacher: true },
+    },
   ],
 });
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
+  // 检查是否需要认证
   if (to.meta.requiresAuth && !authStore.isAuthenticated()) {
     next({ name: "login" });
-  } else if (to.meta.guestOnly && authStore.isAuthenticated()) {
-    next({ name: "home" });
-  } else {
-    next();
+    return;
   }
+
+  // 检查是否仅限访客
+  if (to.meta.guestOnly && authStore.isAuthenticated()) {
+    next({ name: "home" });
+    return;
+  }
+
+  // 检查教师权限
+  if (to.meta.requiresTeacher && authStore.user?.role !== "teacher") {
+    next({ name: "home" });
+    return;
+  }
+
+  next();
 });
 
 export default router;

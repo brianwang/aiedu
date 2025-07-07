@@ -6,11 +6,13 @@
         <router-link to="/" class="brand-link">
           <div class="logo">
             <svg viewBox="0 0 24 24" fill="currentColor" class="logo-icon">
-              <path d="M12 2L2 7v10c0 5.55 3.84 9.739 9 11 5.16-1.261 9-5.45 9-11V7l-10-5z"/>
-              <path d="M10 17l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+              <path
+                d="M12 2L2 7v10c0 5.55 3.84 9.739 9 11 5.16-1.261 9-5.45 9-11V7l-10-5z"
+              />
+              <path d="M10 17l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
             </svg>
           </div>
-          <span class="brand-text">智学平台</span>
+          <span class="brand-text">AI智能教育</span>
         </router-link>
       </div>
 
@@ -19,23 +21,52 @@
         <div class="nav-links">
           <router-link to="/" class="nav-link" @click="closeMobileMenu">
             <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
             <span>首页</span>
           </router-link>
-          
-          <router-link to="/questions" class="nav-link" @click="closeMobileMenu" v-if="isAuthenticated">
+
+          <router-link
+            to="/questions"
+            class="nav-link"
+            @click="closeMobileMenu"
+            v-if="isAuthenticated"
+          >
             <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+              <path
+                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+              />
             </svg>
             <span>题库练习</span>
           </router-link>
 
-          <router-link to="/exams" class="nav-link" @click="closeMobileMenu" v-if="isAuthenticated">
+          <router-link
+            to="/ai-study"
+            class="nav-link"
+            @click="closeMobileMenu"
+            v-if="isAuthenticated"
+          >
             <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
+              />
             </svg>
-            <span>考试中心</span>
+            <span>AI学习</span>
+          </router-link>
+
+          <router-link
+            v-if="isTeacher"
+            to="/teacher-dashboard"
+            class="nav-link"
+            @click="closeMobileMenu"
+            v-if="isAuthenticated"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+              <path
+                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              />
+            </svg>
+            <span>教师中心</span>
           </router-link>
         </div>
 
@@ -45,32 +76,44 @@
             <button class="profile-button" @click="toggleUserDropdown">
               <div class="avatar">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                  <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                  />
                 </svg>
               </div>
               <span class="username">学员</span>
-              <svg viewBox="0 0 24 24" fill="currentColor" class="dropdown-icon">
-                <path d="M7 10l5 5 5-5z"/>
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="dropdown-icon"
+              >
+                <path d="M7 10l5 5 5-5z" />
               </svg>
             </button>
-            
+
             <div class="dropdown-menu" :class="{ show: userDropdownOpen }">
               <a href="#" class="dropdown-item">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
+                  />
                 </svg>
                 我的成绩
               </a>
               <a href="#" class="dropdown-item">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
                 </svg>
                 学习进度
               </a>
               <div class="dropdown-divider"></div>
               <button class="dropdown-item logout-btn" @click="logout">
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5z"/>
+                  <path
+                    d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5z"
+                  />
                 </svg>
                 退出登录
               </button>
@@ -103,6 +146,8 @@ export default defineComponent({
     const userDropdownOpen = ref(false);
 
     const isAuthenticated = computed(() => authStore.isAuthenticated());
+    const user = computed(() => authStore.user);
+    const isTeacher = computed(() => user.value?.role === "teacher");
 
     const logout = () => {
       authStore.clearToken();
@@ -131,6 +176,8 @@ export default defineComponent({
       toggleMobileMenu,
       closeMobileMenu,
       toggleUserDropdown,
+      user,
+      isTeacher,
     };
   },
 });
@@ -238,7 +285,6 @@ export default defineComponent({
 .user-menu {
   position: relative;
 }
-
 
 .profile-button {
   display: flex;
