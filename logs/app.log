@@ -13,3 +13,9 @@ Traceback (most recent call last):
   File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
     raise HTTPException(
 fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 20:41:31,597 - app.api.auth - WARNING - Login failed for username: teacher
+2025-07-08 20:41:31,598 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
