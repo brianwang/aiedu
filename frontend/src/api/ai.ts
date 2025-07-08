@@ -306,4 +306,56 @@ export const getMotivationPlan = async (
       "Content-Type": "application/json",
     },
   });
-}; 
+};
+
+// 智能组卷
+export const generateExam = async (formData: FormData) => {
+  return await axios.post('/ai/generate-exam', formData)
+}
+
+// 题目推荐
+export const recommendQuestions = async (params: { subject?: string; count: number }) => {
+  return await axios.get('/ai/recommend-questions', { params })
+}
+
+// 创建学习计划
+export const createStudyPlan = async (data: { subject: string; goal: string; duration: number }) => {
+  return await axios.post('/ai/create-study-plan', data)
+}
+
+// 分析学习模式
+export const analyzeLearningPattern = async () => {
+  return await axios.get('/ai/analyze-learning-pattern')
+}
+
+// 学习分析报告
+export const generateLearningReport = async () => {
+  return await axios.get('/ai/learning-report')
+}
+
+// 错题分析讲解
+export const analyzeWrongQuestion = async (formData: FormData) => {
+  return await axios.post('/ai/analyze-wrong-question', formData)
+}
+
+// 学习激励
+export const generateLearningMotivation = async () => {
+  return await axios.get('/ai/learning-motivation')
+}
+
+// 学习风格识别
+export const identifyLearningStyle = async () => {
+  return await axios.get('/ai/learning-style')
+}
+
+// 导出所有AI API方法
+export const aiApi = {
+  generateExam,
+  recommendQuestions,
+  createStudyPlan,
+  analyzeLearningPattern,
+  generateLearningReport,
+  analyzeWrongQuestion,
+  generateLearningMotivation,
+  identifyLearningStyle
+} 

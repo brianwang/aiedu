@@ -1,0 +1,15 @@
+2025-07-08 18:58:33,172 - __main__ - INFO - AI路由加载成功
+2025-07-08 18:58:33,245 - main - INFO - AI路由加载成功
+2025-07-08 18:58:33,246 - main - INFO - 应用启动中...
+2025-07-08 18:58:33,356 - main - INFO - 数据库初始化完成
+2025-07-08 18:58:33,356 - main - INFO - 应用关闭中...
+2025-07-08 18:58:48,345 - __main__ - INFO - AI路由加载成功
+2025-07-08 18:58:48,425 - main - INFO - AI路由加载成功
+2025-07-08 18:58:48,426 - main - INFO - 应用启动中...
+2025-07-08 18:58:48,430 - main - INFO - 数据库初始化完成
+2025-07-08 19:12:55,962 - app.api.auth - WARNING - Login failed for username: teacher
+2025-07-08 19:12:55,963 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}

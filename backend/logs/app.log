@@ -1717,3 +1717,4 @@ WHERE learning_plans.user_id = ?]
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
 2025-07-08 18:52:52,952 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
 2025-07-08 18:53:25,964 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2025-07-08 19:11:51,764 - __main__ - INFO - AI路由加载成功
