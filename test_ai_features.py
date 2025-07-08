@@ -17,8 +17,8 @@ def login_as_teacher():
     global TEST_USER_TOKEN
     
     login_data = {
-        "username": "teacher",
-        "password": "teacher"
+        "username": "testteacher",
+        "password": "test123"
     }
     
     try:

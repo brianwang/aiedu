@@ -24,9 +24,17 @@ class AuthService:
         user = self.db.query(User).filter(User.username == username).first()
         if not user:
             return None
-        if not verify_password(password, str(user.hashed_password)):
-            return None
-        return user
+        
+        # 支持两种密码验证方式
+        # 1. 检查哈希密码
+        if user.hashed_password and str(user.hashed_password) and verify_password(password, str(user.hashed_password)):
+            return user
+        
+        # 2. 检查明文密码
+        if user.password and str(user.password) == password:
+            return user
+            
+        return None
 
     def create_access_token_for_user(self, user: User) -> str:
         access_token_expires = timedelta(
@@ -38,6 +46,7 @@ class AuthService:
         hashed_password = get_password_hash(password)
         user = User(username=username,
                     email=email,
+                    password=password,  # 同时保存明文密码
                     hashed_password=hashed_password)
         self.db.add(user)
         self.db.commit()

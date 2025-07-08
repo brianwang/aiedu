@@ -97,13 +97,25 @@ def list_users_simple():
         
         for user in users:
             status = "✅ 活跃" if user.is_active else "❌ 禁用"
-            created_time = user.created_at.strftime('%Y-%m-%d %H:%M') if user.created_at else "未知"
+            # 安全处理时间格式
+            try:
+                if hasattr(user.created_at, 'strftime'):
+                    created_time = user.created_at.strftime('%Y-%m-%d %H:%M')
+                elif isinstance(user.created_at, str):
+                    created_time = user.created_at[:16]  # 取前16个字符
+                else:
+                    created_time = str(user.created_at)[:16] if user.created_at else "未知"
+            except:
+                created_time = "未知"
+            
             print(f"{user.id:<5} {user.username:<15} {user.email:<25} {user.role:<10} {status:<8} {created_time}")
         
         print(f"\n总计: {len(users)} 个用户")
         
     except Exception as e:
         print(f"❌ 获取用户列表失败: {e}")
+        import traceback
+        traceback.print_exc()
     finally:
         db.close()
 
