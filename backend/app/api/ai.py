@@ -40,6 +40,9 @@ class MotivationRequest(BaseModel):
     learning_achievements: List[str]
     personal_characteristics: List[str]
 
+class LearningPathRequest(BaseModel):
+    target_skill: str
+
 @router.get("/recommendations")
 async def get_recommended_questions(
     subject: Optional[str] = None,
@@ -408,3 +411,29 @@ async def get_user_learning_style(
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"学习风格分析失败: {str(e)}")
+
+
+@router.post("/learning-path")
+async def recommend_learning_path(
+    request: LearningPathRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """推荐个性化学习路径"""
+    try:
+        learning_path = await ai_service.recommend_learning_path(
+            db=db,
+            user_id=current_user.id,
+            target_skill=request.target_skill
+        )
+
+        if not learning_path:
+            raise HTTPException(status_code=404, detail="无法生成学习路径")
+
+        return {
+            "success": True,
+            "data": learning_path,
+            "message": "学习路径推荐成功"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"推荐学习路径失败: {str(e)}")

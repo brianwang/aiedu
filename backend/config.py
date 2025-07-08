@@ -28,6 +28,11 @@ class Settings(BaseSettings):
     openai_api_key: Optional[str] = None
     ai_model: str = "gpt-3.5-turbo"
 
+    # 新增deepseek配置
+    deepseek_api_key: Optional[str] = None
+    deepseek_base_url: str = 'https://api.deepseek.com'
+    deepseek_model: str = 'deepseek-chat'
+
     # 邮件配置
     smtp_server: Optional[str] = None
     smtp_port: int = 587

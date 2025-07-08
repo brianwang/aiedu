@@ -6,6 +6,11 @@ from sqlalchemy.orm import Session
 from app.models.question import Question, QuestionCategory
 from app.models.user import User, StudySession, WrongQuestion
 from config import settings
+import os
+try:
+    from openai import OpenAI
+except ImportError:
+    OpenAI = None
 
 logger = logging.getLogger(__name__)
 
@@ -13,12 +18,37 @@ logger = logging.getLogger(__name__)
 class AIService:
     def __init__(self):
         self.openai_api_key = settings.openai_api_key
+        self.deepseek_api_key = getattr(settings, 'deepseek_api_key', None)
+        self.deepseek_base_url = getattr(settings, 'deepseek_base_url', 'https://api.deepseek.com')
+        self.deepseek_model = getattr(settings, 'deepseek_model', 'deepseek-chat')
+        self._client = None
+        if OpenAI and self.deepseek_api_key:
+            self._client = OpenAI(api_key=self.deepseek_api_key, base_url=self.deepseek_base_url)
 
     async def generate_questions(self, subject: str, difficulty: int, count: int = 10) -> List[Dict]:
-        """AI生成题目"""
+        """AI生成题目，优先使用deepseek大模型"""
         try:
-            # 这里可以集成OpenAI API来生成题目
-            # 目前返回模拟数据
+            if self._client:
+                prompt = f"请为学科：{subject}，难度等级：{difficulty}，生成{count}道单选题，格式为JSON数组，每题包含content, question_type, options, answer, explanation, difficulty。"
+                response = self._client.chat.completions.create(
+                    model=self.deepseek_model,
+                    messages=[
+                        {"role": "system", "content": "你是一个专业的教育AI出题助手。"},
+                        {"role": "user", "content": prompt}
+                    ],
+                    stream=False
+                )
+                import json as _json
+                # 尝试解析AI返回的JSON题目
+                content = response.choices[0].message.content
+                if content:
+                    try:
+                        questions = _json.loads(content)
+                        if isinstance(questions, list):
+                            return questions
+                    except Exception:
+                        pass  # 解析失败则降级为模拟数据
+            # 未配置deepseek或解析失败，返回模拟数据
             questions = []
             for i in range(count):
                 question = {
@@ -50,7 +80,7 @@ class AIService:
             ).all()
 
             # 获取用户的学习水平
-            study_level = user.study_level
+            study_level = str(user.study_level) if user.study_level else "beginner"
 
             # 根据学习水平推荐题目
             difficulty_map = {
@@ -125,7 +155,7 @@ class AIService:
             # 创建学习计划
             study_plan = {
                 "user_id": user_id,
-                "study_level": user.study_level,
+                "study_level": str(user.study_level) if user.study_level else "beginner",
                 "daily_goal": {
                     "questions": 20,
                     "study_time": 60,  # 分钟
@@ -138,13 +168,13 @@ class AIService:
                 },
                 "recommendations": {
                     "focus_subjects": self._get_focus_subjects(db, user_id),
-                    "difficulty_adjustment": self._get_difficulty_adjustment(accuracy),
-                    "study_schedule": self._get_study_schedule(user.study_level)
+                    "difficulty_adjustment": self._get_difficulty_adjustment(float(accuracy)),
+                    "study_schedule": self._get_study_schedule(str(user.study_level) if user.study_level else "beginner")
                 },
                 "progress_summary": {
                     "total_study_time": total_study_time,
                     "total_questions": total_questions,
-                    "accuracy": round(accuracy, 2),
+                    "accuracy": round(float(accuracy), 2),
                     "wrong_questions_count": len(wrong_questions)
                 }
             }
@@ -248,71 +278,68 @@ class AIService:
 
     async def smart_grading(self, question_content: str, standard_answer: str, 
                            student_answer: str, question_type: str, max_score: int) -> Dict:
-        """智能评分"""
+        """智能评分，使用deepseek大模型"""
         try:
-            # 这里可以集成OpenAI API进行智能评分
-            # 目前返回模拟评分结果
-            
-            # 简单的答案相似度计算
-            similarity = self._calculate_similarity(standard_answer, student_answer)
-            
-            # 根据相似度和题目类型计算分数
-            base_score = similarity * max_score
-            
-            # 根据题目类型调整评分标准
-            if question_type == "single_choice":
-                score = max_score if similarity > 0.9 else 0
-                correctness = 1.0 if similarity > 0.9 else 0.0
-            elif question_type == "multiple_choice":
-                score = base_score * 0.8
-                correctness = similarity
-            elif question_type == "fill_blank":
-                score = base_score * 0.9
-                correctness = similarity
-            else:  # short_answer, essay
-                score = base_score * 0.7
-                correctness = similarity
-            
-            # 计算其他维度
-            logic_completeness = min(1.0, similarity + 0.2)
-            expression_standard = min(1.0, similarity + 0.1)
-            creativity = min(1.0, (1 - similarity) * 0.5 + 0.3)
-            
-            # 生成评价
-            if score >= max_score * 0.9:
-                overall_evaluation = "优秀"
-                suggestions = ["答案完全正确，逻辑清晰", "继续保持这种学习状态"]
-            elif score >= max_score * 0.7:
-                overall_evaluation = "良好"
-                suggestions = ["答案基本正确，可以进一步完善", "注意细节的准确性"]
-            elif score >= max_score * 0.6:
-                overall_evaluation = "中等"
-                suggestions = ["答案部分正确，需要加强理解", "建议复习相关知识点"]
-            else:
-                overall_evaluation = "需要改进"
-                suggestions = ["答案有较大偏差，建议重新学习", "可以寻求老师或同学的帮助"]
-            
-            return {
-                "score": round(score, 1),
-                "correctness": round(correctness, 2),
-                "logic_completeness": round(logic_completeness, 2),
-                "expression_standard": round(expression_standard, 2),
-                "creativity": round(creativity, 2),
-                "overall_evaluation": overall_evaluation,
-                "suggestions": suggestions
-            }
-            
+            if self._client:
+                prompt = f"""
+                请对以下题目进行智能评分：
+                题目内容：{question_content}
+                标准答案：{standard_answer}
+                学生答案：{student_answer}
+                题目类型：{question_type}
+                满分：{max_score}
+                
+                请返回JSON格式的评分结果，包含：
+                - score: 得分（整数）
+                - feedback: 详细反馈
+                - accuracy: 准确度百分比（0-100）
+                - suggestions: 改进建议
+                """
+                response = self._client.chat.completions.create(
+                    model=self.deepseek_model,
+                    messages=[
+                        {"role": "system", "content": "你是一个专业的教育AI评分助手，请严格按照要求进行评分。"},
+                        {"role": "user", "content": prompt}
+                    ],
+                    stream=False
+                )
+                import json as _json
+                content = response.choices[0].message.content
+                if content:
+                    try:
+                        result = _json.loads(content)
+                        if isinstance(result, dict):
+                            return result
+                    except Exception:
+                        pass  # 解析失败则降级为模拟评分
+            # 未配置deepseek或解析失败，使用模拟评分
+            return self._calculate_similarity_based_grading(
+                question_content, standard_answer, student_answer, 
+                question_type, max_score
+            )
         except Exception as e:
             logger.error(f"智能评分失败: {e}")
-            return {
-                "score": 0,
-                "correctness": 0,
-                "logic_completeness": 0,
-                "expression_standard": 0,
-                "creativity": 0,
-                "overall_evaluation": "评分失败",
-                "suggestions": ["系统暂时无法评分，请稍后重试"]
-            }
+            return self._calculate_similarity_based_grading(
+                question_content, standard_answer, student_answer, 
+                question_type, max_score
+            )
+
+    def _calculate_similarity_based_grading(self, question_content: str, standard_answer: str, 
+                                           student_answer: str, question_type: str, max_score: int) -> Dict:
+        """基于相似度的评分（降级方案）"""
+        # 简单的文本相似度计算
+        similarity = self._calculate_similarity(student_answer, standard_answer)
+        score = int(similarity * max_score)
+        
+        feedback = "答案基本正确" if similarity > 0.8 else "答案需要改进"
+        suggestions = "继续努力，保持学习热情！" if similarity > 0.6 else "建议重新学习相关知识点"
+        
+        return {
+            "score": score,
+            "feedback": feedback,
+            "accuracy": round(similarity * 100, 2),
+            "suggestions": suggestions
+        }
 
     def _calculate_similarity(self, text1: str, text2: str) -> float:
         """计算文本相似度（简化版本）"""
@@ -591,3 +618,92 @@ class AIService:
                 "emotional_support": ["相信自己"],
                 "encouragement_message": "继续努力，您一定会成功！"
             }
+
+    async def recommend_learning_path(self, db: Session, user_id: int, target_skill: str) -> Dict:
+        """推荐个性化学习路径，使用deepseek大模型"""
+        try:
+            if self._client:
+                # 获取用户学习数据
+                user = db.query(User).filter(User.id == user_id).first()
+                if not user:
+                    return {}
+                
+                study_sessions = db.query(StudySession).filter(
+                    StudySession.user_id == user_id
+                ).all()
+                
+                total_study_time = sum(session.duration_minutes for session in study_sessions)
+                total_questions = sum(session.questions_answered for session in study_sessions)
+                total_correct = sum(session.correct_answers for session in study_sessions)
+                accuracy = (total_correct / total_questions * 100) if total_questions > 0 else 0
+                
+                prompt = f"""
+                请为用户推荐学习路径：
+                目标技能：{target_skill}
+                用户当前水平：{user.study_level or 'beginner'}
+                总学习时间：{total_study_time}分钟
+                总答题数：{total_questions}
+                正确率：{accuracy:.2f}%
+                
+                请返回JSON格式的学习路径，包含：
+                - path_name: 路径名称
+                - description: 路径描述
+                - stages: 学习阶段数组，每个阶段包含name, duration, goals, resources
+                - estimated_time: 预计总时间（小时）
+                - difficulty: 难度等级
+                """
+                
+                response = self._client.chat.completions.create(
+                    model=self.deepseek_model,
+                    messages=[
+                        {"role": "system", "content": "你是一个专业的教育AI学习路径规划师。"},
+                        {"role": "user", "content": prompt}
+                    ],
+                    stream=False
+                )
+                
+                import json as _json
+                content = response.choices[0].message.content
+                if content:
+                    try:
+                        result = _json.loads(content)
+                        if isinstance(result, dict):
+                            return result
+                    except Exception:
+                        pass  # 解析失败则降级为模拟路径
+            
+            # 未配置deepseek或解析失败，返回模拟学习路径
+            return self._generate_default_learning_path(target_skill)
+            
+        except Exception as e:
+            logger.error(f"推荐学习路径失败: {e}")
+            return self._generate_default_learning_path(target_skill)
+    
+    def _generate_default_learning_path(self, target_skill: str) -> Dict:
+        """生成默认学习路径（降级方案）"""
+        return {
+            "path_name": f"{target_skill}学习路径",
+            "description": f"系统为您推荐的{target_skill}学习路径",
+            "stages": [
+                {
+                    "name": "基础阶段",
+                    "duration": "2周",
+                    "goals": ["掌握基础概念", "完成基础练习"],
+                    "resources": ["基础教材", "在线课程", "练习题"]
+                },
+                {
+                    "name": "进阶阶段", 
+                    "duration": "3周",
+                    "goals": ["深入理解原理", "解决复杂问题"],
+                    "resources": ["进阶教材", "实战项目", "讨论交流"]
+                },
+                {
+                    "name": "应用阶段",
+                    "duration": "2周", 
+                    "goals": ["实际应用", "项目实践"],
+                    "resources": ["项目实战", "案例分析", "总结反思"]
+                }
+            ],
+            "estimated_time": 40,
+            "difficulty": "intermediate"
+        }
