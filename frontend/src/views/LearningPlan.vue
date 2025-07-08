@@ -302,17 +302,17 @@ const loadPlans = async () => {
   loading.value = true
   try {
     // 加载学习计划
-    const plansResponse = await api.get('/learning/plans')
+    const plansResponse = await api.get('/api/v1/learning/plans')
     plans.value = plansResponse
 
     // 加载学习统计
-    const statsResponse = await api.get('/learning/statistics')
+    const statsResponse = await api.get('/api/v1/learning/statistics')
     statistics.value = statsResponse
 
     // 加载任务（如果有计划）
     if (plans.value.length > 0) {
       for (const plan of plans.value) {
-        const tasksResponse = await api.get(`/learning/plans/${plan.id}/tasks`)
+        const tasksResponse = await api.get(`/api/v1/learning/plans/${plan.id}/tasks`)
         tasks.value.push(...tasksResponse)
       }
     }
@@ -345,7 +345,7 @@ const getPlanCompletionRate = (planId) => {
 
 const startTask = async (taskId) => {
   try {
-    await api.put(`/learning/tasks/${taskId}/status`, { status: 'in_progress' })
+    await api.put(`/api/v1/learning/tasks/${taskId}/status`, { status: 'in_progress' })
     await loadPlans() // 重新加载数据
   } catch (error) {
     console.error('开始任务失败:', error)
@@ -354,7 +354,7 @@ const startTask = async (taskId) => {
 
 const completeTask = async (taskId) => {
   try {
-    await api.put(`/learning/tasks/${taskId}/status`, { status: 'completed' })
+    await api.put(`/api/v1/learning/tasks/${taskId}/status`, { status: 'completed' })
     await loadPlans() // 重新加载数据
   } catch (error) {
     console.error('完成任务失败:', error)

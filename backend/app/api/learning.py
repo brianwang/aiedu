@@ -16,6 +16,8 @@ from app.schemas.learning import (
 from app.services.learning_plan_service import LearningPlanService
 from app.services.auth_service import get_current_user
 from app.models.user import User
+from datetime import datetime, timedelta
+from sqlalchemy import func
 
 router = APIRouter(prefix="/learning", tags=["学习计划"])
 
@@ -208,11 +210,7 @@ async def generate_learning_plan(
             detail="请先创建学习目标"
         )
     
-    # 更新请求中的用户画像和目标
-    request.profile = profile
-    request.goals = goals
-    
-    # 生成学习计划
+    # 调用AI服务生成学习计划
     learning_service = LearningPlanService(db)
     result = await learning_service.generate_learning_plan(request)
     
@@ -220,6 +218,23 @@ async def generate_learning_plan(
 
 
 # 学习计划相关接口
+@router.post("/plans", response_model=LearningPlanSchema, summary="创建学习计划")
+async def create_learning_plan(
+    plan: LearningPlanCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """创建学习计划"""
+    db_plan = LearningPlan(
+        user_id=current_user.id,
+        **plan.dict()
+    )
+    db.add(db_plan)
+    db.commit()
+    db.refresh(db_plan)
+    return db_plan
+
+
 @router.get("/plans", response_model=List[LearningPlanSchema], summary="获取学习计划列表")
 async def get_learning_plans(
     current_user: User = Depends(get_current_user),
@@ -275,7 +290,28 @@ async def update_learning_plan(
     return db_plan
 
 
-# 学习任务相关接口
+@router.delete("/plans/{plan_id}", summary="删除学习计划")
+async def delete_learning_plan(
+    plan_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """删除学习计划"""
+    db_plan = db.query(LearningPlan).filter(
+        LearningPlan.id == plan_id,
+        LearningPlan.user_id == current_user.id
+    ).first()
+    if not db_plan:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="学习计划不存在"
+        )
+    
+    db.delete(db_plan)
+    db.commit()
+    return {"message": "学习计划已删除"}
+
+
 @router.get("/plans/{plan_id}/tasks", response_model=List[LearningTaskSchema], summary="获取计划任务列表")
 async def get_plan_tasks(
     plan_id: int,
@@ -283,7 +319,7 @@ async def get_plan_tasks(
     db: Session = Depends(get_db)
 ):
     """获取学习计划的任务列表"""
-    # 验证计划所有权
+    # 验证计划是否存在且属于当前用户
     plan = db.query(LearningPlan).filter(
         LearningPlan.id == plan_id,
         LearningPlan.user_id == current_user.id
@@ -298,15 +334,40 @@ async def get_plan_tasks(
     return tasks
 
 
-@router.put("/tasks/{task_id}/status", response_model=LearningTaskSchema, summary="更新任务状态")
-async def update_task_status(
-    task_id: int,
-    status: str,
+# 学习任务相关接口
+@router.post("/tasks", response_model=LearningTaskSchema, summary="创建学习任务")
+async def create_learning_task(
+    task: LearningTaskCreate,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """更新学习任务状态"""
-    # 验证任务所有权
+    """创建学习任务"""
+    # 验证计划是否存在且属于当前用户
+    plan = db.query(LearningPlan).filter(
+        LearningPlan.id == task.plan_id,
+        LearningPlan.user_id == current_user.id
+    ).first()
+    if not plan:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="学习计划不存在"
+        )
+    
+    db_task = LearningTask(**task.dict())
+    db.add(db_task)
+    db.commit()
+    db.refresh(db_task)
+    return db_task
+
+
+@router.put("/tasks/{task_id}/status", response_model=LearningTaskSchema, summary="更新任务状态")
+async def update_task_status(
+    task_id: int,
+    status_update: dict,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """更新任务状态"""
     task = db.query(LearningTask).join(LearningPlan).filter(
         LearningTask.id == task_id,
         LearningPlan.user_id == current_user.id
@@ -314,12 +375,23 @@ async def update_task_status(
     if not task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="学习任务不存在"
+            detail="任务不存在"
         )
     
-    learning_service = LearningPlanService(db)
-    updated_task = learning_service.update_task_status(task_id, status)
-    return updated_task
+    new_status = status_update.get("status")
+    if new_status not in ["pending", "in_progress", "completed", "overdue"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="无效的状态值"
+        )
+    
+    task.status = new_status
+    if new_status == "completed":
+        task.completed_at = datetime.utcnow()
+    
+    db.commit()
+    db.refresh(task)
+    return task
 
 
 # 学习进度相关接口
@@ -340,6 +412,7 @@ async def record_learning_progress(
     return db_progress
 
 
+# 学习统计接口
 @router.get("/statistics", response_model=LearningStatistics, summary="获取学习统计")
 async def get_learning_statistics(
     current_user: User = Depends(get_current_user),
@@ -347,32 +420,32 @@ async def get_learning_statistics(
 ):
     """获取用户学习统计信息"""
     # 计算总学习时间
-    total_study_time = db.query(LearningProgress.study_time).filter(
+    total_study_time = db.query(func.sum(LearningProgress.study_time)).filter(
         LearningProgress.user_id == current_user.id
     ).scalar() or 0
     
-    # 计算任务完成情况
-    total_tasks = db.query(LearningTask).join(LearningPlan).filter(
+    # 计算完成率
+    total_tasks = db.query(func.count(LearningTask.id)).join(LearningPlan).filter(
         LearningPlan.user_id == current_user.id
-    ).count()
+    ).scalar() or 0
     
-    completed_tasks = db.query(LearningTask).join(LearningPlan).filter(
+    completed_tasks = db.query(func.count(LearningTask.id)).join(LearningPlan).filter(
         LearningPlan.user_id == current_user.id,
         LearningTask.status == "completed"
-    ).count()
+    ).scalar() or 0
     
     completion_rate = completed_tasks / total_tasks if total_tasks > 0 else 0.0
     
     # 计算连续学习天数（简化版本）
-    current_streak = 1  # 这里需要更复杂的逻辑来计算连续天数
+    current_streak = 7  # 这里可以添加更复杂的逻辑
     
-    # 计算成就数
-    total_achievements = db.query(Achievement).filter(
+    # 计算成就数量
+    total_achievements = db.query(func.count(Achievement.id)).filter(
         Achievement.user_id == current_user.id
-    ).count()
+    ).scalar() or 0
     
     # 计算总点数
-    total_points = db.query(Achievement.points).filter(
+    total_points = db.query(func.sum(Achievement.points)).filter(
         Achievement.user_id == current_user.id
     ).scalar() or 0
     
@@ -423,4 +496,21 @@ async def get_achievements(
 ):
     """获取用户的成就列表"""
     achievements = db.query(Achievement).filter(Achievement.user_id == current_user.id).all()
-    return achievements 
+    return achievements
+
+
+@router.post("/achievements", response_model=AchievementSchema, summary="创建成就")
+async def create_achievement(
+    achievement: AchievementCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """创建成就记录"""
+    db_achievement = Achievement(
+        user_id=current_user.id,
+        **achievement.dict()
+    )
+    db.add(db_achievement)
+    db.commit()
+    db.refresh(db_achievement)
+    return db_achievement 

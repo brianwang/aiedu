@@ -166,12 +166,12 @@ export default defineComponent({
     const mobileMenuOpen = ref(false);
     const userDropdownOpen = ref(false);
 
-    const isAuthenticated = computed(() => authStore.isAuthenticated());
+    const isAuthenticated = computed(() => authStore.isAuthenticated);
     const user = computed(() => authStore.user);
     const isTeacher = computed(() => user.value?.role === "teacher");
 
     const logout = () => {
-      authStore.clearToken();
+      authStore.logoutUser();
       router.push("/login");
       userDropdownOpen.value = false;
       mobileMenuOpen.value = false;

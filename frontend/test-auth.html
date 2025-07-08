@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>认证状态测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; }
+        .error { background-color: #f8d7da; }
+        .info { background-color: #d1ecf1; }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-danger { background-color: #dc3545; color: white; }
+        .btn-success { background-color: #28a745; color: white; }
+    </style>
+</head>
+<body>
+    <h1>认证状态管理测试</h1>
+    
+    <div class="test-section info">
+        <h3>当前状态</h3>
+        <p>Token: <span id="token-status">未设置</span></p>
+        <p>认证状态: <span id="auth-status">未认证</span></p>
+        <p>用户信息: <span id="user-info">无</span></p>
+    </div>
+
+    <div class="test-section">
+        <h3>测试操作</h3>
+        <button class="btn-primary" onclick="testLogin()">测试登录</button>
+        <button class="btn-danger" onclick="testLogout()">测试登出</button>
+        <button class="btn-success" onclick="testAPI()">测试API调用</button>
+        <button onclick="checkLocalStorage()">检查本地存储</button>
+    </div>
+
+    <div class="test-section">
+        <h3>测试结果</h3>
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8111';
+        
+        function log(message, type = 'info') {
+            const results = document.getElementById('test-results');
+            const div = document.createElement('div');
+            div.className = `test-section ${type}`;
+            div.innerHTML = `<p>${new Date().toLocaleTimeString()}: ${message}</p>`;
+            results.appendChild(div);
+        }
+
+        function updateStatus() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            document.getElementById('token-status').textContent = token ? '已设置' : '未设置';
+            document.getElementById('auth-status').textContent = token ? '已认证' : '未认证';
+            document.getElementById('user-info').textContent = user ? JSON.parse(user).username : '无';
+        }
+
+        async function testLogin() {
+            try {
+                log('开始测试登录...', 'info');
+                
+                const response = await fetch(`${API_BASE}/api/v1/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: 'testuser2',
+                        password: 'password123'
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('user', JSON.stringify({
+                        username: 'testuser2',
+                        role: 'student'
+                    }));
+                    
+                    log('登录成功！', 'success');
+                    updateStatus();
+                } else {
+                    const error = await response.json();
+                    log(`登录失败: ${JSON.stringify(error)}`, 'error');
+                }
+            } catch (error) {
+                log(`登录异常: ${error.message}`, 'error');
+            }
+        }
+
+        function testLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            log('已清除认证信息', 'info');
+            updateStatus();
+        }
+
+        async function testAPI() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                log('请先登录', 'error');
+                return;
+            }
+
+            try {
+                log('测试API调用...', 'info');
+                
+                const response = await fetch(`${API_BASE}/api/v1/learning/plans`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    log(`API调用成功，返回 ${data.length} 个计划`, 'success');
+                } else {
+                    const error = await response.json();
+                    log(`API调用失败: ${JSON.stringify(error)}`, 'error');
+                }
+            } catch (error) {
+                log(`API调用异常: ${error.message}`, 'error');
+            }
+        }
+
+        function checkLocalStorage() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            log(`本地存储检查:`, 'info');
+            log(`Token: ${token ? '存在' : '不存在'}`, token ? 'success' : 'error');
+            log(`User: ${user ? '存在' : '不存在'}`, user ? 'success' : 'error');
+            
+            if (user) {
+                try {
+                    const userData = JSON.parse(user);
+                    log(`用户信息: ${JSON.stringify(userData)}`, 'info');
+                } catch (e) {
+                    log('用户信息解析失败', 'error');
+                }
+            }
+        }
+
+        // 页面加载时更新状态
+        updateStatus();
+    </script>
+</body>
+</html> 

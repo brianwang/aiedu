@@ -12,6 +12,15 @@ import TeacherDashboard from "@/views/TeacherDashboard.vue";
 import ProfileWizard from "@/views/ProfileWizard.vue";
 import LearningPlan from "@/views/LearningPlan.vue";
 
+// 扩展路由元数据类型
+declare module 'vue-router' {
+  interface RouteMeta {
+    requiresAuth?: boolean;
+    guestOnly?: boolean;
+    requiresTeacher?: boolean;
+  }
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -94,13 +103,13 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
   // 检查是否需要认证
-  if (to.meta.requiresAuth && !authStore.isAuthenticated()) {
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next({ name: "login" });
     return;
   }
 
   // 检查是否仅限访客
-  if (to.meta.guestOnly && authStore.isAuthenticated()) {
+  if (to.meta.guestOnly && authStore.isAuthenticated) {
     next({ name: "home" });
     return;
   }

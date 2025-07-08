@@ -132,7 +132,6 @@
 import { defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
-import { login } from "@/api/auth";
 
 export default defineComponent({
   name: "LoginView",
@@ -150,12 +149,17 @@ export default defineComponent({
       try {
         loading.value = true;
         error.value = "";
-        const { data } = await login({
+        
+        const result = await authStore.loginUser({
           username: form.username,
           password: form.password,
         });
-        authStore.setToken(data.access_token);
-        router.push("/");
+        
+        if (result.success) {
+          router.push("/");
+        } else {
+          error.value = "登录失败，请检查用户名和密码";
+        }
       } catch (err) {
         error.value = (err as Error).message || "登录失败，请检查用户名和密码";
       } finally {

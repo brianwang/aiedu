@@ -947,3 +947,347 @@ Traceback (most recent call last):
     raise HTTPException(
 fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
 2025-07-08 15:36:34,623 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 15:39:28,567 - main - INFO - 应用关闭中...
+2025-07-08 15:39:29,824 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:39:29,941 - main - INFO - AI路由加载成功
+2025-07-08 15:39:29,942 - main - INFO - 应用启动中...
+2025-07-08 15:39:29,945 - main - INFO - 数据库初始化完成
+2025-07-08 15:41:08,548 - main - INFO - 应用关闭中...
+2025-07-08 15:41:09,719 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:41:09,840 - main - INFO - AI路由加载成功
+2025-07-08 15:41:09,841 - main - INFO - 应用启动中...
+2025-07-08 15:41:09,844 - main - INFO - 数据库初始化完成
+2025-07-08 15:41:21,103 - main - INFO - 应用关闭中...
+2025-07-08 15:41:22,324 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:41:22,428 - main - INFO - AI路由加载成功
+2025-07-08 15:41:22,429 - main - INFO - 应用启动中...
+2025-07-08 15:41:22,432 - main - INFO - 数据库初始化完成
+2025-07-08 15:41:34,167 - app.api.auth - WARNING - Login failed for username: admin2
+2025-07-08 15:41:34,167 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 15:42:22,446 - app.api.auth - WARNING - Login failed for username: testuser
+2025-07-08 15:42:22,447 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 15:44:31,657 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:44:32,802 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:44:32,905 - main - INFO - AI路由加载成功
+2025-07-08 15:44:32,906 - main - INFO - 应用启动中...
+2025-07-08 15:44:32,909 - main - INFO - 数据库初始化完成
+2025-07-08 15:51:45,370 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 15:55:43,689 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 15:57:02,871 - main - INFO - 应用关闭中...
+2025-07-08 15:57:03,971 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:57:04,083 - main - INFO - AI路由加载成功
+2025-07-08 15:57:04,084 - main - INFO - 应用启动中...
+2025-07-08 15:57:04,086 - main - INFO - 数据库初始化完成
+2025-07-08 15:57:26,970 - app.api.auth - WARNING - Login failed for username: admin2
+2025-07-08 15:57:26,972 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 15:57:31,773 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 15:57:42,328 - main - INFO - 应用关闭中...
+2025-07-08 15:57:45,984 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:57:46,157 - main - INFO - AI路由加载成功
+2025-07-08 15:57:46,159 - main - INFO - 应用启动中...
+2025-07-08 15:57:46,163 - main - INFO - 数据库初始化完成
+2025-07-08 15:58:00,916 - main - INFO - 应用关闭中...
+2025-07-08 15:58:01,967 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:58:02,058 - main - INFO - AI路由加载成功
+2025-07-08 15:58:02,059 - main - INFO - 应用启动中...
+2025-07-08 15:58:02,064 - main - INFO - 数据库初始化完成
+2025-07-08 15:58:08,168 - app.api.auth - INFO - User testuser2 logged in successfully
+2025-07-08 15:58:10,201 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: learning_plans.user_profile_id
+[SQL: SELECT learning_plans.id AS learning_plans_id, learning_plans.user_id AS learning_plans_user_id, learning_plans.user_profile_id AS learning_plans_user_profile_id, learning_plans.plan_type AS learning_plans_plan_type, learning_plans.title AS learning_plans_title, learning_plans.description AS learning_plans_description, learning_plans.start_date AS learning_plans_start_date, learning_plans.end_date AS learning_plans_end_date, learning_plans.status AS learning_plans_status, learning_plans.ai_generated AS learning_plans_ai_generated, learning_plans.created_at AS learning_plans_created_at 
+FROM learning_plans 
+WHERE learning_plans.user_id = ?]
+[parameters: (6,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: learning_plans.user_profile_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\api\learning.py", line 244, in get_learning_plans
+    plans = db.query(LearningPlan).filter(LearningPlan.user_id == current_user.id).all()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: learning_plans.user_profile_id
+[SQL: SELECT learning_plans.id AS learning_plans_id, learning_plans.user_id AS learning_plans_user_id, learning_plans.user_profile_id AS learning_plans_user_profile_id, learning_plans.plan_type AS learning_plans_plan_type, learning_plans.title AS learning_plans_title, learning_plans.description AS learning_plans_description, learning_plans.start_date AS learning_plans_start_date, learning_plans.end_date AS learning_plans_end_date, learning_plans.status AS learning_plans_status, learning_plans.ai_generated AS learning_plans_ai_generated, learning_plans.created_at AS learning_plans_created_at 
+FROM learning_plans 
+WHERE learning_plans.user_id = ?]
+[parameters: (6,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-08 15:58:11,250 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 15:58:20,426 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: learning_goals.user_profile_id
+[SQL: SELECT learning_goals.id AS learning_goals_id, learning_goals.user_id AS learning_goals_user_id, learning_goals.user_profile_id AS learning_goals_user_profile_id, learning_goals.subject AS learning_goals_subject, learning_goals.skill_area AS learning_goals_skill_area, learning_goals.target_level AS learning_goals_target_level, learning_goals.target_timeframe AS learning_goals_target_timeframe, learning_goals.priority AS learning_goals_priority, learning_goals.status AS learning_goals_status, learning_goals.created_at AS learning_goals_created_at 
+FROM learning_goals 
+WHERE learning_goals.user_id = ?]
+[parameters: (6,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: learning_goals.user_profile_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\api\learning.py", line 112, in get_learning_goals
+    goals = db.query(LearningGoal).filter(LearningGoal.user_id == current_user.id).all()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: learning_goals.user_profile_id
+[SQL: SELECT learning_goals.id AS learning_goals_id, learning_goals.user_id AS learning_goals_user_id, learning_goals.user_profile_id AS learning_goals_user_profile_id, learning_goals.subject AS learning_goals_subject, learning_goals.skill_area AS learning_goals_skill_area, learning_goals.target_level AS learning_goals_target_level, learning_goals.target_timeframe AS learning_goals_target_timeframe, learning_goals.priority AS learning_goals_priority, learning_goals.status AS learning_goals_status, learning_goals.created_at AS learning_goals_created_at 
+FROM learning_goals 
+WHERE learning_goals.user_id = ?]
+[parameters: (6,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-08 15:59:46,439 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:59:47,482 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:59:47,584 - main - INFO - AI路由加载成功
+2025-07-08 15:59:47,586 - main - INFO - 应用启动中...
+2025-07-08 15:59:47,591 - main - INFO - 数据库初始化完成
+2025-07-08 15:59:57,506 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:00:23,490 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:03:12,824 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:36:54,578 - __main__ - INFO - AI路由加载成功
+2025-07-08 16:36:55,876 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 16:36:55,991 - main - INFO - AI路由加载成功
+2025-07-08 16:36:55,994 - main - INFO - 应用启动中...
+2025-07-08 16:36:55,997 - main - INFO - 数据库初始化完成
+2025-07-08 16:37:05,399 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:39:15,330 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:40:44,481 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:40:50,951 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:40:54,860 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:41:22,589 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:41:24,911 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 16:52:58,244 - app.api.auth - WARNING - Login failed for username: aaa
+2025-07-08 16:52:58,253 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:52:59,789 - app.api.auth - WARNING - Login failed for username: aaa
+2025-07-08 16:52:59,790 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:03,979 - app.api.auth - WARNING - Login failed for username: aaa
+2025-07-08 16:53:04,032 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:04,765 - app.api.auth - WARNING - Login failed for username: aaa
+2025-07-08 16:53:04,769 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:04,888 - app.api.auth - WARNING - Login failed for username: aaa
+2025-07-08 16:53:04,905 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:05,037 - app.api.auth - WARNING - Login failed for username: aaa
+2025-07-08 16:53:05,038 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:05,190 - app.api.auth - WARNING - Login failed for username: aaa
+2025-07-08 16:53:05,195 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:05,332 - app.api.auth - WARNING - Login failed for username: aaa
+2025-07-08 16:53:05,334 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:16,848 - app.api.auth - WARNING - Login failed for username: testuser
+2025-07-08 16:53:16,848 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:20,604 - app.api.auth - WARNING - Login failed for username: admin
+2025-07-08 16:53:20,605 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:22,071 - app.api.auth - WARNING - Login failed for username: admin
+2025-07-08 16:53:22,071 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:22,832 - app.api.auth - WARNING - Login failed for username: admin
+2025-07-08 16:53:22,832 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:23,007 - app.api.auth - WARNING - Login failed for username: admin
+2025-07-08 16:53:23,007 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 16:53:23,143 - app.api.auth - WARNING - Login failed for username: admin
+2025-07-08 16:53:23,144 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}

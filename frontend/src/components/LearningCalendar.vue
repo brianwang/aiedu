@@ -168,11 +168,11 @@ const todayTasks = computed(() => {
 // 方法
 const loadTasks = async () => {
   try {
-    const response = await api.get('/learning/plans')
+    const response = await api.get('/api/v1/learning/plans')
     const allTasks = []
     
     for (const plan of response) {
-      const tasksResponse = await api.get(`/learning/plans/${plan.id}/tasks`)
+      const tasksResponse = await api.get(`/api/v1/learning/plans/${plan.id}/tasks`)
       allTasks.push(...tasksResponse)
     }
     
@@ -205,7 +205,7 @@ const selectDate = (day) => {
 
 const startTask = async (taskId) => {
   try {
-    await api.put(`/learning/tasks/${taskId}/status`, { status: 'in_progress' })
+    await api.put(`/api/v1/learning/tasks/${taskId}/status`, { status: 'in_progress' })
     await loadTasks()
   } catch (error) {
     console.error('开始任务失败:', error)
@@ -214,7 +214,7 @@ const startTask = async (taskId) => {
 
 const completeTask = async (taskId) => {
   try {
-    await api.put(`/learning/tasks/${taskId}/status`, { status: 'completed' })
+    await api.put(`/api/v1/learning/tasks/${taskId}/status`, { status: 'completed' })
     await loadTasks()
   } catch (error) {
     console.error('完成任务失败:', error)
