@@ -16,9 +16,9 @@ const recentActivity = ref([
 
 const quickActions = [
   { title: '开始答题', desc: '从题库中选择练习', icon: 'practice', route: '/questions', color: 'primary' },
-  { title: '模拟考试', desc: '参加模拟考试测试', icon: 'exam', route: '/exams', color: 'secondary' },
-  { title: '学习进度', desc: '查看学习统计数据', icon: 'progress', route: '/progress', color: 'success' },
-  { title: '错题本', desc: '复习错误题目', icon: 'review', route: '/review', color: 'warning' }
+  { title: '学习计划', desc: '个性化学习计划', icon: 'plan', route: '/learning-plan', color: 'success' },
+  { title: 'AI学习', desc: '智能学习助手', icon: 'ai', route: '/ai-study', color: 'secondary' },
+  { title: '模拟考试', desc: '参加模拟考试测试', icon: 'exam', route: '/exams', color: 'warning' }
 ];
 
 const featuredSubjects = [
@@ -129,7 +129,10 @@ onMounted(() => {
             <svg v-else-if="action.icon === 'progress'" viewBox="0 0 24 24" fill="currentColor">
               <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
             </svg>
-            <svg v-else-if="action.icon === 'review'" viewBox="0 0 24 24" fill="currentColor">
+            <svg v-else-if="action.icon === 'plan'" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            </svg>
+            <svg v-else-if="action.icon === 'ai'" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
             </svg>
           </div>

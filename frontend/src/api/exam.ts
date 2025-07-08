@@ -12,9 +12,9 @@ interface ExamResult {
 export const submitExamResult = async (
   result: ExamResult
 ): Promise<AxiosResponse> => {
-  return axios.post("/api/exam/results", result);
+  return axios.post("/api/v1/exam/results", result);
 };
 
 export const getExam = async (examId: string): Promise<AxiosResponse> => {
-  return axios.get(`/api/exam/${examId}`);
+  return axios.get(`/api/v1/exam/${examId}`);
 };

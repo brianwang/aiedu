@@ -39,6 +39,7 @@ class User(Base):
     preferred_subjects = Column(String(500), nullable=True)  # JSON格式存储偏好学科
 
     # 关系
+    profile = relationship("UserProfile", back_populates="user", uselist=False)
     exams = relationship("Exam", back_populates="creator")
     exam_results = relationship("ExamResult", back_populates="student")
     study_sessions = relationship("StudySession", back_populates="user")

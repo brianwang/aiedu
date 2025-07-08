@@ -1,0 +1,949 @@
+2025-07-08 13:12:45,238 - __main__ - WARNING - AI路由未找到，跳过加载
+2025-07-08 13:12:45,387 - __main__ - INFO - 应用启动中...
+2025-07-08 13:12:45,413 - __main__ - INFO - 数据库初始化完成
+2025-07-08 13:18:51,998 - __main__ - INFO - 应用关闭中...
+2025-07-08 13:18:54,264 - __main__ - WARNING - AI路由未找到，跳过加载
+2025-07-08 13:18:54,355 - __main__ - INFO - 应用启动中...
+2025-07-08 13:18:54,358 - __main__ - INFO - 数据库初始化完成
+2025-07-08 13:20:11,383 - app.api.auth - ERROR - Login error: (sqlite3.OperationalError) no such column: users.full_name
+[SQL: SELECT users.id AS users_id, users.email AS users_email, users.username AS users_username, users.password AS users_password, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.avatar AS users_avatar, users.phone AS users_phone, users.bio AS users_bio, users.is_active AS users_is_active, users.is_verified AS users_is_verified, users.is_superuser AS users_is_superuser, users.role AS users_role, users.created_at AS users_created_at, users.updated_at AS users_updated_at, users.last_login AS users_last_login, users.study_level AS users_study_level, users.preferred_subjects AS users_preferred_subjects 
+FROM users 
+WHERE users.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('20099514@qq.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: users.full_name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 50, in simple_login
+    user = auth_service.authenticate_user(form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 19, in authenticate_user
+    user = self.db.query(User).filter(User.username == username).first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2759, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: users.full_name
+[SQL: SELECT users.id AS users_id, users.email AS users_email, users.username AS users_username, users.password AS users_password, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.avatar AS users_avatar, users.phone AS users_phone, users.bio AS users_bio, users.is_active AS users_is_active, users.is_verified AS users_is_verified, users.is_superuser AS users_is_superuser, users.role AS users_role, users.created_at AS users_created_at, users.updated_at AS users_updated_at, users.last_login AS users_last_login, users.study_level AS users_study_level, users.preferred_subjects AS users_preferred_subjects 
+FROM users 
+WHERE users.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('20099514@qq.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-08 13:35:39,825 - app.api.auth - WARNING - Login failed for username: testuser
+2025-07-08 13:35:39,828 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 13:35:46,430 - app.api.auth - WARNING - Login failed for username: testuser
+2025-07-08 13:35:46,430 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 13:35:51,853 - app.api.auth - WARNING - Login failed for username: admin
+2025-07-08 13:35:51,854 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 13:36:00,012 - __main__ - INFO - 应用关闭中...
+2025-07-08 13:36:02,048 - __main__ - WARNING - AI路由未找到，跳过加载
+2025-07-08 13:36:02,133 - __main__ - INFO - 应用启动中...
+2025-07-08 13:36:02,136 - __main__ - INFO - 数据库初始化完成
+2025-07-08 13:36:03,838 - app.api.auth - WARNING - Login failed for username: admin
+2025-07-08 13:36:03,839 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 13:37:09,618 - app.api.auth - WARNING - Login failed for username: admin
+2025-07-08 13:37:09,619 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 13:51:40,087 - app.api.auth - ERROR - Login error: 'Settings' object has no attribute 'ACCESS_TOKEN_EXPIRE_MINUTES'
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 63, in simple_login
+    access_token = auth_service.create_access_token_for_user(user)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 28, in create_access_token_for_user
+    minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\pydantic\main.py", line 989, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'ACCESS_TOKEN_EXPIRE_MINUTES'
+2025-07-08 13:52:38,840 - __main__ - INFO - 应用关闭中...
+2025-07-08 13:52:40,589 - __main__ - WARNING - AI路由未找到，跳过加载
+2025-07-08 13:52:47,110 - __main__ - WARNING - AI路由未找到，跳过加载
+2025-07-08 13:59:05,341 - __main__ - WARNING - AI路由未找到，跳过加载: cannot import name 'get_current_user' from 'app.services.auth_service' (C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py)
+2025-07-08 13:59:06,543 - __mp_main__ - WARNING - AI路由未找到，跳过加载: cannot import name 'get_current_user' from 'app.services.auth_service' (C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py)
+2025-07-08 13:59:06,668 - main - WARNING - AI路由未找到，跳过加载: cannot import name 'get_current_user' from 'app.services.auth_service' (C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py)
+2025-07-08 13:59:06,669 - main - INFO - 应用启动中...
+2025-07-08 13:59:06,672 - main - INFO - 数据库初始化完成
+2025-07-08 13:59:24,854 - app.api.auth - WARNING - Login failed for username: nonexistent
+2025-07-08 13:59:24,854 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 13:59:59,047 - app.api.auth - ERROR - Registration error: (sqlite3.IntegrityError) UNIQUE constraint failed: users.username
+[SQL: INSERT INTO users (email, username, password, hashed_password, full_name, avatar, phone, bio, is_active, is_verified, is_superuser, role, created_at, updated_at, last_login, study_level, preferred_subjects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('test@example.com', 'testuser', None, '$2b$12$hpa0sKjq0/eYxNsGv/Oof.ZCfemcSGQrbKKO6UZbjQ0K6SPneNNNa', None, None, None, None, 1, 0, 0, 'student', '2025-07-08 05:59:59.046741', '2025-07-08 05:59:59.046741', None, 'beginner', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: users.username
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 103, in register_user
+    user = auth_service.create_user(username=form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 38, in create_user
+    self.db.commit()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: users.username
+[SQL: INSERT INTO users (email, username, password, hashed_password, full_name, avatar, phone, bio, is_active, is_verified, is_superuser, role, created_at, updated_at, last_login, study_level, preferred_subjects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('test@example.com', 'testuser', None, '$2b$12$hpa0sKjq0/eYxNsGv/Oof.ZCfemcSGQrbKKO6UZbjQ0K6SPneNNNa', None, None, None, None, 1, 0, 0, 'student', '2025-07-08 05:59:59.046741', '2025-07-08 05:59:59.046741', None, 'beginner', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-08 14:01:14,625 - main - INFO - 应用关闭中...
+2025-07-08 14:01:47,412 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:01:47,495 - main - INFO - AI路由加载成功
+2025-07-08 14:01:47,497 - main - INFO - 应用启动中...
+2025-07-08 14:01:47,499 - main - INFO - 数据库初始化完成
+2025-07-08 14:01:53,942 - main - INFO - 应用关闭中...
+2025-07-08 14:01:54,999 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:01:55,081 - main - INFO - AI路由加载成功
+2025-07-08 14:01:55,083 - main - INFO - 应用启动中...
+2025-07-08 14:01:55,086 - main - INFO - 数据库初始化完成
+2025-07-08 14:17:10,912 - __main__ - INFO - AI路由加载成功
+2025-07-08 14:17:11,856 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:17:11,940 - main - INFO - AI路由加载成功
+2025-07-08 14:17:11,942 - main - INFO - 应用启动中...
+2025-07-08 14:17:11,944 - main - INFO - 数据库初始化完成
+2025-07-08 14:17:20,105 - main - INFO - 应用关闭中...
+2025-07-08 14:17:24,995 - app.api.auth - ERROR - Login error: 'Settings' object has no attribute 'SECRET_KEY'
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 63, in simple_login
+    access_token = auth_service.create_access_token_for_user(user)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 34, in create_access_token_for_user
+    return create_access_token(data={"sub": user.username},
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\utils\jwt.py", line 37, in create_access_token
+    settings.SECRET_KEY,
+    ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\pydantic\main.py", line 989, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'SECRET_KEY'
+2025-07-08 14:18:02,550 - main - INFO - 应用关闭中...
+2025-07-08 14:18:04,800 - __main__ - INFO - AI路由加载成功
+2025-07-08 14:18:05,787 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:18:05,859 - main - INFO - AI路由加载成功
+2025-07-08 14:18:05,861 - main - INFO - 应用启动中...
+2025-07-08 14:18:05,864 - main - INFO - 数据库初始化完成
+2025-07-08 14:18:43,093 - app.api.auth - ERROR - Login error: 'Settings' object has no attribute 'SECRET_KEY'
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 63, in simple_login
+    access_token = auth_service.create_access_token_for_user(user)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 34, in create_access_token_for_user
+    return create_access_token(data={"sub": user.username},
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\utils\jwt.py", line 37, in create_access_token
+    settings.SECRET_KEY,
+    ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\pydantic\main.py", line 989, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'SECRET_KEY'
+2025-07-08 14:19:02,345 - main - INFO - 应用关闭中...
+2025-07-08 14:19:03,512 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:19:03,600 - main - INFO - AI路由加载成功
+2025-07-08 14:19:03,603 - main - INFO - 应用启动中...
+2025-07-08 14:19:03,606 - main - INFO - 数据库初始化完成
+2025-07-08 14:19:08,227 - main - INFO - 应用关闭中...
+2025-07-08 14:19:09,246 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:19:09,323 - main - INFO - AI路由加载成功
+2025-07-08 14:19:09,325 - main - INFO - 应用启动中...
+2025-07-08 14:19:09,328 - main - INFO - 数据库初始化完成
+2025-07-08 14:19:13,368 - __main__ - INFO - AI路由加载成功
+2025-07-08 14:19:14,489 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:19:14,584 - main - INFO - AI路由加载成功
+2025-07-08 14:19:14,586 - main - INFO - 应用启动中...
+2025-07-08 14:19:14,589 - main - INFO - 数据库初始化完成
+2025-07-08 14:19:23,529 - app.api.auth - ERROR - Registration error: (sqlite3.IntegrityError) UNIQUE constraint failed: users.username
+[SQL: INSERT INTO users (email, username, password, hashed_password, full_name, avatar, phone, bio, is_active, is_verified, is_superuser, role, created_at, updated_at, last_login, study_level, preferred_subjects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('test@example.com', 'testuser', None, '$2b$12$vkbIF5kN83lsxb3VCqZ84esv15WFU3Ds.f1HgYgG9m/C8tKPwDaie', None, None, None, None, 1, 0, 0, 'student', '2025-07-08 06:19:23.527339', '2025-07-08 06:19:23.527339', None, 'beginner', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: users.username
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 103, in register_user
+    user = auth_service.create_user(username=form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 43, in create_user
+    self.db.commit()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: users.username
+[SQL: INSERT INTO users (email, username, password, hashed_password, full_name, avatar, phone, bio, is_active, is_verified, is_superuser, role, created_at, updated_at, last_login, study_level, preferred_subjects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('test@example.com', 'testuser', None, '$2b$12$vkbIF5kN83lsxb3VCqZ84esv15WFU3Ds.f1HgYgG9m/C8tKPwDaie', None, None, None, None, 1, 0, 0, 'student', '2025-07-08 06:19:23.527339', '2025-07-08 06:19:23.527339', None, 'beginner', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-08 14:20:06,757 - app.api.auth - ERROR - Registration error: (sqlite3.IntegrityError) UNIQUE constraint failed: users.username
+[SQL: INSERT INTO users (email, username, password, hashed_password, full_name, avatar, phone, bio, is_active, is_verified, is_superuser, role, created_at, updated_at, last_login, study_level, preferred_subjects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('test@example.com', 'testuser', None, '$2b$12$aD/2Yptr1wKTRaT1QUSnX.uLBmUHG5usWwNPbLyklpiYd3.tZI2r6', None, None, None, None, 1, 0, 0, 'student', '2025-07-08 06:20:06.756562', '2025-07-08 06:20:06.756562', None, 'beginner', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: users.username
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 103, in register_user
+    user = auth_service.create_user(username=form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 43, in create_user
+    self.db.commit()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: users.username
+[SQL: INSERT INTO users (email, username, password, hashed_password, full_name, avatar, phone, bio, is_active, is_verified, is_superuser, role, created_at, updated_at, last_login, study_level, preferred_subjects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('test@example.com', 'testuser', None, '$2b$12$aD/2Yptr1wKTRaT1QUSnX.uLBmUHG5usWwNPbLyklpiYd3.tZI2r6', None, None, None, None, 1, 0, 0, 'student', '2025-07-08 06:20:06.756562', '2025-07-08 06:20:06.756562', None, 'beginner', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-08 14:24:55,096 - app.api.auth - WARNING - Login failed for username: 20099514@qq.com
+2025-07-08 14:24:55,096 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 14:25:00,904 - app.api.auth - WARNING - Login failed for username: admin1
+2025-07-08 14:25:00,905 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 14:25:15,340 - app.api.auth - WARNING - Login failed for username: testuser
+2025-07-08 14:25:15,341 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 14:25:25,533 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 14:29:41,863 - app.api.auth - INFO - User admin2 logged in successfully
+2025-07-08 14:31:30,693 - main - INFO - 应用关闭中...
+2025-07-08 14:31:32,240 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:31:32,390 - main - INFO - AI路由加载成功
+2025-07-08 14:31:32,394 - main - INFO - 应用启动中...
+2025-07-08 14:31:32,401 - main - INFO - 数据库初始化完成
+2025-07-08 14:32:25,361 - main - INFO - 应用关闭中...
+2025-07-08 14:32:26,568 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:32:26,647 - main - INFO - AI路由加载成功
+2025-07-08 14:32:26,649 - main - INFO - 应用启动中...
+2025-07-08 14:32:26,652 - main - INFO - 数据库初始化完成
+2025-07-08 14:34:02,773 - main - INFO - 应用关闭中...
+2025-07-08 14:34:07,558 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:34:07,680 - main - INFO - AI路由加载成功
+2025-07-08 14:34:07,728 - main - INFO - 应用启动中...
+2025-07-08 14:34:07,736 - main - INFO - 数据库初始化完成
+2025-07-08 14:35:13,863 - main - INFO - 应用关闭中...
+2025-07-08 14:35:16,107 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 14:35:16,369 - main - INFO - AI路由加载成功
+2025-07-08 14:35:16,457 - main - INFO - 应用启动中...
+2025-07-08 14:35:16,554 - main - INFO - 数据库初始化完成
+2025-07-08 14:35:23,745 - main - INFO - 应用关闭中...
+2025-07-08 15:11:42,277 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:11:43,256 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:11:43,373 - main - INFO - AI路由加载成功
+2025-07-08 15:11:43,375 - main - INFO - 应用启动中...
+2025-07-08 15:11:43,384 - main - INFO - 数据库初始化完成
+2025-07-08 15:16:49,391 - app.api.auth - ERROR - Login error: Mapper 'Mapper[User(users)]' has no property 'profile'.  If this property was indicated from other mappers or configure events, ensure registry.configure() has been called.
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2522, in get_property
+    return self._props[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'profile'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 50, in simple_login
+    user = auth_service.authenticate_user(form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 24, in authenticate_user
+    user = self.db.query(User).filter(User.username == username).first()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2955, in query
+    return self._query_cls(entities, self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 276, in __init__
+    self._set_entities(entities)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 289, in _set_entities
+    coercions.expect(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
+    insp._post_inspect
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1338, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+                                           ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
+    self._check_configure()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4214, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4255, in _do_configure_registries
+    mapper._post_configure_properties()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2418, in _post_configure_properties
+    prop.init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\interfaces.py", line 589, in init
+    self.do_init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1661, in do_init
+    self._generate_backref()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2145, in _generate_backref
+    self._add_reverse_property(self.back_populates)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1592, in _add_reverse_property
+    other = self.mapper.get_property(key, _configure_mappers=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2524, in get_property
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Mapper 'Mapper[User(users)]' has no property 'profile'.  If this property was indicated from other mappers or configure events, ensure registry.configure() has been called.
+2025-07-08 15:20:44,562 - app.api.auth - ERROR - Login error: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[UserProfile(user_profiles)]'. Original exception was: Mapper 'Mapper[User(users)]' has no property 'profile'.  If this property was indicated from other mappers or configure events, ensure registry.configure() has been called.
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 50, in simple_login
+    user = auth_service.authenticate_user(form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 24, in authenticate_user
+    user = self.db.query(User).filter(User.username == username).first()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2955, in query
+    return self._query_cls(entities, self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 276, in __init__
+    self._set_entities(entities)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 289, in _set_entities
+    coercions.expect(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
+    insp._post_inspect
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1338, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+                                           ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
+    self._check_configure()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4214, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4251, in _do_configure_registries
+    raise e
+sqlalchemy.exc.InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[UserProfile(user_profiles)]'. Original exception was: Mapper 'Mapper[User(users)]' has no property 'profile'.  If this property was indicated from other mappers or configure events, ensure registry.configure() has been called.
+2025-07-08 15:23:12,193 - main - INFO - 应用关闭中...
+2025-07-08 15:23:14,455 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:23:14,629 - main - INFO - AI路由加载成功
+2025-07-08 15:23:14,630 - main - INFO - 应用启动中...
+2025-07-08 15:23:14,639 - main - INFO - 数据库初始化完成
+2025-07-08 15:23:36,044 - main - INFO - 应用关闭中...
+2025-07-08 15:23:37,135 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:23:37,231 - main - INFO - AI路由加载成功
+2025-07-08 15:23:37,232 - main - INFO - 应用启动中...
+2025-07-08 15:23:37,235 - main - INFO - 数据库初始化完成
+2025-07-08 15:23:46,321 - main - INFO - 应用关闭中...
+2025-07-08 15:23:47,473 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:23:47,567 - main - INFO - AI路由加载成功
+2025-07-08 15:23:47,568 - main - INFO - 应用启动中...
+2025-07-08 15:23:47,571 - main - INFO - 数据库初始化完成
+2025-07-08 15:24:03,483 - main - INFO - 应用关闭中...
+2025-07-08 15:24:04,593 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:24:04,682 - main - INFO - AI路由加载成功
+2025-07-08 15:24:04,683 - main - INFO - 应用启动中...
+2025-07-08 15:24:04,686 - main - INFO - 数据库初始化完成
+2025-07-08 15:24:07,850 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:24:09,039 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:24:09,143 - main - INFO - AI路由加载成功
+2025-07-08 15:24:09,145 - main - INFO - 应用启动中...
+2025-07-08 15:24:09,148 - main - INFO - 数据库初始化完成
+2025-07-08 15:24:25,497 - app.api.auth - ERROR - Login error: Could not determine join condition between parent/child tables on relationship UserProfile.learning_goals - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2435, in _determine_joins
+    self.primaryjoin = join_condition(
+                       ^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\util.py", line 123, in join_condition
+    return Join._join_condition(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\selectable.py", line 1444, in _join_condition
+    raise exc.NoForeignKeysError(
+sqlalchemy.exc.NoForeignKeysError: Can't find any foreign key relationships between 'user_profiles' and 'learning_goals'.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 50, in simple_login
+    user = auth_service.authenticate_user(form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 24, in authenticate_user
+    user = self.db.query(User).filter(User.username == username).first()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2955, in query
+    return self._query_cls(entities, self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 276, in __init__
+    self._set_entities(entities)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 289, in _set_entities
+    coercions.expect(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
+    insp._post_inspect
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1338, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+                                           ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
+    self._check_configure()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4214, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4255, in _do_configure_registries
+    mapper._post_configure_properties()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2418, in _post_configure_properties
+    prop.init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\interfaces.py", line 589, in init
+    self.do_init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1658, in do_init
+    self._setup_join_conditions()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1896, in _setup_join_conditions
+    self._join_condition = jc = JoinCondition(
+                                ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2322, in __init__
+    self._determine_joins()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2456, in _determine_joins
+    raise sa_exc.NoForeignKeysError(
+sqlalchemy.exc.NoForeignKeysError: Could not determine join condition between parent/child tables on relationship UserProfile.learning_goals - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2025-07-08 15:24:48,906 - main - INFO - 应用关闭中...
+2025-07-08 15:24:49,128 - main - INFO - 应用关闭中...
+2025-07-08 15:24:50,120 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:24:50,240 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:24:50,258 - main - INFO - AI路由加载成功
+2025-07-08 15:24:50,259 - main - INFO - 应用启动中...
+2025-07-08 15:24:50,263 - main - INFO - 数据库初始化完成
+2025-07-08 15:24:50,360 - main - INFO - AI路由加载成功
+2025-07-08 15:24:50,362 - main - INFO - 应用启动中...
+2025-07-08 15:24:50,365 - main - INFO - 数据库初始化完成
+2025-07-08 15:24:59,456 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:25:00,703 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:25:00,800 - main - INFO - AI路由加载成功
+2025-07-08 15:25:00,802 - main - INFO - 应用启动中...
+2025-07-08 15:25:00,804 - main - INFO - 数据库初始化完成
+2025-07-08 15:25:07,313 - app.api.auth - ERROR - Login error: Could not determine join condition between parent/child tables on relationship UserProfile.learning_goals - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2435, in _determine_joins
+    self.primaryjoin = join_condition(
+                       ^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\util.py", line 123, in join_condition
+    return Join._join_condition(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\selectable.py", line 1444, in _join_condition
+    raise exc.NoForeignKeysError(
+sqlalchemy.exc.NoForeignKeysError: Can't find any foreign key relationships between 'user_profiles' and 'learning_goals'.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 50, in simple_login
+    user = auth_service.authenticate_user(form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 24, in authenticate_user
+    user = self.db.query(User).filter(User.username == username).first()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2955, in query
+    return self._query_cls(entities, self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 276, in __init__
+    self._set_entities(entities)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 289, in _set_entities
+    coercions.expect(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
+    insp._post_inspect
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1338, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+                                           ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
+    self._check_configure()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4214, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4255, in _do_configure_registries
+    mapper._post_configure_properties()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2418, in _post_configure_properties
+    prop.init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\interfaces.py", line 589, in init
+    self.do_init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1658, in do_init
+    self._setup_join_conditions()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1896, in _setup_join_conditions
+    self._join_condition = jc = JoinCondition(
+                                ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2322, in __init__
+    self._determine_joins()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2456, in _determine_joins
+    raise sa_exc.NoForeignKeysError(
+sqlalchemy.exc.NoForeignKeysError: Could not determine join condition between parent/child tables on relationship UserProfile.learning_goals - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2025-07-08 15:26:10,668 - app.api.auth - ERROR - Login error: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[UserProfile(user_profiles)]'. Original exception was: Could not determine join condition between parent/child tables on relationship UserProfile.learning_goals - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 50, in simple_login
+    user = auth_service.authenticate_user(form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 24, in authenticate_user
+    user = self.db.query(User).filter(User.username == username).first()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2955, in query
+    return self._query_cls(entities, self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 276, in __init__
+    self._set_entities(entities)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 289, in _set_entities
+    coercions.expect(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
+    insp._post_inspect
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1338, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+                                           ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
+    self._check_configure()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4214, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4251, in _do_configure_registries
+    raise e
+sqlalchemy.exc.InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[UserProfile(user_profiles)]'. Original exception was: Could not determine join condition between parent/child tables on relationship UserProfile.learning_goals - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2025-07-08 15:26:17,094 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:26:18,049 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:26:18,130 - main - INFO - AI路由加载成功
+2025-07-08 15:26:18,131 - main - INFO - 应用启动中...
+2025-07-08 15:26:18,133 - main - INFO - 数据库初始化完成
+2025-07-08 15:26:34,546 - main - INFO - 应用关闭中...
+2025-07-08 15:30:18,843 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:30:19,727 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:30:19,840 - main - INFO - AI路由加载成功
+2025-07-08 15:30:19,841 - main - INFO - 应用启动中...
+2025-07-08 15:30:19,844 - main - INFO - 数据库初始化完成
+2025-07-08 15:30:32,349 - app.api.auth - ERROR - Login error: Could not determine join condition between parent/child tables on relationship UserProfile.learning_goals - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2435, in _determine_joins
+    self.primaryjoin = join_condition(
+                       ^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\util.py", line 123, in join_condition
+    return Join._join_condition(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\selectable.py", line 1444, in _join_condition
+    raise exc.NoForeignKeysError(
+sqlalchemy.exc.NoForeignKeysError: Can't find any foreign key relationships between 'user_profiles' and 'learning_goals'.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 50, in simple_login
+    user = auth_service.authenticate_user(form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 24, in authenticate_user
+    user = self.db.query(User).filter(User.username == username).first()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2955, in query
+    return self._query_cls(entities, self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 276, in __init__
+    self._set_entities(entities)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 289, in _set_entities
+    coercions.expect(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
+    insp._post_inspect
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1338, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+                                           ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
+    self._check_configure()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4214, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4255, in _do_configure_registries
+    mapper._post_configure_properties()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2418, in _post_configure_properties
+    prop.init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\interfaces.py", line 589, in init
+    self.do_init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1658, in do_init
+    self._setup_join_conditions()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1896, in _setup_join_conditions
+    self._join_condition = jc = JoinCondition(
+                                ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2322, in __init__
+    self._determine_joins()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2456, in _determine_joins
+    raise sa_exc.NoForeignKeysError(
+sqlalchemy.exc.NoForeignKeysError: Could not determine join condition between parent/child tables on relationship UserProfile.learning_goals - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2025-07-08 15:33:23,799 - main - INFO - 应用关闭中...
+2025-07-08 15:33:25,088 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:33:25,231 - main - INFO - AI路由加载成功
+2025-07-08 15:33:25,232 - main - INFO - 应用启动中...
+2025-07-08 15:33:25,235 - main - INFO - 数据库初始化完成
+2025-07-08 15:33:36,260 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:33:37,715 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:33:37,836 - main - INFO - AI路由加载成功
+2025-07-08 15:33:37,837 - main - INFO - 应用启动中...
+2025-07-08 15:33:37,841 - main - INFO - 数据库初始化完成
+2025-07-08 15:33:52,594 - app.api.auth - ERROR - Login error: Could not determine join condition between parent/child tables on relationship UserProfile.learning_plans - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2435, in _determine_joins
+    self.primaryjoin = join_condition(
+                       ^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\util.py", line 123, in join_condition
+    return Join._join_condition(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\selectable.py", line 1444, in _join_condition
+    raise exc.NoForeignKeysError(
+sqlalchemy.exc.NoForeignKeysError: Can't find any foreign key relationships between 'user_profiles' and 'learning_plans'.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 50, in simple_login
+    user = auth_service.authenticate_user(form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 24, in authenticate_user
+    user = self.db.query(User).filter(User.username == username).first()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2955, in query
+    return self._query_cls(entities, self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 276, in __init__
+    self._set_entities(entities)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 289, in _set_entities
+    coercions.expect(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
+    insp._post_inspect
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 1338, in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+                                           ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
+    self._check_configure()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4214, in _configure_registries
+    _do_configure_registries(registries, cascade)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 4255, in _do_configure_registries
+    mapper._post_configure_properties()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\mapper.py", line 2418, in _post_configure_properties
+    prop.init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\interfaces.py", line 589, in init
+    self.do_init()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1658, in do_init
+    self._setup_join_conditions()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1896, in _setup_join_conditions
+    self._join_condition = jc = JoinCondition(
+                                ^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2322, in __init__
+    self._determine_joins()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\relationships.py", line 2456, in _determine_joins
+    raise sa_exc.NoForeignKeysError(
+sqlalchemy.exc.NoForeignKeysError: Could not determine join condition between parent/child tables on relationship UserProfile.learning_plans - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2025-07-08 15:34:48,312 - __main__ - INFO - AI路由加载成功
+2025-07-08 15:34:49,491 - __mp_main__ - INFO - AI路由加载成功
+2025-07-08 15:34:49,615 - main - INFO - AI路由加载成功
+2025-07-08 15:34:49,616 - main - INFO - 应用启动中...
+2025-07-08 15:34:49,620 - main - INFO - 数据库初始化完成
+2025-07-08 15:34:57,113 - app.api.auth - WARNING - Login failed for username: testuser
+2025-07-08 15:34:57,113 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 15:35:04,045 - app.api.auth - ERROR - Registration error: (sqlite3.IntegrityError) UNIQUE constraint failed: users.username
+[SQL: INSERT INTO users (email, username, password, hashed_password, full_name, avatar, phone, bio, is_active, is_verified, is_superuser, role, created_at, updated_at, last_login, study_level, preferred_subjects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('newuser@example.com', 'newuser', None, '$2b$12$euyX01ReKixijmkWz/WKteNbB8K7Arih8v8EE6bGSVD0c307UmUJa', None, None, None, None, 1, 0, 0, 'student', '2025-07-08 07:35:04.044426', '2025-07-08 07:35:04.044426', None, 'beginner', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: users.username
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 103, in register_user
+    user = auth_service.create_user(username=form_data.username,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu\backend\app\services\auth_service.py", line 43, in create_user
+    self.db.commit()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4345, in flush
+    self._flush(objects)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4480, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 4441, in _flush
+    flush_context.execute()
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\ProgramData\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: users.username
+[SQL: INSERT INTO users (email, username, password, hashed_password, full_name, avatar, phone, bio, is_active, is_verified, is_superuser, role, created_at, updated_at, last_login, study_level, preferred_subjects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('newuser@example.com', 'newuser', None, '$2b$12$euyX01ReKixijmkWz/WKteNbB8K7Arih8v8EE6bGSVD0c307UmUJa', None, None, None, None, 1, 0, 0, 'student', '2025-07-08 07:35:04.044426', '2025-07-08 07:35:04.044426', None, 'beginner', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-08 15:35:10,600 - app.api.auth - WARNING - Login failed for username: student1
+2025-07-08 15:35:10,600 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-08 15:36:34,623 - app.api.auth - INFO - User admin2 logged in successfully

@@ -12,7 +12,7 @@ export const login = async (credentials: {
   username: string;
   password: string;
 }): Promise<AxiosResponse<{ access_token: string }>> => {
-  return axios.post("/api/login", credentials, {
+  return axios.post("/api/v1/login", credentials, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -40,7 +40,7 @@ export const register = async (
 ): Promise<
   AxiosResponse<{ message: string; user_id: number; email: string }>
 > => {
-  return axios.post("/api/register", data, {
+  return axios.post("/api/v1/register", data, {
     headers: {
       "Content-Type": "application/json",
     },

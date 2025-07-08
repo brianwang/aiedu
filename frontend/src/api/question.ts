@@ -29,26 +29,26 @@ interface ExamPaper {
 export const createQuestion = async (
   question: Omit<Question, "id">
 ): Promise<AxiosResponse<Question>> => {
-  return axios.post("/api/questions", question);
+  return axios.post("/api/v1/questions", question);
 };
 
 export const getQuestion = async (
   questionId: number
 ): Promise<AxiosResponse<Question>> => {
-  return axios.get(`/api/questions/${questionId}`);
+  return axios.get(`/api/v1/questions/${questionId}`);
 };
 
 export const updateQuestion = async (
   questionId: number,
   question: Partial<Question>
 ): Promise<AxiosResponse<Question>> => {
-  return axios.put(`/api/questions/${questionId}`, question);
+  return axios.put(`/api/v1/questions/${questionId}`, question);
 };
 
 export const deleteQuestion = async (
   questionId: number
 ): Promise<AxiosResponse> => {
-  return axios.delete(`/api/questions/${questionId}`);
+  return axios.delete(`/api/v1/questions/${questionId}`);
 };
 
 export const getQuestionsByCategory = async (
@@ -57,8 +57,8 @@ export const getQuestionsByCategory = async (
   limit = 100
 ): Promise<AxiosResponse<Question[]>> => {
   const url = categoryId
-    ? `/api/questions/category/${categoryId}`
-    : "/api/questions";
+    ? `/api/v1/questions/category/${categoryId}`
+    : "/api/v1/questions";
   return axios.get(url, {
     params: { skip, limit },
   });
@@ -67,19 +67,19 @@ export const getQuestionsByCategory = async (
 export const getCategories = async (): Promise<
   AxiosResponse<QuestionCategory[]>
 > => {
-  return axios.get("/api/questions/categories");
+  return axios.get("/api/v1/questions/categories");
 };
 
 export const createCategory = async (
   category: Omit<QuestionCategory, "id">
 ): Promise<AxiosResponse<QuestionCategory>> => {
-  return axios.post("/api/questions/categories", category);
+  return axios.post("/api/v1/questions/categories", category);
 };
 
 export const createExamPaper = async (
   exam: Omit<ExamPaper, "id">
 ): Promise<AxiosResponse<ExamPaper>> => {
-  return axios.post("/api/questions/exams", exam);
+  return axios.post("/api/v1/questions/exams", exam);
 };
 
 export const addQuestionToExam = async (
@@ -88,7 +88,7 @@ export const addQuestionToExam = async (
   score = 10,
   sequence?: number
 ): Promise<AxiosResponse> => {
-  return axios.post(`/api/questions/exams/${examId}/questions`, {
+  return axios.post(`/api/v1/questions/exams/${examId}/questions`, {
     questionId,
     score,
     sequence,

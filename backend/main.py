@@ -1,5 +1,5 @@
 from config import settings
-from app.api import auth, question, exam
+from app.api import auth, question, exam, learning
 from database import engine, Base
 import sys
 from pathlib import Path
@@ -12,6 +12,8 @@ from contextlib import asynccontextmanager
 
 sys.path.append(str(Path(__file__).parent))
 
+# 导入所有模型以确保SQLAlchemy关系正确配置
+from app.models import *
 
 # 配置日志
 logging.basicConfig(
@@ -80,14 +82,17 @@ async def global_exception_handler(request: Request, exc: Exception):
 app.include_router(auth.router, prefix="/api/v1")
 app.include_router(question.router, prefix="/api/v1")
 app.include_router(exam.router, prefix="/api/v1")
+app.include_router(learning.router, prefix="/api/v1")
 
 # 尝试导入AI路由（如果存在）
 try:
     from app.api import ai
     app.include_router(ai.router, prefix="/api/v1")
     logger.info("AI路由加载成功")
-except ImportError:
-    logger.warning("AI路由未找到，跳过加载")
+except ImportError as e:
+    logger.warning(f"AI路由未找到，跳过加载: {e}")
+except Exception as e:
+    logger.warning(f"AI路由加载失败，跳过加载: {e}")
 
 
 @app.get("/")
@@ -114,7 +119,7 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
-        app,
+        "main:app",
         host="0.0.0.0",
         port=8111,
         reload=settings.debug,

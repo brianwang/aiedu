@@ -55,11 +55,24 @@
           </router-link>
 
           <router-link
-            v-if="isTeacher"
-            to="/teacher-dashboard"
+            to="/learning-plan"
             class="nav-link"
             @click="closeMobileMenu"
             v-if="isAuthenticated"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+              <path
+                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+              />
+            </svg>
+            <span>学习计划</span>
+          </router-link>
+
+          <router-link
+            v-if="isTeacher && isAuthenticated"
+            to="/teacher-dashboard"
+            class="nav-link"
+            @click="closeMobileMenu"
           >
             <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
               <path
@@ -100,6 +113,14 @@
                 </svg>
                 我的成绩
               </a>
+              <router-link to="/learning-plan" class="dropdown-item" @click="closeMobileMenu">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+                  />
+                </svg>
+                学习计划
+              </router-link>
               <a href="#" class="dropdown-item">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path

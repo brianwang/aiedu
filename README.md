@@ -1,181 +1,172 @@
 # AI智能教育平台
 
-一个基于人工智能的智能学习和学习规划平台，为学生提供个性化的学习体验。
+一个基于AI的智能教育平台，提供个性化学习体验、智能题库、学习分析等功能。
 
-## 🚀 功能特性
+## 🚀 快速启动
 
-### 核心功能
+### 方法一：使用启动脚本（推荐）
 
-* **智能题库系统** - 支持多种题型，智能难度调节
-* **个性化学习规划** - 基于学习数据分析制定学习计划
-* **智能考试系统** - 自动组卷、智能评分
-* **学习进度跟踪** - 实时监控学习效果
-* **错题本系统** - 智能错题收集和复习提醒
+**Windows用户：**
+```bash
+start.bat
+```
 
-### 高级功能
+**Linux/Mac用户：**
+```bash
+chmod +x start.sh
+./start.sh
+```
 
-* **AI智能推荐** - 基于学习行为推荐适合的题目
-* **学习数据分析** - 详细的学习报告和统计
-* **多角色支持** - 学生、教师、管理员不同权限
-* **实时通知** - 学习提醒和进度通知
+### 方法二：手动启动
 
-## 🛠️ 技术栈
-
-### 后端
-
-* **FastAPI** - 高性能Python Web框架
-* **SQLAlchemy** - ORM数据库操作
-* **Alembic** - 数据库迁移管理
-* **JWT** - 用户认证
-* **SQLite** - 数据库（可扩展至PostgreSQL/MySQL）
-
-### 前端
-
-* **Vue 3** - 渐进式JavaScript框架
-* **TypeScript** - 类型安全的JavaScript
-* **Vue Router** - 前端路由
-* **Pinia** - 状态管理
-* **Naive UI** - 现代化UI组件库
-* **Vite** - 快速构建工具
-
-## 📦 安装指南
-
-### 环境要求
-
-* Python 3.8+
-* Node.js 16+
-* pnpm (推荐) 或 npm
-
-### 后端安装
+#### 1. 启动后端服务
 
 ```bash
 cd backend
+
+# 创建虚拟环境
+python -m venv venv
+
+# 激活虚拟环境
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
+
+# 安装依赖
 pip install -r requirements.txt
+
+# 启动服务
 python main.py
 ```
 
-### 前端安装
+#### 2. 启动前端服务
 
 ```bash
 cd frontend
-pnpm install
-pnpm dev
+
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
 ```
 
-### 数据库初始化
+## 📱 访问地址
 
-```bash
-cd backend
-alembic upgrade head
-```
+- **前端应用**: http://localhost:5173
+- **后端API**: http://localhost:8111
+- **API文档**: http://localhost:8111/docs
 
-## 🎯 使用指南
+## 🔧 环境要求
 
-### 学生用户
+- Python 3.8+
+- Node.js 16+
+- npm 或 pnpm
 
-1. 注册/登录账户
-2. 选择学科和难度
-3. 开始练习或参加考试
-4. 查看学习进度和错题本
-5. 获取个性化学习建议
-
-### 教师用户
-
-1. 创建和管理题库
-2. 设计考试试卷
-3. 查看学生成绩统计
-4. 分析学习数据
-
-### 管理员
-
-1. 用户管理
-2. 系统配置
-3. 数据备份
-4. 权限管理
-
-## 📁 项目结构
+## 🛠️ 项目结构
 
 ```
-aiedu-2/
-├── backend/                 # 后端代码
+aiedu/
+├── backend/                 # 后端服务 (FastAPI)
 │   ├── app/
 │   │   ├── api/            # API路由
 │   │   ├── models/         # 数据模型
-│   │   ├── schemas/        # 数据验证
 │   │   ├── services/       # 业务逻辑
-│   │   └── utils/          # 工具函数
-│   ├── alembic/            # 数据库迁移
-│   └── main.py             # 应用入口
-├── frontend/               # 前端代码
+│   │   └── schemas/        # 数据验证
+│   ├── database/           # 数据库配置
+│   └── main.py            # 应用入口
+├── frontend/               # 前端应用 (Vue 3 + TypeScript)
 │   ├── src/
 │   │   ├── api/           # API调用
-│   │   ├── components/    # 组件
-│   │   ├── views/         # 页面
-│   │   ├── stores/        # 状态管理
-│   │   └── router/        # 路由配置
+│   │   ├── components/    # Vue组件
+│   │   ├── views/         # 页面视图
+│   │   └── stores/        # 状态管理
 │   └── package.json
-└── prompts.txt            # AI提示词
+└── README.md
 ```
 
-## 🔧 开发指南
+## 🎯 主要功能
 
-### 添加新功能
+### 用户系统
+- 多角色用户管理（学生、教师、管理员）
+- JWT身份认证
+- 用户注册和登录
 
-1. 在后端 `app/models/` 中定义数据模型
-2. 在 `app/schemas/` 中定义数据验证
-3. 在 `app/services/` 中实现业务逻辑
-4. 在 `app/api/` 中定义API接口
-5. 在前端 `src/views/` 中创建页面
-6. 在 `src/api/` 中添加API调用
+### 智能题库
+- 题目分类管理
+- 难度分级
+- 智能推荐算法
+- AI生成题目
 
-### 数据库迁移
+### 学习分析
+- 学习进度跟踪
+- 能力评估
+- 学习风格分析
+- 个性化学习计划
 
+### AI功能
+- 智能评分
+- 学习动机激励
+- 难度分析
+- 学习模式识别
+
+## 🔍 问题排查
+
+### 1. 登录失败 (404错误)
+
+**问题原因：**
+- 前后端端口不匹配
+- API路径配置错误
+- 代理设置问题
+
+**解决方案：**
+1. 确保后端运行在8111端口
+2. 检查前端API调用路径是否包含`/api/v1`前缀
+3. 验证Vite代理配置正确
+
+### 2. 数据库连接失败
+
+**解决方案：**
 ```bash
-# 创建迁移文件
-alembic revision --autogenerate -m "描述"
-
-# 执行迁移
-alembic upgrade head
+cd backend
+python -c "from database import engine; print('数据库连接正常')"
 ```
 
-## 🚀 部署
+### 3. 前端依赖安装失败
 
-### 生产环境部署
-
-1. 配置环境变量
-2. 使用生产级数据库（PostgreSQL/MySQL）
-3. 配置反向代理（Nginx）
-4. 使用进程管理器（PM2/Supervisor）
-
-### Docker部署
-
+**解决方案：**
 ```bash
-# 构建镜像
-docker build -t aiedu-platform .
-
-# 运行容器
-docker run -p 8000:8000 aiedu-platform
+cd frontend
+rm -rf node_modules package-lock.json
+npm install
 ```
+
+### 4. Python依赖安装失败
+
+**解决方案：**
+```bash
+cd backend
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+## 📝 API文档
+
+启动后端服务后，访问 http://localhost:8111/docs 查看完整的API文档。
 
 ## 🤝 贡献指南
 
 1. Fork 项目
-2. 创建功能分支
-3. 提交更改
-4. 推送到分支
-5. 创建 Pull Request
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 打开 Pull Request
 
 ## 📄 许可证
 
-MIT License
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ## 📞 联系方式
 
-* 项目维护者：\[您的姓名]
-* 邮箱：\[您的邮箱]
-* 项目地址：\[GitHub地址]
-
-***
-
-**版本**: 1.0.0\
-**最后更新**: 2025年7月
+如有问题或建议，请提交 Issue 或联系开发团队。

@@ -6,8 +6,11 @@ import { useAuthStore } from "../stores/auth";
 import Register from "@/views/Register.vue";
 import QuestionBank from "@/views/QuestionBank.vue";
 import AIStudy from "@/views/AIStudy.vue";
+import AITest from "@/views/AITest.vue";
 import MemberCenter from "@/views/MemberCenter.vue";
 import TeacherDashboard from "@/views/TeacherDashboard.vue";
+import ProfileWizard from "@/views/ProfileWizard.vue";
+import LearningPlan from "@/views/LearningPlan.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +52,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: "/ai-test",
+      name: "ai-test",
+      component: AITest,
+      meta: { requiresAuth: true },
+    },
+    {
       path: "/member-center",
       name: "member-center",
       component: MemberCenter,
@@ -59,6 +68,24 @@ const router = createRouter({
       name: "teacher-dashboard",
       component: TeacherDashboard,
       meta: { requiresAuth: true, requiresTeacher: true },
+    },
+    {
+      path: "/profile-wizard",
+      name: "profile-wizard",
+      component: ProfileWizard,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/learning-plan",
+      name: "learning-plan",
+      component: LearningPlan,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/learning-plan/:planId",
+      name: "LearningPlan",
+      component: LearningPlan,
+      meta: { requiresAuth: true },
     },
   ],
 });
