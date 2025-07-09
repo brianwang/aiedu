@@ -51,3 +51,4 @@ htmlcov/
 .DS_Store
 *.swp
 # End of Selection
+logs/*.log

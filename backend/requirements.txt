@@ -37,3 +37,7 @@ wheel==0.45.1
 openai>=1.0.0
 aiofiles==24.1.0
 Pillow==11.0.0
+aiohttp==3.9.1
+numpy==1.24.3
+requests==2.31.0
+websockets==12.0
