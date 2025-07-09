@@ -1,32 +1,107 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 const stats = ref({
   totalQuestions: 1250,
   completedExams: 15,
   studyHours: 48,
-  accuracy: 85
+  accuracy: 85,
 });
 
 const recentActivity = ref([
-  { id: 1, type: 'exam', title: '数学基础测试', score: 88, date: '2024-01-15', status: 'completed' },
-  { id: 2, type: 'practice', title: '英语语法练习', score: 92, date: '2024-01-14', status: 'completed' },
-  { id: 3, type: 'exam', title: '物理力学测试', score: null, date: '2024-01-16', status: 'pending' },
+  {
+    id: 1,
+    type: "exam",
+    title: "数学基础测试",
+    score: 88,
+    date: "2024-01-15",
+    status: "completed",
+  },
+  {
+    id: 2,
+    type: "practice",
+    title: "英语语法练习",
+    score: 92,
+    date: "2024-01-14",
+    status: "completed",
+  },
+  {
+    id: 3,
+    type: "exam",
+    title: "物理力学测试",
+    score: null,
+    date: "2024-01-16",
+    status: "pending",
+  },
 ]);
 
 const quickActions = [
-  { title: '开始答题', desc: '从题库中选择练习', icon: 'practice', route: '/questions', color: 'primary' },
-  { title: '学习计划', desc: '个性化学习计划', icon: 'plan', route: '/learning-plan', color: 'success' },
-  { title: 'AI学习', desc: '智能学习助手', icon: 'ai', route: '/ai-study', color: 'secondary' },
-  { title: '模拟考试', desc: '参加模拟考试测试', icon: 'exam', route: '/exams', color: 'warning' }
+  {
+    title: "开始答题",
+    desc: "从题库中选择练习",
+    icon: "practice",
+    route: "/question-bank",
+    color: "primary",
+  },
+  {
+    title: "学习计划",
+    desc: "个性化学习计划",
+    icon: "plan",
+    route: "/member-center",
+    color: "success",
+  },
+  {
+    title: "AI学习",
+    desc: "智能学习助手",
+    icon: "ai",
+    route: "/ai",
+    color: "secondary",
+  },
+  {
+    title: "模拟考试",
+    desc: "参加模拟考试测试",
+    icon: "exam",
+    route: "/exam",
+    color: "warning",
+  },
 ];
 
 const featuredSubjects = [
-  { name: '数学', questions: 320, icon: '📊', difficulty: 'medium', progress: 65 },
-  { name: '英语', questions: 280, icon: '🔤', difficulty: 'easy', progress: 78 },
-  { name: '物理', questions: 245, icon: '⚛️', difficulty: 'hard', progress: 42 },
-  { name: '化学', questions: 195, icon: '🧪', difficulty: 'medium', progress: 58 },
-  { name: '生物', questions: 210, icon: '🧬', difficulty: 'easy', progress: 73 },
+  {
+    name: "数学",
+    questions: 320,
+    icon: "📊",
+    difficulty: "medium",
+    progress: 65,
+  },
+  {
+    name: "英语",
+    questions: 280,
+    icon: "🔤",
+    difficulty: "easy",
+    progress: 78,
+  },
+  {
+    name: "物理",
+    questions: 245,
+    icon: "⚛️",
+    difficulty: "hard",
+    progress: 42,
+  },
+  {
+    name: "化学",
+    questions: 195,
+    icon: "🧪",
+    difficulty: "medium",
+    progress: 58,
+  },
+  {
+    name: "生物",
+    questions: 210,
+    icon: "🧬",
+    difficulty: "easy",
+    progress: 73,
+  },
 ];
 
 onMounted(() => {
@@ -60,11 +135,15 @@ onMounted(() => {
         <div class="stat-card">
           <div class="stat-icon primary">
             <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+              <path
+                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+              />
             </svg>
           </div>
           <div class="stat-content">
-            <div class="stat-number">{{ stats.totalQuestions.toLocaleString() }}</div>
+            <div class="stat-number">
+              {{ stats.totalQuestions.toLocaleString() }}
+            </div>
             <div class="stat-label">练习题目</div>
           </div>
         </div>
@@ -72,7 +151,9 @@ onMounted(() => {
         <div class="stat-card">
           <div class="stat-icon secondary">
             <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+              <path
+                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+              />
             </svg>
           </div>
           <div class="stat-content">
@@ -84,8 +165,10 @@ onMounted(() => {
         <div class="stat-card">
           <div class="stat-icon success">
             <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
-              <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+              <path
+                d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+              />
+              <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
             </svg>
           </div>
           <div class="stat-content">
@@ -97,7 +180,9 @@ onMounted(() => {
         <div class="stat-card">
           <div class="stat-icon warning">
             <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              <path
+                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              />
             </svg>
           </div>
           <div class="stat-content">
@@ -112,28 +197,58 @@ onMounted(() => {
     <section class="quick-actions-section">
       <h2 class="section-title">快速开始</h2>
       <div class="quick-actions-grid">
-        <router-link 
-          v-for="action in quickActions" 
+        <router-link
+          v-for="action in quickActions"
           :key="action.title"
-          :to="action.route" 
+          :to="action.route"
           class="quick-action-card"
           :class="action.color"
         >
           <div class="action-icon">
-            <svg v-if="action.icon === 'practice'" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            <svg
+              v-if="action.icon === 'practice'"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+              />
             </svg>
-            <svg v-else-if="action.icon === 'exam'" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+            <svg
+              v-else-if="action.icon === 'exam'"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+              />
             </svg>
-            <svg v-else-if="action.icon === 'progress'" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+            <svg
+              v-else-if="action.icon === 'progress'"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+              />
             </svg>
-            <svg v-else-if="action.icon === 'plan'" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            <svg
+              v-else-if="action.icon === 'plan'"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+              />
             </svg>
-            <svg v-else-if="action.icon === 'ai'" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            <svg
+              v-else-if="action.icon === 'ai'"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
+              />
             </svg>
           </div>
           <div class="action-content">
@@ -142,7 +257,9 @@ onMounted(() => {
           </div>
           <div class="action-arrow">
             <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+              <path
+                d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+              />
             </svg>
           </div>
         </router-link>
@@ -154,7 +271,11 @@ onMounted(() => {
       <section class="subjects-section">
         <h2 class="section-title">学科进度</h2>
         <div class="subjects-list">
-          <div v-for="subject in featuredSubjects" :key="subject.name" class="subject-card">
+          <div
+            v-for="subject in featuredSubjects"
+            :key="subject.name"
+            class="subject-card"
+          >
             <div class="subject-header">
               <div class="subject-icon">{{ subject.icon }}</div>
               <div class="subject-info">
@@ -162,12 +283,21 @@ onMounted(() => {
                 <p class="subject-questions">{{ subject.questions }} 道题目</p>
               </div>
               <div class="subject-difficulty" :class="subject.difficulty">
-                {{ subject.difficulty === 'easy' ? '简单' : subject.difficulty === 'medium' ? '中等' : '困难' }}
+                {{
+                  subject.difficulty === "easy"
+                    ? "简单"
+                    : subject.difficulty === "medium"
+                    ? "中等"
+                    : "困难"
+                }}
               </div>
             </div>
             <div class="subject-progress">
               <div class="progress-bar">
-                <div class="progress-fill" :style="{ width: `${subject.progress}%` }"></div>
+                <div
+                  class="progress-fill"
+                  :style="{ width: `${subject.progress}%` }"
+                ></div>
               </div>
               <span class="progress-text">{{ subject.progress }}%</span>
             </div>
@@ -179,13 +309,25 @@ onMounted(() => {
       <section class="activity-section">
         <h2 class="section-title">最近活动</h2>
         <div class="activity-list">
-          <div v-for="activity in recentActivity" :key="activity.id" class="activity-item">
+          <div
+            v-for="activity in recentActivity"
+            :key="activity.id"
+            class="activity-item"
+          >
             <div class="activity-icon" :class="activity.type">
-              <svg v-if="activity.type === 'exam'" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"/>
+              <svg
+                v-if="activity.type === 'exam'"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"
+                />
               </svg>
               <svg v-else viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                <path
+                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                />
               </svg>
             </div>
             <div class="activity-content">
@@ -193,7 +335,9 @@ onMounted(() => {
               <p class="activity-date">{{ activity.date }}</p>
             </div>
             <div class="activity-result">
-              <span v-if="activity.status === 'completed'" class="score">{{ activity.score }}分</span>
+              <span v-if="activity.status === 'completed'" class="score"
+                >{{ activity.score }}分</span
+              >
               <span v-else class="status pending">待完成</span>
             </div>
           </div>
@@ -289,8 +433,13 @@ onMounted(() => {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* 统计卡片 */
@@ -336,10 +485,18 @@ onMounted(() => {
   color: white;
 }
 
-.stat-icon.primary { background: var(--gradient-primary); }
-.stat-icon.secondary { background: var(--gradient-secondary); }
-.stat-icon.success { background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); }
-.stat-icon.warning { background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); }
+.stat-icon.primary {
+  background: var(--gradient-primary);
+}
+.stat-icon.secondary {
+  background: var(--gradient-secondary);
+}
+.stat-icon.success {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+}
+.stat-icon.warning {
+  background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+}
 
 .stat-number {
   font-size: 2rem;
@@ -388,7 +545,7 @@ onMounted(() => {
 }
 
 .quick-action-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -398,9 +555,15 @@ onMounted(() => {
   transition: all 0.2s ease;
 }
 
-.quick-action-card.secondary::before { background: var(--secondary-color); }
-.quick-action-card.success::before { background: var(--success-color); }
-.quick-action-card.warning::before { background: var(--warning-color); }
+.quick-action-card.secondary::before {
+  background: var(--secondary-color);
+}
+.quick-action-card.success::before {
+  background: var(--success-color);
+}
+.quick-action-card.warning::before {
+  background: var(--warning-color);
+}
 
 .quick-action-card:hover {
   transform: translateY(-2px);

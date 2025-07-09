@@ -1,227 +1,44 @@
-import { useApi } from "@/composables/useApi";
-import type { AxiosResponse } from "axios";
+import { apiClient } from "./index";
 
-const api = useApi();
-
-// 题目推荐接口
-export interface RecommendedQuestion {
-  id: number;
-  content: string;
-  question_type: string;
-  options?: string[];
-  difficulty: number;
-  category?: string;
-}
-
-export interface QuestionRecommendationResponse {
-  success: boolean;
-  data: RecommendedQuestion[];
-  message: string;
-}
-
-export const getRecommendedQuestions = async (
-  subject?: string,
-  count: number = 10
-): Promise<QuestionRecommendationResponse> => {
-  const params = new URLSearchParams();
-  if (subject) params.append("subject", subject);
-  params.append("count", count.toString());
-
-  return api.get(`/api/v1/ai/recommendations?${params.toString()}`);
-};
-
-// 学习计划接口
-export interface DailyGoal {
-  questions: number;
-  study_time: number;
-  accuracy_target: number;
-}
-
-export interface WeeklyGoals {
-  total_questions: number;
-  total_study_time: number;
-  review_wrong_questions: number;
-}
-
-export interface StudySchedule {
-  daily_study_time: number;
-  sessions_per_day: number;
-  break_time: number;
-}
-
-export interface Recommendations {
-  focus_subjects: string[];
-  difficulty_adjustment: string;
-  study_schedule: StudySchedule;
-}
-
-export interface ProgressSummary {
-  total_study_time: number;
-  total_questions: number;
-  accuracy: number;
-  wrong_questions_count: number;
-}
-
-export interface StudyPlan {
-  user_id: number;
-  study_level: string;
-  daily_goal: DailyGoal;
-  weekly_goals: WeeklyGoals;
-  recommendations: Recommendations;
-  progress_summary: ProgressSummary;
-}
-
-export interface StudyPlanResponse {
-  success: boolean;
-  data: StudyPlan;
-  message: string;
-}
-
-export const getStudyPlan = async (): Promise<StudyPlanResponse> => {
-  return api.get("/api/v1/ai/study-plan");
-};
-
-// 学习模式分析接口
-export interface LearningPattern {
-  time_distribution: Record<string, number>;
-  subject_preference: Record<string, number>;
-  learning_efficiency: number;
-  total_study_sessions: number;
-  average_session_duration: number;
-  message?: string;
-}
-
-export interface LearningPatternResponse {
-  success: boolean;
-  data: LearningPattern;
-  message: string;
-}
-
-export const getLearningPattern = async (): Promise<LearningPatternResponse> => {
-  return api.get("/api/v1/ai/learning-pattern");
-};
-
-// 难度分析接口
-export interface DifficultyAnalysis {
-  accuracy: number;
-  total_questions: number;
-  wrong_questions_count: number;
-  suggestion: string;
-  recommended_difficulty: string;
-}
-
-export interface DifficultyAnalysisResponse {
-  success: boolean;
-  data: DifficultyAnalysis;
-  message: string;
-}
-
-export const getDifficultyAnalysis = async (): Promise<DifficultyAnalysisResponse> => {
-  return api.get("/api/v1/ai/difficulty-analysis");
-};
-
-// AI生成题目接口（教师/管理员）
-export interface GenerateQuestionRequest {
+export interface QuestionGenerationRequest {
   subject: string;
   difficulty: number;
   count: number;
+  question_types?: string[];
 }
 
-export interface GeneratedQuestion {
-  content: string;
-  question_type: string;
-  options: string[];
-  answer: string;
-  explanation: string;
-  difficulty: number;
-}
-
-export interface GenerateQuestionsResponse {
-  success: boolean;
-  data: GeneratedQuestion[];
-  message: string;
-}
-
-export const generateQuestions = async (
-  data: GenerateQuestionRequest
-): Promise<GenerateQuestionsResponse> => {
-  const params = new URLSearchParams();
-  params.append("subject", data.subject);
-  params.append("difficulty", data.difficulty.toString());
-  params.append("count", data.count.toString());
-
-  return api.post(`/api/v1/ai/generate-questions?${params.toString()}`, null);
-};
-
-// 智能评分接口
 export interface SmartGradingRequest {
   question_content: string;
   standard_answer: string;
   student_answer: string;
   question_type: string;
   max_score: number;
+  student_level?: string;
 }
 
-export interface GradingResult {
-  score: number;
-  correctness: number;
-  logic_completeness: number;
-  expression_standard: number;
-  creativity: number;
-  overall_evaluation: string;
-  suggestions: string[];
+export interface RealTimeQARequest {
+  question: string;
+  context?: string;
+  user_level?: string;
 }
 
-export interface SmartGradingResponse {
-  success: boolean;
-  data: GradingResult;
-  message: string;
+export interface TextToSpeechRequest {
+  text: string;
+  voice?: string;
 }
 
-export const smartGrading = async (
-  data: SmartGradingRequest
-): Promise<SmartGradingResponse> => {
-  return api.post("/api/v1/ai/smart-grading", data);
-};
+export interface AIStatus {
+  ai_available: boolean;
+  clients_count: number;
+  cache_enabled: boolean;
+  cache_size: number;
+}
 
-// 学习能力评估接口
-export interface AbilityAssessmentRequest {
-  study_time: number;
-  questions_completed: number;
+export interface LearningReport {
+  total_study_time: number;
+  total_questions: number;
   accuracy: number;
-  subjects: string[];
-  wrong_questions_distribution: Record<string, number>;
-}
-
-export interface AbilityAssessment {
-  knowledge_mastery: number;
-  problem_solving: number;
-  concentration: number;
-  knowledge_transfer: number;
-  learning_efficiency: number;
-  overall_level: string;
-  improvement_suggestions: string[];
-}
-
-export interface AbilityAssessmentResponse {
-  success: boolean;
-  data: AbilityAssessment;
-  message: string;
-}
-
-export const assessLearningAbility = async (
-  data: AbilityAssessmentRequest
-): Promise<AbilityAssessmentResponse> => {
-  return api.post("/api/v1/ai/ability-assessment", data);
-};
-
-// 学习风格分析接口
-export interface LearningStyleRequest {
-  time_distribution: Record<string, number>;
-  question_type_preference: Record<string, number>;
-  learning_mode: string;
-  review_frequency: number;
-  wrong_question_handling: string;
+  suggestions: string;
 }
 
 export interface LearningStyle {
@@ -231,93 +48,140 @@ export interface LearningStyle {
   study_methods: string[];
 }
 
-export interface LearningStyleResponse {
-  success: boolean;
-  data: LearningStyle;
-  message: string;
-}
-
-export const analyzeLearningStyle = async (
-  data: LearningStyleRequest
-): Promise<LearningStyleResponse> => {
-  return api.post("/api/v1/ai/learning-style", data);
-};
-
-// 学习动机激励接口
-export interface MotivationRequest {
-  learning_status: string;
-  learning_difficulties: string[];
-  learning_goals: string[];
-  learning_achievements: string[];
-  personal_characteristics: string[];
-}
-
-export interface MotivationPlan {
-  achievement_recognition: string[];
-  goal_setting: string[];
-  challenge_incentives: string[];
-  emotional_support: string[];
+export interface LearningMotivation {
   encouragement_message: string;
+  learning_tips: string[];
 }
 
-export interface MotivationResponse {
-  success: boolean;
-  data: MotivationPlan;
-  message: string;
+export interface GradingResult {
+  score: number;
+  accuracy_score: number;
+  logic_score: number;
+  expression_score: number;
+  creativity_score: number;
+  overall_accuracy: number;
+  detailed_feedback: {
+    strengths: string[];
+    weaknesses: string[];
+    specific_errors: string[];
+    improvement_suggestions: string[];
+  };
+  learning_insights: {
+    knowledge_gaps: string[];
+    skill_development: string[];
+    next_steps: string[];
+  };
+  encouragement: string;
+  difficulty_adjustment: string;
 }
 
-export const getMotivationPlan = async (
-  data: MotivationRequest
-): Promise<MotivationResponse> => {
-  return api.post("/api/v1/ai/motivation", data);
-};
-
-// 学习任务接口
-export interface LearningTask {
-  id: string;
-  title: string;
-  description: string;
-  task_type: string;
-  subject: string;
-  estimated_time: number;
-  status: 'pending' | 'in_progress' | 'completed';
-  scheduled_date: string;
-  created_at: string;
-  started_at?: string;
-  completed_at?: string;
+export interface QAResult {
+  answer: string;
+  explanation: string;
+  knowledge_points: string[];
+  learning_tips: string[];
+  related_topics: string[];
+  difficulty_level: string;
 }
 
-export interface LearningTasksResponse {
-  success: boolean;
-  data: LearningTask[];
-  message: string;
+export interface SpeechToTextResult {
+  text: string;
+  confidence: number;
+  language: string;
+  duration?: number;
+  error?: string;
 }
 
-export const getLearningTasks = async (): Promise<LearningTasksResponse> => {
-  return api.get("/api/v1/learning/tasks");
-};
+export interface TextToSpeechResult {
+  audio_data: string;
+  text: string;
+  voice: string;
+}
 
-export const updateTaskStatus = async (
-  taskId: string, 
-  status: 'pending' | 'in_progress' | 'completed'
-): Promise<any> => {
-  return api.put(`/api/v1/learning/tasks/${taskId}/status`, {
-    status,
-    updated_at: new Date().toISOString()
-  });
-};
-
-// 导出所有AI API方法
+// AI功能API
 export const aiApi = {
-  getRecommendedQuestions,
-  getStudyPlan,
-  getLearningPattern,
-  getDifficultyAnalysis,
-  generateQuestions,
-  smartGrading,
-  assessLearningAbility,
-  analyzeLearningStyle,
-  getMotivationPlan,
-  getLearningTasks,
-  updateTaskStatus
-} 
+  // 获取AI服务状态
+  getStatus(): Promise<AIStatus> {
+    return apiClient.get("/ai/ai-status");
+  },
+
+  // 生成题目
+  generateQuestions(request: QuestionGenerationRequest): Promise<any[]> {
+    return apiClient.post("/ai/generate-questions", request);
+  },
+
+  // 智能评分
+  smartGrading(request: SmartGradingRequest): Promise<GradingResult> {
+    return apiClient.post("/ai/smart-grading", request);
+  },
+
+  // 实时问答
+  realTimeQA(request: RealTimeQARequest): Promise<QAResult> {
+    return apiClient.post("/ai/real-time-qa", request);
+  },
+
+  // 语音转文字
+  speechToText(
+    audioFile: File,
+    language: string = "zh-CN"
+  ): Promise<SpeechToTextResult> {
+    const formData = new FormData();
+    formData.append("audio_file", audioFile);
+    formData.append("language", language);
+    return apiClient.post("/ai/speech-to-text", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
+
+  // 文字转语音
+  textToSpeech(request: TextToSpeechRequest): Promise<TextToSpeechResult> {
+    return apiClient.post("/ai/text-to-speech", request);
+  },
+
+  // 获取推荐题目
+  getRecommendations(subject?: string, count: number = 10): Promise<any[]> {
+    const params = new URLSearchParams();
+    if (subject) params.append("subject", subject);
+    params.append("count", count.toString());
+    return apiClient.get(`/ai/recommendations?${params.toString()}`);
+  },
+
+  // 生成学习报告
+  generateLearningReport(): Promise<LearningReport> {
+    return apiClient.get("/ai/learning-report");
+  },
+
+  // 分析学习风格
+  analyzeLearningStyle(): Promise<LearningStyle> {
+    return apiClient.get("/ai/learning-style");
+  },
+
+  // 获取学习激励
+  getLearningMotivation(): Promise<LearningMotivation> {
+    return apiClient.get("/ai/learning-motivation");
+  },
+
+  // 错题分析
+  analyzeWrongQuestion(
+    questionContent: string,
+    userAnswer: string,
+    correctAnswer: string,
+    subject: string
+  ): Promise<any> {
+    return apiClient.post("/ai/analyze-wrong-question", {
+      question_content: questionContent,
+      user_answer: userAnswer,
+      correct_answer: correctAnswer,
+      subject: subject,
+    });
+  },
+};
+
+export default aiApi;
+
+// 兼容性导出：推荐题目
+export function getRecommendedQuestions(subject?: string, count: number = 10) {
+  return aiApi.getRecommendations(subject, count);
+}

@@ -1,559 +1,400 @@
 <template>
   <nav class="navbar">
-    <div class="navbar-container">
-      <!-- Logo和品牌 -->
-      <div class="navbar-brand">
+    <div class="nav-container">
+      <div class="nav-brand">
         <router-link to="/" class="brand-link">
-          <div class="logo">
-            <svg viewBox="0 0 24 24" fill="currentColor" class="logo-icon">
-              <path
-                d="M12 2L2 7v10c0 5.55 3.84 9.739 9 11 5.16-1.261 9-5.45 9-11V7l-10-5z"
-              />
-              <path d="M10 17l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
-            </svg>
-          </div>
-          <span class="brand-text">AI智能教育</span>
+          <span class="brand-icon">🎓</span>
+          <span class="brand-text">AI智能教育平台</span>
         </router-link>
       </div>
 
-      <!-- 导航菜单 -->
-      <div class="navbar-menu" :class="{ active: mobileMenuOpen }">
-        <div class="nav-links">
-          <router-link to="/" class="nav-link" @click="closeMobileMenu">
-            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
-            <span>首页</span>
-          </router-link>
+      <div class="nav-menu" :class="{ active: isMenuOpen }">
+        <router-link to="/" class="nav-link">首页</router-link>
+        <router-link to="/question-bank" class="nav-link">题库</router-link>
+        <router-link to="/exam" class="nav-link">考试</router-link>
+        <router-link to="/ai" class="nav-link">AI学习</router-link>
+        <router-link to="/teachers" class="nav-link">教师</router-link>
+        <router-link to="/courses" class="nav-link">课程</router-link>
+        <router-link to="/community" class="nav-link">社区</router-link>
+      </div>
 
-          <router-link
-            to="/question-bank"
-            class="nav-link"
-            @click="closeMobileMenu"
-            v-if="isAuthenticated"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path
-                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
-              />
-            </svg>
-            <span>题库练习</span>
-          </router-link>
+      <div class="nav-auth">
+        <template v-if="isAuthenticated">
+          <div class="user-menu" @click="toggleUserMenu">
+            <span class="user-avatar">{{ userInitials }}</span>
+            <span class="user-name">{{ userName }}</span>
+            <span class="dropdown-arrow">▼</span>
 
-          <router-link
-            to="/ai-study"
-            class="nav-link"
-            @click="closeMobileMenu"
-            v-if="isAuthenticated"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
-              />
-            </svg>
-            <span>AI学习</span>
-          </router-link>
-
-          <router-link
-            to="/analytics"
-            class="nav-link"
-            @click="closeMobileMenu"
-            v-if="isAuthenticated"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
-              />
-            </svg>
-            <span>数据分析</span>
-          </router-link>
-
-          <router-link
-            to="/learning-plan"
-            class="nav-link"
-            @click="closeMobileMenu"
-            v-if="isAuthenticated"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path
-                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
-              />
-            </svg>
-            <span>学习计划</span>
-          </router-link>
-
-          <router-link
-            v-if="isTeacher && isAuthenticated"
-            to="/teacher-dashboard"
-            class="nav-link"
-            @click="closeMobileMenu"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-              <path
-                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-              />
-            </svg>
-            <span>教师中心</span>
-          </router-link>
-        </div>
-
-        <!-- 用户菜单 -->
-        <div class="user-menu">
-          <div v-if="isAuthenticated" class="user-profile">
-            <button class="profile-button" @click="toggleUserDropdown">
-              <div class="avatar">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                  />
-                </svg>
-              </div>
-              <span class="username">学员</span>
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="dropdown-icon"
-              >
-                <path d="M7 10l5 5 5-5z" />
-              </svg>
-            </button>
-
-            <div class="dropdown-menu" :class="{ show: userDropdownOpen }">
-              <a href="#" class="dropdown-item">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
-                  />
-                </svg>
-                我的成绩
-              </a>
-              <router-link to="/learning-plan" class="dropdown-item" @click="closeMobileMenu">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
-                  />
-                </svg>
-                学习计划
+            <div class="dropdown-menu" v-if="showUserMenu">
+              <router-link to="/member-center" class="dropdown-item">
+                <span class="icon">👤</span>
+                个人中心
               </router-link>
-              <a href="#" class="dropdown-item">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                  />
-                </svg>
-                学习进度
-              </a>
+              <router-link
+                v-if="isTeacher"
+                to="/teacher-dashboard"
+                class="dropdown-item"
+              >
+                <span class="icon">📊</span>
+                教师面板
+              </router-link>
               <div class="dropdown-divider"></div>
-              <button class="dropdown-item logout-btn" @click="logout">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5z"
-                  />
-                </svg>
+              <button @click="logout" class="dropdown-item logout-btn">
+                <span class="icon">🚪</span>
                 退出登录
               </button>
             </div>
           </div>
-          
-          <!-- 未登录状态显示登录/注册链接 -->
-          <div v-else class="auth-links">
-            <router-link to="/login" class="auth-link login-link">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-                <path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5z"/>
-              </svg>
-              登录
-            </router-link>
-            <router-link to="/register" class="auth-link register-link">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-                <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-              </svg>
-              注册
-            </router-link>
-          </div>
-        </div>
+        </template>
+
+        <template v-else>
+          <router-link to="/login" class="auth-btn login-btn">登录</router-link>
+          <router-link to="/register" class="auth-btn register-btn"
+            >注册</router-link
+          >
+        </template>
       </div>
 
-      <!-- 移动端菜单按钮 -->
-      <button class="mobile-menu-btn" @click="toggleMobileMenu">
-        <span class="hamburger"></span>
-        <span class="hamburger"></span>
-        <span class="hamburger"></span>
-      </button>
+      <div class="nav-toggle" @click="toggleMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </nav>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, ref } from "vue";
-import { useAuthStore } from "../stores/auth";
+<script setup>
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
-export default defineComponent({
-  name: "NavBar",
-  setup() {
-    const authStore = useAuthStore();
-    const router = useRouter();
-    const mobileMenuOpen = ref(false);
-    const userDropdownOpen = ref(false);
+const router = useRouter();
+const authStore = useAuthStore();
 
-    const isAuthenticated = computed(() => authStore.isAuthenticated);
-    const user = computed(() => authStore.user);
-    const isTeacher = computed(() => user.value?.role === "teacher");
+// 响应式数据
+const isMenuOpen = ref(false);
+const showUserMenu = ref(false);
 
-    const logout = () => {
-      authStore.logoutUser();
-      router.push("/login");
-      userDropdownOpen.value = false;
-      mobileMenuOpen.value = false;
-    };
+// 计算属性
+const isAuthenticated = computed(() => authStore.isAuthenticated);
+const userName = computed(() => authStore.user?.username || "用户");
+const userInitials = computed(() => {
+  const name = authStore.user?.username || "";
+  return name.substring(0, 2).toUpperCase();
+});
+const isTeacher = computed(
+  () => authStore.user?.role === "teacher" || authStore.user?.role === "admin"
+);
 
-    const toggleMobileMenu = () => {
-      mobileMenuOpen.value = !mobileMenuOpen.value;
-    };
+// 方法
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
 
-    const closeMobileMenu = () => {
-      mobileMenuOpen.value = false;
-    };
+const toggleUserMenu = () => {
+  showUserMenu.value = !showUserMenu.value;
+};
 
-    const toggleUserDropdown = () => {
-      userDropdownOpen.value = !userDropdownOpen.value;
-    };
+const logout = async () => {
+  try {
+    await authStore.logout();
+    showUserMenu.value = false;
+    router.push("/login");
+  } catch (error) {
+    console.error("退出登录失败:", error);
+  }
+};
 
-    return {
-      isAuthenticated,
-      mobileMenuOpen,
-      userDropdownOpen,
-      logout,
-      toggleMobileMenu,
-      closeMobileMenu,
-      toggleUserDropdown,
-      user,
-      isTeacher,
-    };
-  },
+// 点击外部关闭菜单
+const handleClickOutside = (event) => {
+  const userMenu = document.querySelector(".user-menu");
+  if (userMenu && !userMenu.contains(event.target)) {
+    showUserMenu.value = false;
+  }
+};
+
+// 生命周期
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleClickOutside);
 });
 </script>
 
 <style scoped>
 .navbar {
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem 0;
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-container {
-  max-width: 1400px;
+.nav-container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding: 0 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
 }
 
-/* Logo和品牌 */
-.navbar-brand {
-  flex-shrink: 0;
+.nav-brand {
+  display: flex;
+  align-items: center;
 }
 
 .brand-link {
   display: flex;
   align-items: center;
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: 1.25rem;
-}
-
-.logo {
-  margin-right: var(--spacing-sm);
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-md);
+  text-decoration: none;
   color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
-.logo-icon {
-  width: 20px;
-  height: 20px;
+.brand-icon {
+  font-size: 2rem;
+  margin-right: 0.5rem;
 }
 
 .brand-text {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 1.2rem;
 }
 
-/* 导航菜单 */
-.navbar-menu {
+.nav-menu {
   display: flex;
   align-items: center;
-  flex: 1;
-  justify-content: space-between;
-  margin-left: var(--spacing-xxl);
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
+  gap: 2rem;
 }
 
 .nav-link {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-sm) var(--spacing-md);
-  color: var(--text-secondary);
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
+  color: white;
+  text-decoration: none;
   font-weight: 500;
-}
-
-.nav-link:hover {
-  color: var(--primary-color);
-  background: rgba(74, 144, 226, 0.1);
-}
-
-.nav-link.router-link-active {
-  color: var(--primary-color);
-  background: rgba(74, 144, 226, 0.1);
-}
-
-.nav-icon {
-  width: 18px;
-  height: 18px;
-  margin-right: var(--spacing-xs);
-}
-
-/* 用户菜单 */
-.user-menu {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
   position: relative;
 }
 
-/* 认证链接样式 */
-.auth-links {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
-.auth-link {
+.nav-link.router-link-active {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-auth {
   display: flex;
   align-items: center;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  transition: all 0.2s ease;
+  gap: 1rem;
+}
+
+.auth-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
   text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-.login-link {
-  color: var(--text-secondary);
-}
-
-.login-link:hover {
-  color: var(--primary-color);
-  background: rgba(74, 144, 226, 0.1);
-}
-
-.register-link {
-  background: var(--primary-color);
+.login-btn {
   color: white;
+  border: 2px solid white;
 }
 
-.register-link:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+.login-btn:hover {
+  background: white;
+  color: #667eea;
 }
 
-.profile-button {
+.register-btn {
+  background: white;
+  color: #667eea;
+}
+
+.register-btn:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+}
+
+.user-menu {
+  position: relative;
   display: flex;
   align-items: center;
-  padding: var(--spacing-sm);
-  background: none;
-  border: none;
-  color: var(--text-primary);
+  gap: 0.5rem;
   cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: background 0.2s ease;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-.profile-button:hover {
-  background: var(--bg-accent);
+.user-menu:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.avatar {
+.user-avatar {
   width: 32px;
   height: 32px;
-  background: var(--gradient-primary);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: bold;
   color: white;
-  margin-right: var(--spacing-sm);
+  font-size: 0.9rem;
 }
 
-.avatar svg {
-  width: 18px;
-  height: 18px;
-}
-
-.username {
-  margin-right: var(--spacing-xs);
+.user-name {
+  color: white;
   font-weight: 500;
 }
 
-.dropdown-icon {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s ease;
+.dropdown-arrow {
+  color: white;
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
 }
 
-.profile-button:hover .dropdown-icon {
+.user-menu:hover .dropdown-arrow {
   transform: rotate(180deg);
 }
 
-/* 下拉菜单 */
 .dropdown-menu {
   position: absolute;
   top: 100%;
   right: 0;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   min-width: 200px;
-  padding: var(--spacing-sm) 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.2s ease;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
   z-index: 1000;
-}
-
-.dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
 }
 
 .dropdown-item {
   display: flex;
   align-items: center;
-  padding: var(--spacing-sm) var(--spacing-md);
-  color: var(--text-primary);
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: #333;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: background 0.3s ease;
   border: none;
   background: none;
   width: 100%;
   text-align: left;
   cursor: pointer;
+  font-size: 0.9rem;
 }
 
 .dropdown-item:hover {
-  background: var(--bg-accent);
+  background: #f8f9fa;
 }
 
-.dropdown-item svg {
-  width: 16px;
-  height: 16px;
-  margin-right: var(--spacing-sm);
-  color: var(--text-secondary);
+.dropdown-item .icon {
+  font-size: 1rem;
 }
 
 .dropdown-divider {
   height: 1px;
-  background: var(--border-color);
-  margin: var(--spacing-sm) 0;
+  background: #e9ecef;
+  margin: 0.5rem 0;
 }
 
 .logout-btn {
-  color: var(--danger-color);
+  color: #dc3545;
 }
 
 .logout-btn:hover {
-  background: rgba(231, 76, 60, 0.1);
+  background: #f8d7da;
 }
 
-/* 移动端菜单按钮 */
-.mobile-menu-btn {
+.nav-toggle {
   display: none;
   flex-direction: column;
-  background: none;
-  border: none;
   cursor: pointer;
-  padding: var(--spacing-xs);
+  gap: 4px;
 }
 
-.hamburger {
-  width: 20px;
-  height: 2px;
-  background: var(--text-primary);
-  margin: 2px 0;
-  transition: 0.3s;
+.nav-toggle span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .mobile-menu-btn {
+  .nav-menu {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .nav-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-toggle {
     display: flex;
   }
 
-  .navbar-menu {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    right: 0;
-    background: var(--bg-primary);
-    border-top: 1px solid var(--border-color);
-    flex-direction: column;
-    padding: var(--spacing-lg);
-    transform: translateY(-100vh);
-    transition: transform 0.3s ease;
-    margin-left: 0;
+  .nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
   }
 
-  .navbar-menu.active {
-    transform: translateY(0);
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0;
   }
 
-  .nav-links {
-    flex-direction: column;
-    width: 100%;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
+  .nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
   }
 
-  .nav-link {
-    width: 100%;
-    justify-content: flex-start;
-    padding: var(--spacing-md);
+  .nav-container {
+    padding: 0 1rem;
   }
 
-  .user-menu {
-    width: 100%;
+  .brand-text {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-auth {
+    gap: 0.5rem;
   }
 
-  .dropdown-menu {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    box-shadow: none;
-    border: none;
-    border-top: 1px solid var(--border-color);
-    margin-top: var(--spacing-md);
-    padding-top: var(--spacing-md);
+  .auth-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .user-name {
+    display: none;
   }
 }
 </style>
