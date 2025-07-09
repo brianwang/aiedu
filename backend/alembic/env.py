@@ -1,3 +1,7 @@
+from configparser import ConfigParser
+from config import settings
+from database import Base
+from app.models import *
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -10,11 +14,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from app.models.user import User
-from app.models.question import Question
-from database import Base
-from config import settings
-from configparser import ConfigParser
+# 导入所有模型以确保SQLAlchemy关系正确配置
 
 config = ConfigParser()
 
