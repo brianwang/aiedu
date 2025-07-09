@@ -1,2 +1,53 @@
 .env
+# FastAPI 项目常用忽略文件
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.so
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# 数据库
+*.db
+*.sqlite3
+instance/
+db.sqlite3
+
+# 日志文件
 *.log
+
+# 配置文件
+.env
+.env.*
+
+# Alembic 迁移
+alembic/versions/
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# 单元测试缓存
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# 本地开发文件
+.DS_Store
+*.swp
+# End of Selection

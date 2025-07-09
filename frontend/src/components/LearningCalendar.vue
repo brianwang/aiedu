@@ -169,7 +169,7 @@ const todayTasks = computed(() => {
 const loadTasks = async () => {
   try {
     // 首先尝试从AI学习计划获取任务
-    const aiResponse = await api.get('/ai/study-plan')
+    const aiResponse = await api.get('/api/v1/ai/study-plan')
     if (aiResponse.data && aiResponse.data.tasks) {
       tasks.value = aiResponse.data.tasks.map(task => ({
         ...task,

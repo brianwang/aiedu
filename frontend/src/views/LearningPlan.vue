@@ -325,7 +325,7 @@ const loadPlans = async () => {
   try {
     // 加载学习计划
     const plansResponse = await api.get('/api/v1/learning/plans')
-    plans.value = plansResponse
+    plans.value = plansResponse || []
 
     // 加载学习统计
     const statsResponse = await api.get('/api/v1/learning/statistics')
@@ -334,8 +334,14 @@ const loadPlans = async () => {
     // 加载任务（如果有计划）
     if (plans.value.length > 0) {
       for (const plan of plans.value) {
-        const tasksResponse = await api.get(`/api/v1/learning/plans/${plan.id}/tasks`)
-        tasks.value.push(...tasksResponse)
+        try {
+          const tasksResponse = await api.get(`/api/v1/learning/plans/${plan.id}/tasks`)
+          if (Array.isArray(tasksResponse)) {
+            tasks.value.push(...tasksResponse)
+          }
+        } catch (error) {
+          console.warn(`获取计划 ${plan.id} 的任务失败:`, error)
+        }
       }
     }
   } catch (error) {

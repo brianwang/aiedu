@@ -18,6 +18,7 @@ import Teachers from '@/views/Teachers.vue'
 import AITest from '@/views/AITest.vue'
 import Analytics from '@/views/Analytics.vue'
 import TestAuth from '@/views/TestAuth.vue'
+import LearningPlan from '@/views/LearningPlan.vue'
 
 // 扩展路由元数据类型
 declare module 'vue-router' {
@@ -138,6 +139,12 @@ const router = createRouter({
       name: 'test-auth',
       component: TestAuth,
       meta: { guestOnly: true }
+    },
+    {
+      path: '/learning-plan',
+      name: 'LearningPlan',
+      component: LearningPlan,
+      meta: { requiresAuth: true }
     }
   ]
 })
