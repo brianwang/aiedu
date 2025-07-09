@@ -1718,3 +1718,208 @@ WHERE learning_plans.user_id = ?]
 2025-07-08 18:52:52,952 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
 2025-07-08 18:53:25,964 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
 2025-07-08 19:11:51,764 - __main__ - INFO - AI路由加载成功
+2025-07-09 09:08:02,774 - __main__ - INFO - AI路由加载成功
+2025-07-09 09:08:06,745 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 09:08:07,159 - main - INFO - AI路由加载成功
+2025-07-09 09:08:07,235 - main - INFO - 应用启动中...
+2025-07-09 09:08:07,257 - main - INFO - 数据库初始化完成
+2025-07-09 09:19:31,607 - main - INFO - 应用关闭中...
+2025-07-09 09:19:33,633 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 09:19:33,650 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 09:19:33,735 - main - INFO - AI路由加载成功
+2025-07-09 09:19:33,736 - main - INFO - 应用启动中...
+2025-07-09 09:19:33,738 - main - INFO - 数据库初始化完成
+2025-07-09 09:19:43,869 - main - INFO - 应用关闭中...
+2025-07-09 09:19:45,461 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 09:19:45,477 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 09:19:45,528 - main - INFO - AI路由加载成功
+2025-07-09 09:19:45,529 - main - INFO - 应用启动中...
+2025-07-09 09:19:45,532 - main - INFO - 数据库初始化完成
+2025-07-09 09:19:51,494 - main - INFO - 应用关闭中...
+2025-07-09 09:19:53,356 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 09:19:53,374 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 09:19:53,460 - main - INFO - AI路由加载成功
+2025-07-09 09:19:53,462 - main - INFO - 应用启动中...
+2025-07-09 09:19:53,465 - main - INFO - 数据库初始化完成
+2025-07-09 09:20:01,869 - main - INFO - 应用关闭中...
+2025-07-09 09:20:03,422 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 09:20:03,438 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 09:20:03,488 - main - INFO - AI路由加载成功
+2025-07-09 09:20:03,490 - main - INFO - 应用启动中...
+2025-07-09 09:20:03,492 - main - INFO - 数据库初始化完成
+2025-07-09 09:20:45,078 - main - INFO - 应用关闭中...
+2025-07-09 09:20:46,762 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 09:20:46,782 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 09:20:46,858 - main - INFO - AI路由加载成功
+2025-07-09 09:20:46,859 - main - INFO - 应用启动中...
+2025-07-09 09:20:46,861 - main - INFO - 数据库初始化完成
+2025-07-09 09:22:32,141 - main - INFO - 应用关闭中...
+2025-07-09 09:22:35,774 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 09:22:35,794 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 09:22:35,951 - main - INFO - AI路由加载成功
+2025-07-09 09:22:35,982 - main - INFO - 应用启动中...
+2025-07-09 09:22:35,992 - main - INFO - 数据库初始化完成
+2025-07-09 10:41:24,410 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:41:24,433 - __main__ - INFO - AI路由加载成功
+2025-07-09 10:41:26,128 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:41:26,148 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:41:26,224 - main - INFO - AI路由加载成功
+2025-07-09 10:41:26,225 - main - INFO - 应用启动中...
+2025-07-09 10:41:26,236 - main - INFO - 数据库初始化完成
+2025-07-09 10:48:06,105 - main - INFO - 应用关闭中...
+2025-07-09 10:48:06,365 - main - INFO - 应用关闭中...
+2025-07-09 10:48:11,793 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:48:11,794 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:48:11,819 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:48:11,825 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:48:12,063 - main - INFO - AI路由加载成功
+2025-07-09 10:48:12,066 - main - INFO - AI路由加载成功
+2025-07-09 10:48:12,077 - main - INFO - 应用启动中...
+2025-07-09 10:48:12,079 - main - INFO - 应用启动中...
+2025-07-09 10:48:12,096 - main - INFO - 数据库初始化完成
+2025-07-09 10:48:12,099 - main - INFO - 数据库初始化完成
+2025-07-09 10:49:21,299 - main - INFO - 应用关闭中...
+2025-07-09 10:49:21,373 - main - INFO - 应用关闭中...
+2025-07-09 10:49:25,630 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:49:25,640 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:49:25,658 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:49:25,663 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:49:25,838 - main - INFO - AI路由加载成功
+2025-07-09 10:49:25,841 - main - INFO - AI路由加载成功
+2025-07-09 10:49:25,892 - main - INFO - 应用启动中...
+2025-07-09 10:49:25,893 - main - INFO - 应用启动中...
+2025-07-09 10:49:25,902 - main - INFO - 数据库初始化完成
+2025-07-09 10:49:25,912 - main - INFO - 数据库初始化完成
+2025-07-09 10:50:56,972 - main - INFO - 应用关闭中...
+2025-07-09 10:50:57,082 - main - INFO - 应用关闭中...
+2025-07-09 10:51:00,031 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:51:00,045 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:51:00,073 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:51:00,085 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:51:00,256 - main - INFO - AI路由加载成功
+2025-07-09 10:51:00,257 - main - INFO - AI路由加载成功
+2025-07-09 10:51:00,394 - main - INFO - 应用启动中...
+2025-07-09 10:51:00,396 - main - INFO - 应用启动中...
+2025-07-09 10:51:00,417 - main - INFO - 数据库初始化完成
+2025-07-09 10:51:00,417 - main - INFO - 数据库初始化完成
+2025-07-09 10:52:40,358 - main - INFO - 应用关闭中...
+2025-07-09 10:52:41,052 - main - INFO - 应用关闭中...
+2025-07-09 10:52:45,779 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:52:45,800 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:52:45,803 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 10:52:45,827 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 10:52:45,875 - main - INFO - AI路由加载成功
+2025-07-09 10:52:45,917 - main - INFO - 应用启动中...
+2025-07-09 10:52:45,927 - main - INFO - 数据库初始化完成
+2025-07-09 10:52:45,949 - main - INFO - AI路由加载成功
+2025-07-09 10:52:45,994 - main - INFO - 应用启动中...
+2025-07-09 10:52:46,003 - main - INFO - 数据库初始化完成
+2025-07-09 11:24:18,370 - main - INFO - 应用关闭中...
+2025-07-09 11:24:18,441 - main - INFO - 应用关闭中...
+2025-07-09 11:24:22,921 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 11:24:22,939 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 11:24:22,946 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 11:24:22,966 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 11:24:23,091 - main - INFO - AI路由加载成功
+2025-07-09 11:24:23,093 - main - INFO - 应用启动中...
+2025-07-09 11:24:23,093 - main - INFO - AI路由加载成功
+2025-07-09 11:24:23,095 - main - INFO - 应用启动中...
+2025-07-09 11:24:23,103 - main - INFO - 数据库初始化完成
+2025-07-09 11:24:23,103 - main - INFO - 数据库初始化完成
+2025-07-09 11:28:04,994 - main - INFO - 应用关闭中...
+2025-07-09 11:28:05,031 - main - INFO - 应用关闭中...
+2025-07-09 11:28:08,571 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 11:28:08,575 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 11:28:08,605 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 11:28:08,613 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 11:28:08,727 - main - INFO - AI路由加载成功
+2025-07-09 11:28:08,729 - main - INFO - 应用启动中...
+2025-07-09 11:28:08,729 - main - INFO - 应用启动中...
+2025-07-09 11:28:08,738 - main - INFO - 数据库初始化完成
+2025-07-09 11:28:08,740 - main - INFO - 数据库初始化完成
+2025-07-09 11:59:41,310 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 11:59:41,332 - __main__ - INFO - AI路由加载成功
+2025-07-09 11:59:43,239 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 11:59:43,262 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 11:59:43,363 - main - INFO - AI路由加载成功
+2025-07-09 11:59:43,365 - main - INFO - 应用启动中...
+2025-07-09 11:59:43,375 - main - INFO - 数据库初始化完成
+2025-07-09 12:02:03,381 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:02:03,402 - __main__ - INFO - AI路由加载成功
+2025-07-09 12:02:05,307 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:02:05,326 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:02:05,397 - main - INFO - AI路由加载成功
+2025-07-09 12:02:05,398 - main - INFO - 应用启动中...
+2025-07-09 12:02:05,401 - main - INFO - 数据库初始化完成
+2025-07-09 12:06:31,788 - main - INFO - 应用关闭中...
+2025-07-09 12:06:31,828 - main - INFO - 应用关闭中...
+2025-07-09 12:06:34,772 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:06:34,774 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:06:34,805 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:06:34,806 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:06:34,929 - main - INFO - AI路由加载成功
+2025-07-09 12:06:34,931 - main - INFO - 应用启动中...
+2025-07-09 12:06:34,935 - main - INFO - 数据库初始化完成
+2025-07-09 12:06:34,936 - main - INFO - AI路由加载成功
+2025-07-09 12:06:34,937 - main - INFO - 应用启动中...
+2025-07-09 12:06:34,941 - main - INFO - 数据库初始化完成
+2025-07-09 12:06:40,432 - main - INFO - 应用关闭中...
+2025-07-09 12:06:40,542 - main - INFO - 应用关闭中...
+2025-07-09 12:06:42,790 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:06:42,830 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:06:42,909 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:06:42,924 - main - INFO - AI路由加载成功
+2025-07-09 12:06:42,926 - main - INFO - 应用启动中...
+2025-07-09 12:06:42,929 - main - INFO - 数据库初始化完成
+2025-07-09 12:06:42,935 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:06:43,056 - main - INFO - AI路由加载成功
+2025-07-09 12:06:43,058 - main - INFO - 应用启动中...
+2025-07-09 12:06:43,062 - main - INFO - 数据库初始化完成
+2025-07-09 12:06:48,300 - main - INFO - 应用关闭中...
+2025-07-09 12:06:48,443 - main - INFO - 应用关闭中...
+2025-07-09 12:06:50,646 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:06:50,677 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:06:50,758 - main - INFO - AI路由加载成功
+2025-07-09 12:06:50,759 - main - INFO - 应用启动中...
+2025-07-09 12:06:50,763 - main - INFO - 数据库初始化完成
+2025-07-09 12:06:50,768 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:06:50,788 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:06:50,892 - main - INFO - AI路由加载成功
+2025-07-09 12:06:50,894 - main - INFO - 应用启动中...
+2025-07-09 12:06:50,900 - main - INFO - 数据库初始化完成
+2025-07-09 12:06:54,512 - main - INFO - 应用关闭中...
+2025-07-09 12:06:54,607 - main - INFO - 应用关闭中...
+2025-07-09 12:06:56,788 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:06:56,813 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:06:56,878 - app.services.ai_service - INFO - DeepSeek AI客户端初始化成功
+2025-07-09 12:06:56,899 - __mp_main__ - INFO - AI路由加载成功
+2025-07-09 12:06:56,899 - main - INFO - AI路由加载成功
+2025-07-09 12:06:56,901 - main - INFO - 应用启动中...
+2025-07-09 12:06:56,904 - main - INFO - 数据库初始化完成
+2025-07-09 12:06:56,993 - main - INFO - AI路由加载成功
+2025-07-09 12:06:56,996 - main - INFO - 应用启动中...
+2025-07-09 12:06:57,002 - main - INFO - 数据库初始化完成
+2025-07-09 12:07:51,659 - app.api.auth - WARNING - Login failed for username: admin2
+2025-07-09 12:07:51,660 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-09 12:07:53,813 - app.api.auth - WARNING - Login failed for username: admin2
+2025-07-09 12:07:53,814 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-09 12:08:00,433 - app.api.auth - WARNING - Login failed for username: admin2
+2025-07-09 12:08:00,494 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+2025-07-09 12:08:13,021 - app.api.auth - WARNING - Login failed for username: admin2
+2025-07-09 12:08:13,026 - app.api.auth - ERROR - Login error: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}
+Traceback (most recent call last):
+  File "C:\Users\brian\projects\aiedu\backend\app\api\auth.py", line 54, in simple_login
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 401: {'error': 'Authentication failed', 'message': 'Invalid username or password'}

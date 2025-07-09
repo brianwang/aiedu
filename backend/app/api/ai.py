@@ -13,6 +13,18 @@ router = APIRouter(prefix="/ai", tags=["AI智能服务"])
 
 ai_service = AIService()
 
+# 权限检查函数
+def require_role(allowed_roles: List[str]):
+    """检查用户角色权限"""
+    def role_checker(current_user: User = Depends(get_current_user)):
+        if current_user.role not in allowed_roles:
+            raise HTTPException(
+                status_code=403, 
+                detail=f"权限不足，需要角色: {', '.join(allowed_roles)}"
+            )
+        return current_user
+    return role_checker
+
 # 请求模型
 class SmartGradingRequest(BaseModel):
     question_content: str
@@ -49,10 +61,10 @@ class LearningPathRequest(BaseModel):
 async def get_recommended_questions(
     subject: Optional[str] = None,
     count: int = 10,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """获取智能推荐的题目"""
+    """获取智能推荐的题目 - 所有用户可用"""
     try:
         questions = await ai_service.recommend_questions(
             db=db,
@@ -82,10 +94,10 @@ async def get_recommended_questions(
 
 @router.get("/study-plan")
 async def get_study_plan(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """获取个性化学习计划"""
+    """获取个性化学习计划 - 所有用户可用"""
     try:
         study_plan = await ai_service.create_study_plan(db=db, user_id=current_user.id)
 
@@ -103,10 +115,10 @@ async def get_study_plan(
 
 @router.get("/learning-pattern")
 async def get_learning_pattern(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """获取学习模式分析"""
+    """获取学习模式分析 - 所有用户可用"""
     try:
         pattern = await ai_service.analyze_learning_pattern(db=db, user_id=current_user.id)
 
@@ -124,12 +136,9 @@ async def generate_questions(
     subject: str,
     difficulty: int,
     count: int = 10,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(require_role(["teacher", "admin"]))
 ):
-    """AI生成题目（仅教师和管理员可用）"""
-    if current_user.role not in ["teacher", "admin"]:
-        raise HTTPException(status_code=403, detail="权限不足")
-
+    """AI生成题目 - 仅教师和管理员可用"""
     try:
         questions = await ai_service.generate_questions(
             subject=subject,
@@ -148,10 +157,10 @@ async def generate_questions(
 
 @router.get("/difficulty-analysis")
 async def get_difficulty_analysis(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """获取难度分析建议"""
+    """获取难度分析建议 - 所有用户可用"""
     try:
         # 获取用户的学习数据
         from app.models.user import StudySession, WrongQuestion
@@ -198,22 +207,17 @@ async def get_difficulty_analysis(
             "message": "难度分析完成"
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"分析失败: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"难度分析失败: {str(e)}")
 
 
 @router.post("/smart-grading")
 async def smart_grading(
     request: SmartGradingRequest,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(require_role(["teacher", "admin"]))
 ):
-    """智能评分（仅教师和管理员可用）"""
-    if current_user.role not in ["teacher", "admin"]:
-        raise HTTPException(status_code=403, detail="权限不足")
-
+    """智能评分 - 仅教师和管理员可用"""
     try:
-        # 这里可以集成OpenAI API进行智能评分
-        # 目前返回模拟评分结果
-        grading_result = await ai_service.smart_grading(
+        result = await ai_service.smart_grading(
             question_content=request.question_content,
             standard_answer=request.standard_answer,
             student_answer=request.student_answer,
@@ -223,7 +227,7 @@ async def smart_grading(
 
         return {
             "success": True,
-            "data": grading_result,
+            "data": result,
             "message": "智能评分完成"
         }
     except Exception as e:
@@ -233,11 +237,11 @@ async def smart_grading(
 @router.post("/ability-assessment")
 async def assess_learning_ability(
     request: AbilityAssessmentRequest,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(require_role(["student", "teacher", "admin"]))
 ):
-    """学习能力评估"""
+    """学习能力评估 - 所有用户可用"""
     try:
-        assessment_result = await ai_service.assess_learning_ability(
+        result = await ai_service.assess_learning_ability(
             study_time=request.study_time,
             questions_completed=request.questions_completed,
             accuracy=request.accuracy,
@@ -247,21 +251,21 @@ async def assess_learning_ability(
 
         return {
             "success": True,
-            "data": assessment_result,
-            "message": "能力评估完成"
+            "data": result,
+            "message": "学习能力评估完成"
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"能力评估失败: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"学习能力评估失败: {str(e)}")
 
 
 @router.post("/learning-style")
 async def analyze_learning_style(
     request: LearningStyleRequest,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(require_role(["student", "teacher", "admin"]))
 ):
-    """学习风格分析"""
+    """学习风格分析 - 所有用户可用"""
     try:
-        style_result = await ai_service.analyze_learning_style(
+        result = await ai_service.analyze_learning_style(
             time_distribution=request.time_distribution,
             question_type_preference=request.question_type_preference,
             learning_mode=request.learning_mode,
@@ -271,7 +275,7 @@ async def analyze_learning_style(
 
         return {
             "success": True,
-            "data": style_result,
+            "data": result,
             "message": "学习风格分析完成"
         }
     except Exception as e:
@@ -281,11 +285,11 @@ async def analyze_learning_style(
 @router.post("/motivation")
 async def get_motivation_plan(
     request: MotivationRequest,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(require_role(["student", "teacher", "admin"]))
 ):
-    """获取学习动机激励方案"""
+    """获取学习动机激励方案 - 所有用户可用"""
     try:
-        motivation_plan = await ai_service.get_motivation_plan(
+        result = await ai_service.get_motivation_plan(
             learning_status=request.learning_status,
             learning_difficulties=request.learning_difficulties,
             learning_goals=request.learning_goals,
@@ -295,7 +299,7 @@ async def get_motivation_plan(
 
         return {
             "success": True,
-            "data": motivation_plan,
+            "data": result,
             "message": "激励方案生成完成"
         }
     except Exception as e:
@@ -304,72 +308,73 @@ async def get_motivation_plan(
 
 @router.get("/user-ability-assessment")
 async def get_user_ability_assessment(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """获取用户的能力评估（基于学习数据）"""
+    """获取用户学习能力评估 - 所有用户可用"""
     try:
-        # 获取用户的学习数据
+        # 获取用户学习数据
         from app.models.user import StudySession, WrongQuestion
-        from app.models.question import Question, QuestionCategory
 
-        # 获取学习会话数据
         study_sessions = db.query(StudySession).filter(
             StudySession.user_id == current_user.id
         ).all()
 
-        # 获取错题数据
-        wrong_questions = db.query(WrongQuestion).filter(
-            WrongQuestion.user_id == current_user.id
-        ).join(Question).join(QuestionCategory).all()
+        if not study_sessions:
+            raise HTTPException(status_code=404, detail="暂无学习数据，无法进行评估")
 
-        # 计算基础数据
+        # 计算学习统计数据
         total_study_time = sum(session.duration_minutes for session in study_sessions)
         total_questions = sum(session.questions_answered for session in study_sessions)
         total_correct = sum(session.correct_answers for session in study_sessions)
         accuracy = (total_correct / total_questions * 100) if total_questions > 0 else 0
 
-        # 分析学科分布
-        subjects = list(set(session.subject for session in study_sessions if session.subject))
-        
-        # 分析错题分布
-        wrong_questions_distribution = {}
-        for wq in wrong_questions:
-            subject = wq.question.category.name if wq.question.category else "未知"
-            wrong_questions_distribution[subject] = wrong_questions_distribution.get(subject, 0) + 1
+        # 获取错题分布
+        wrong_questions = db.query(WrongQuestion).filter(
+            WrongQuestion.user_id == current_user.id
+        ).all()
 
-        # 调用能力评估
-        assessment_result = await ai_service.assess_learning_ability(
+        # 按学科统计错题
+        subject_errors = {}
+        for wq in wrong_questions:
+            if hasattr(wq, 'question') and wq.question and wq.question.category:
+                subject = wq.question.category.name
+                subject_errors[subject] = subject_errors.get(subject, 0) + 1
+
+        # 调用AI服务进行评估
+        result = await ai_service.assess_learning_ability(
             study_time=total_study_time,
             questions_completed=total_questions,
             accuracy=accuracy,
-            subjects=subjects,
-            wrong_questions_distribution=wrong_questions_distribution
+            subjects=list(subject_errors.keys()) if subject_errors else ["通用"],
+            wrong_questions_distribution=subject_errors
         )
 
         return {
             "success": True,
-            "data": assessment_result,
-            "message": "能力评估完成"
+            "data": result,
+            "message": "学习能力评估完成"
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"能力评估失败: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"学习能力评估失败: {str(e)}")
 
 
 @router.get("/user-learning-style")
 async def get_user_learning_style(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """获取用户的学习风格分析（基于学习数据）"""
+    """获取用户学习风格 - 所有用户可用"""
     try:
-        # 获取用户的学习数据
-        from app.models.user import StudySession, WrongQuestion
+        # 获取用户学习数据
+        from app.models.user import StudySession
 
-        # 获取学习会话数据
         study_sessions = db.query(StudySession).filter(
             StudySession.user_id == current_user.id
         ).all()
+
+        if not study_sessions:
+            raise HTTPException(status_code=404, detail="暂无学习数据，无法分析学习风格")
 
         # 分析时间分布
         time_distribution = {}
@@ -377,38 +382,26 @@ async def get_user_learning_style(
             hour = session.start_time.hour
             time_distribution[str(hour)] = time_distribution.get(str(hour), 0) + session.duration_minutes
 
-        # 分析题目类型偏好（这里简化处理）
+        # 分析题目类型偏好（简化版本）
         question_type_preference = {
-            "single_choice": 40,
-            "multiple_choice": 30,
-            "fill_blank": 20,
-            "short_answer": 10
+            "single_choice": 0,
+            "multiple_choice": 0,
+            "fill_blank": 0,
+            "short_answer": 0
         }
 
-        # 分析学习模式
-        learning_mode = "continuous" if len(study_sessions) > 10 else "distributed"
-        
-        # 分析复习频率
-        review_frequency = len(study_sessions) // 7 if len(study_sessions) > 0 else 0
-        
-        # 分析错题处理方式
-        wrong_questions = db.query(WrongQuestion).filter(
-            WrongQuestion.user_id == current_user.id
-        ).all()
-        wrong_question_handling = "review_frequently" if len(wrong_questions) > 0 else "ignore"
-
-        # 调用学习风格分析
-        style_result = await ai_service.analyze_learning_style(
+        # 调用AI服务进行分析
+        result = await ai_service.analyze_learning_style(
             time_distribution=time_distribution,
             question_type_preference=question_type_preference,
-            learning_mode=learning_mode,
-            review_frequency=review_frequency,
-            wrong_question_handling=wrong_question_handling
+            learning_mode="continuous",
+            review_frequency=3,
+            wrong_question_handling="review"
         )
 
         return {
             "success": True,
-            "data": style_result,
+            "data": result,
             "message": "学习风格分析完成"
         }
     except Exception as e:
@@ -418,24 +411,21 @@ async def get_user_learning_style(
 @router.post("/learning-path")
 async def recommend_learning_path(
     request: LearningPathRequest,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """推荐个性化学习路径"""
+    """推荐学习路径 - 所有用户可用"""
     try:
-        learning_path = await ai_service.recommend_learning_path(
+        result = await ai_service.recommend_learning_path(
             db=db,
             user_id=current_user.id,
             target_skill=request.target_skill
         )
 
-        if not learning_path:
-            raise HTTPException(status_code=404, detail="无法生成学习路径")
-
         return {
             "success": True,
-            "data": learning_path,
-            "message": "学习路径推荐成功"
+            "data": result,
+            "message": "学习路径推荐完成"
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"推荐学习路径失败: {str(e)}")
@@ -447,14 +437,10 @@ async def generate_exam(
     difficulty: int = Form(..., ge=1, le=5),
     exam_type: str = Form("comprehensive"),
     question_distribution: Optional[str] = Form(None),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(require_role(["teacher", "admin"]))
 ):
-    """AI智能组卷"""
+    """AI智能组卷 - 仅教师和管理员可用"""
     try:
-        # 检查用户权限
-        if current_user.role != "teacher":
-            raise HTTPException(status_code=403, detail="只有教师可以生成试卷")
-        
         # 解析题目分布
         distribution = None
         if question_distribution:
@@ -462,45 +448,41 @@ async def generate_exam(
                 distribution = json.loads(question_distribution)
             except json.JSONDecodeError:
                 raise HTTPException(status_code=400, detail="题目分布格式错误")
-        
-        # 生成试卷
-        ai_service = AIService()
-        exam_data = await ai_service.generate_exam(
+
+        result = await ai_service.generate_exam(
             subject=subject,
             difficulty=difficulty,
             exam_type=exam_type,
             question_distribution=distribution
         )
-        
+
         return {
             "success": True,
-            "message": "试卷生成成功",
-            "data": exam_data
+            "data": result,
+            "message": f"成功生成{subject}{exam_type}试卷"
         }
-        
     except Exception as e:
-        logger.error(f"生成试卷失败: {e}")
         raise HTTPException(status_code=500, detail=f"生成试卷失败: {str(e)}")
 
 
 @router.get("/learning-report")
 async def generate_learning_report(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """生成学习分析报告"""
+    """生成学习分析报告 - 所有用户可用"""
     try:
-        ai_service = AIService()
-        report = await ai_service.generate_learning_report(current_user.id, db)
-        
+        result = await ai_service.generate_learning_report(
+            user_id=current_user.id,
+            db=db
+        )
+
         return {
             "success": True,
-            "message": "学习分析报告生成成功",
-            "data": report
+            "data": result,
+            "message": "学习分析报告生成完成"
         }
-        
     except Exception as e:
-        logger.error(f"生成学习报告失败: {e}")
         raise HTTPException(status_code=500, detail=f"生成学习报告失败: {str(e)}")
 
 
@@ -510,66 +492,63 @@ async def analyze_wrong_question(
     user_answer: str = Form(...),
     correct_answer: str = Form(...),
     subject: str = Form(...),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(require_role(["student", "teacher", "admin"]))
 ):
-    """AI错题分析讲解"""
+    """AI错题分析讲解 - 所有用户可用"""
     try:
-        ai_service = AIService()
-        analysis = await ai_service.analyze_wrong_question(
+        result = await ai_service.analyze_wrong_question(
             question_content=question_content,
             user_answer=user_answer,
             correct_answer=correct_answer,
             subject=subject
         )
-        
+
         return {
             "success": True,
-            "message": "错题分析完成",
-            "data": analysis
+            "data": result,
+            "message": "错题分析完成"
         }
-        
     except Exception as e:
-        logger.error(f"错题分析失败: {e}")
         raise HTTPException(status_code=500, detail=f"错题分析失败: {str(e)}")
 
 
 @router.get("/learning-motivation")
 async def generate_learning_motivation(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """生成学习激励信息"""
+    """生成学习激励信息 - 所有用户可用"""
     try:
-        ai_service = AIService()
-        motivation = await ai_service.generate_learning_motivation(current_user.id, db)
-        
+        result = await ai_service.generate_learning_motivation(
+            user_id=current_user.id,
+            db=db
+        )
+
         return {
             "success": True,
-            "message": "学习激励生成成功",
-            "data": motivation
+            "data": result,
+            "message": "学习激励信息生成完成"
         }
-        
     except Exception as e:
-        logger.error(f"生成学习激励失败: {e}")
         raise HTTPException(status_code=500, detail=f"生成学习激励失败: {str(e)}")
 
 
 @router.get("/learning-style")
 async def identify_learning_style(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_role(["student", "teacher", "admin"])),
     db: Session = Depends(get_db)
 ):
-    """识别学习风格"""
+    """识别学习风格 - 所有用户可用"""
     try:
-        ai_service = AIService()
-        style_analysis = await ai_service.identify_learning_style(current_user.id, db)
-        
+        result = await ai_service.identify_learning_style(
+            user_id=current_user.id,
+            db=db
+        )
+
         return {
             "success": True,
-            "message": "学习风格识别完成",
-            "data": style_analysis
+            "data": result,
+            "message": "学习风格识别完成"
         }
-        
     except Exception as e:
-        logger.error(f"学习风格识别失败: {e}")
         raise HTTPException(status_code=500, detail=f"学习风格识别失败: {str(e)}")

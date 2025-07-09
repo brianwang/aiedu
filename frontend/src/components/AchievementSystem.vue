@@ -47,6 +47,9 @@
             <span v-if="achievement.earned" class="earned-date">
               {{ formatDate(achievement.earned_at) }}
             </span>
+            <div v-if="achievement.reward_type" class="reward-info">
+              {{ getRewardInfo(achievement)?.icon }} {{ getRewardInfo(achievement)?.label }}
+            </div>
           </div>
         </div>
       </div>
@@ -97,13 +100,55 @@ const totalPoints = computed(() =>
 // 方法
 const loadAchievements = async () => {
   try {
-    const response = await api.get('/learning/achievements')
-    achievements.value = response
+    const response = await api.get('/api/v1/learning/achievements')
+    if (response && Array.isArray(response)) {
+      achievements.value = response
+    } else {
+      // 如果API不存在或返回格式不正确，使用模拟数据
+      achievements.value = getMockAchievements()
+    }
   } catch (error) {
     console.error('加载成就失败:', error)
-    // 如果API不存在，使用模拟数据
+    // 使用模拟数据作为降级方案
     achievements.value = getMockAchievements()
   }
+}
+
+const createSampleReminders = () => {
+  const now = new Date()
+  const today = new Date(now)
+  const tomorrow = new Date(now)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  
+  return [
+    {
+      id: 1,
+      title: '数学练习时间',
+      description: '完成今日数学练习题',
+      type: 'task',
+      scheduled_time: new Date(today.setHours(14, 0, 0, 0)).toISOString(),
+      dismissed: false,
+      isUrgent: true
+    },
+    {
+      id: 2,
+      title: '休息提醒',
+      description: '学习45分钟了，该休息一下',
+      type: 'break',
+      scheduled_time: new Date(today.setHours(15, 30, 0, 0)).toISOString(),
+      dismissed: false,
+      isUrgent: false
+    },
+    {
+      id: 3,
+      title: '英语复习',
+      description: '复习昨天的英语语法',
+      type: 'review',
+      scheduled_time: new Date(tomorrow.setHours(10, 0, 0, 0)).toISOString(),
+      dismissed: false,
+      isUrgent: false
+    }
+  ]
 }
 
 const getMockAchievements = () => {
@@ -115,7 +160,9 @@ const getMockAchievements = () => {
       description: '连续学习3天',
       points: 50,
       earned: true,
-      earned_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+      earned_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      reward_type: 'experience',
+      reward_value: 100
     },
     {
       id: 2,
@@ -123,7 +170,9 @@ const getMockAchievements = () => {
       title: '学习达人',
       description: '连续学习7天',
       points: 100,
-      earned: false
+      earned: false,
+      reward_type: 'badge',
+      reward_value: 'gold_streak'
     },
     {
       id: 3,
@@ -131,7 +180,9 @@ const getMockAchievements = () => {
       title: '学习大师',
       description: '连续学习30天',
       points: 500,
-      earned: false
+      earned: false,
+      reward_type: 'title',
+      reward_value: '学习大师'
     },
     {
       id: 4,
@@ -140,7 +191,9 @@ const getMockAchievements = () => {
       description: '完成第一个学习任务',
       points: 25,
       earned: true,
-      earned_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+      earned_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+      reward_type: 'experience',
+      reward_value: 50
     },
     {
       id: 5,
@@ -148,7 +201,9 @@ const getMockAchievements = () => {
       title: '任务达人',
       description: '完成10个学习任务',
       points: 150,
-      earned: false
+      earned: false,
+      reward_type: 'badge',
+      reward_value: 'task_master'
     },
     {
       id: 6,
@@ -156,7 +211,9 @@ const getMockAchievements = () => {
       title: '计划完成者',
       description: '完成一个完整的学习计划',
       points: 300,
-      earned: false
+      earned: false,
+      reward_type: 'title',
+      reward_value: '计划完成者'
     },
     {
       id: 7,
@@ -165,7 +222,9 @@ const getMockAchievements = () => {
       description: '掌握一个技能的基础知识',
       points: 200,
       earned: true,
-      earned_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+      earned_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      reward_type: 'experience',
+      reward_value: 200
     },
     {
       id: 8,
@@ -173,7 +232,29 @@ const getMockAchievements = () => {
       title: '技能专家',
       description: '达到高级技能水平',
       points: 1000,
-      earned: false
+      earned: false,
+      reward_type: 'title',
+      reward_value: '技能专家'
+    },
+    {
+      id: 9,
+      achievement_type: 'accuracy',
+      title: '精准射手',
+      description: '连续10题全部正确',
+      points: 75,
+      earned: false,
+      reward_type: 'badge',
+      reward_value: 'accuracy_master'
+    },
+    {
+      id: 10,
+      achievement_type: 'speed',
+      title: '速度之王',
+      description: '在5分钟内完成10道题目',
+      points: 120,
+      earned: false,
+      reward_type: 'badge',
+      reward_value: 'speed_king'
     }
   ]
 }
@@ -182,7 +263,9 @@ const getAchievementIcon = (type) => {
   const iconMap = {
     'daily_streak': '🔥',
     'milestone': '🎯',
-    'skill_mastery': '💎'
+    'skill_mastery': '💎',
+    'accuracy': '🎯',
+    'speed': '⚡'
   }
   return iconMap[type] || '🏆'
 }
@@ -193,9 +276,138 @@ const formatDate = (dateString) => {
   return date.toLocaleDateString('zh-CN')
 }
 
+// 成就解锁检查
+const checkAchievementUnlock = async () => {
+  try {
+    // 获取用户学习数据
+    const statsResponse = await api.get('/api/v1/learning/statistics')
+    if (statsResponse) {
+      const stats = statsResponse
+      
+      // 检查各种成就条件
+      const newAchievements = []
+      
+      // 检查连续学习成就
+      if (stats.current_streak >= 3 && !hasAchievement('daily_streak', '学习新手')) {
+        newAchievements.push(await unlockAchievement('daily_streak', '学习新手'))
+      }
+      if (stats.current_streak >= 7 && !hasAchievement('daily_streak', '学习达人')) {
+        newAchievements.push(await unlockAchievement('daily_streak', '学习达人'))
+      }
+      
+      // 检查任务完成成就
+      if (stats.total_tasks_completed >= 1 && !hasAchievement('milestone', '第一个任务')) {
+        newAchievements.push(await unlockAchievement('milestone', '第一个任务'))
+      }
+      if (stats.total_tasks_completed >= 10 && !hasAchievement('milestone', '任务达人')) {
+        newAchievements.push(await unlockAchievement('milestone', '任务达人'))
+      }
+      
+      // 检查正确率成就
+      if (stats.accuracy_rate >= 90 && !hasAchievement('accuracy', '精准射手')) {
+        newAchievements.push(await unlockAchievement('accuracy', '精准射手'))
+      }
+      
+      // 显示新解锁的成就
+      if (newAchievements.length > 0) {
+        showAchievementUnlock(newAchievements)
+      }
+    }
+  } catch (error) {
+    console.error('检查成就解锁失败:', error)
+  }
+}
+
+const hasAchievement = (type, title) => {
+  return achievements.value.some(achievement => 
+    achievement.achievement_type === type && 
+    achievement.title === title && 
+    achievement.earned
+  )
+}
+
+const unlockAchievement = async (type, title) => {
+  try {
+    // 创建成就记录
+    const achievementData = {
+      achievement_type: type,
+      title: title,
+      earned: true,
+      earned_at: new Date().toISOString()
+    }
+    
+    const response = await api.post('/api/v1/learning/achievements', achievementData)
+    
+    // 更新本地成就列表
+    const existingIndex = achievements.value.findIndex(a => 
+      a.achievement_type === type && a.title === title
+    )
+    
+    if (existingIndex >= 0) {
+      achievements.value[existingIndex] = response
+    } else {
+      achievements.value.push(response)
+    }
+    
+    return response
+  } catch (error) {
+    console.error('解锁成就失败:', error)
+    return null
+  }
+}
+
+const showAchievementUnlock = (newAchievements) => {
+  // 创建成就解锁通知
+  newAchievements.forEach(achievement => {
+    if (achievement) {
+      const notification = document.createElement('div')
+      notification.className = 'achievement-notification'
+      notification.innerHTML = `
+        <div class="achievement-unlock">
+          <div class="unlock-icon">🏆</div>
+          <div class="unlock-content">
+            <h4>🎉 解锁新成就！</h4>
+            <p class="achievement-title">${achievement.title}</p>
+            <p class="achievement-desc">${achievement.description}</p>
+            <p class="achievement-reward">+${achievement.points} 点数</p>
+          </div>
+          <button onclick="this.parentElement.parentElement.remove()" class="close-btn">×</button>
+        </div>
+      `
+      
+      document.body.appendChild(notification)
+      
+      // 5秒后自动移除
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove()
+        }
+      }, 5000)
+    }
+  })
+}
+
+// 获取奖励信息
+const getRewardInfo = (achievement) => {
+  if (!achievement.reward_type) return null
+  
+  const rewardInfo = {
+    experience: { icon: '⭐', label: '经验值' },
+    badge: { icon: '🏅', label: '徽章' },
+    title: { icon: '👑', label: '称号' }
+  }
+  
+  return rewardInfo[achievement.reward_type] || null
+}
+
 // 生命周期
 onMounted(() => {
   loadAchievements()
+  
+  // 检查成就解锁
+  setTimeout(() => {
+    checkAchievementUnlock()
+  }, 2000)
 })
 </script>
 
@@ -364,6 +576,105 @@ onMounted(() => {
 
 .earned-date {
   color: #28a745;
+}
+
+.reward-info {
+  color: #007bff;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+/* 成就解锁通知样式 */
+.achievement-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1002;
+  animation: slideInAchievement 0.5s ease;
+}
+
+.achievement-unlock {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 350px;
+}
+
+.unlock-icon {
+  font-size: 32px;
+  animation: bounce 1s infinite;
+}
+
+.unlock-content h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+.achievement-title {
+  margin: 0 0 5px 0;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.achievement-desc {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.achievement-reward {
+  margin: 0;
+  font-weight: bold;
+  color: #ffd700;
+  font-size: 14px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes slideInAchievement {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
 .empty-state {

@@ -61,61 +61,110 @@
             </div>
           </div>
 
-          <div class="daily-goals">
-            <h3>今日目标</h3>
-            <div class="goals-grid">
-              <div class="goal-item">
-                <div class="goal-icon">📝</div>
-                <div class="goal-content">
-                  <div class="goal-number">
-                    {{ studyPlan.daily_goal?.questions || 20 }}
-                  </div>
-                  <div class="goal-label">题目数量</div>
+          <!-- 学习计划详情 -->
+          <div class="plan-details">
+            <div class="plan-section">
+              <h3>📋 学习计划概览</h3>
+              <div class="plan-info">
+                <div class="info-item">
+                  <span class="label">学习阶段：</span>
+                  <span class="value">{{ studyPlan.study_level || '初级' }}</span>
                 </div>
-              </div>
-              <div class="goal-item">
-                <div class="goal-icon">⏰</div>
-                <div class="goal-content">
-                  <div class="goal-number">
-                    {{ studyPlan.daily_goal?.study_time || 60 }}
-                  </div>
-                  <div class="goal-label">学习时间(分钟)</div>
+                <div class="info-item">
+                  <span class="label">重点学科：</span>
+                  <span class="value">{{ studyPlan.focus_subjects?.join(', ') || '暂无' }}</span>
                 </div>
-              </div>
-              <div class="goal-item">
-                <div class="goal-icon">🎯</div>
-                <div class="goal-content">
-                  <div class="goal-number">
-                    {{ studyPlan.daily_goal?.accuracy_target || 80 }}%
-                  </div>
-                  <div class="goal-label">目标正确率</div>
+                <div class="info-item">
+                  <span class="label">难度建议：</span>
+                  <span class="value">{{ getDifficultyText(studyPlan.difficulty_adjustment) }}</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="recommendations">
-            <h3>AI建议</h3>
-            <div class="recommendation-list">
-              <div
-                v-if="studyPlan.recommendations?.focus_subjects?.length"
-                class="recommendation-item"
-              >
-                <div class="rec-icon">🎯</div>
-                <div class="rec-content">
-                  <strong>重点关注学科：</strong>
-                  {{ studyPlan.recommendations.focus_subjects.join("、") }}
+            <div class="plan-section">
+              <h3>🎯 今日目标</h3>
+              <div class="goals-grid">
+                <div class="goal-item">
+                  <div class="goal-icon">📝</div>
+                  <div class="goal-content">
+                    <div class="goal-number">
+                      {{ studyPlan.daily_goal?.questions || 20 }}
+                    </div>
+                    <div class="goal-label">题目数量</div>
+                  </div>
+                </div>
+                <div class="goal-item">
+                  <div class="goal-icon">⏰</div>
+                  <div class="goal-content">
+                    <div class="goal-number">
+                      {{ studyPlan.daily_goal?.study_time || 60 }}
+                    </div>
+                    <div class="goal-label">学习时间(分钟)</div>
+                  </div>
+                </div>
+                <div class="goal-item">
+                  <div class="goal-icon">🎯</div>
+                  <div class="goal-content">
+                    <div class="goal-number">
+                      {{ studyPlan.daily_goal?.accuracy_target || 80 }}%
+                    </div>
+                    <div class="goal-label">目标正确率</div>
+                  </div>
                 </div>
               </div>
-              <div class="recommendation-item">
-                <div class="rec-icon">📈</div>
-                <div class="rec-content">
-                  <strong>难度调整：</strong>
-                  {{
-                    getDifficultyText(
-                      studyPlan.recommendations?.difficulty_adjustment
-                    )
-                  }}
+            </div>
+
+            <!-- 今日学习计划提醒 -->
+            <div class="plan-section" v-if="todayTasks.length > 0">
+              <h3>📅 今日学习提醒</h3>
+              <div class="today-tasks">
+                <div 
+                  v-for="task in todayTasks" 
+                  :key="task.id"
+                  :class="['task-item', `status-${task.status}`]"
+                >
+                  <div class="task-info">
+                    <div class="task-title">{{ task.title }}</div>
+                    <div class="task-meta">
+                      <span class="task-type">{{ getTaskTypeText(task.task_type) }}</span>
+                      <span class="task-duration">{{ task.estimated_time }}分钟</span>
+                      <span class="task-subject">{{ task.subject }}</span>
+                    </div>
+                  </div>
+                  <div class="task-actions">
+                    <button 
+                      v-if="task.status === 'pending'"
+                      @click="startTask(task.id)"
+                      class="btn btn-sm btn-primary"
+                    >
+                      开始
+                    </button>
+                    <button 
+                      v-if="task.status === 'in_progress'"
+                      @click="completeTask(task.id)"
+                      class="btn btn-sm btn-success"
+                    >
+                      完成
+                    </button>
+                    <span v-if="task.status === 'completed'" class="status-badge">
+                      ✅ 已完成
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 学习建议 -->
+            <div class="plan-section" v-if="studyPlan.study_suggestions">
+              <h3>💡 学习建议</h3>
+              <div class="suggestions-list">
+                <div 
+                  v-for="(suggestion, index) in studyPlan.study_suggestions" 
+                  :key="index"
+                  class="suggestion-item"
+                >
+                  <div class="suggestion-icon">💡</div>
+                  <div class="suggestion-text">{{ suggestion }}</div>
                 </div>
               </div>
             </div>
@@ -123,17 +172,11 @@
         </div>
       </div>
 
-      <!-- 能力评估卡片 -->
+      <!-- 学习能力评估卡片 -->
       <div class="ability-assessment-card">
         <div class="card-header">
           <h2>学习能力评估</h2>
-          <button
-            @click="assessAbility"
-            class="btn-secondary"
-            :disabled="loading"
-          >
-            评估能力
-          </button>
+          <!-- 右上角按钮已移除 -->
         </div>
 
         <div v-if="loading && !abilityAssessment" class="loading">
@@ -142,95 +185,79 @@
         </div>
 
         <div v-else-if="abilityAssessment" class="assessment-content">
-          <div class="ability-summary">
-            <div class="ability-level">
-              <h3>综合能力等级</h3>
-              <div class="level-badge">{{ abilityAssessment.overall_level }}</div>
+          <div class="assessment-summary">
+            <div class="summary-item">
+              <div class="summary-number">
+                {{ abilityAssessment.overall_score || 0 }}
+              </div>
+              <div class="summary-label">综合能力</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-number">
+                {{ abilityAssessment.learning_level || '初级' }}
+              </div>
+              <div class="summary-label">学习水平</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-number">
+                {{ abilityAssessment.study_efficiency || 0 }}%
+              </div>
+              <div class="summary-label">学习效率</div>
             </div>
           </div>
 
-          <div class="ability-metrics">
-            <h3>能力维度分析</h3>
-            <div class="metrics-grid">
-              <div class="metric-item">
-                <div class="metric-label">知识掌握度</div>
-                <div class="metric-bar">
-                  <div 
-                    class="metric-fill" 
-                    :style="{ width: (abilityAssessment.knowledge_mastery / 10 * 100) + '%' }"
-                  ></div>
+          <div class="assessment-details">
+            <div class="detail-section">
+              <h3>📊 能力分析</h3>
+              <div class="ability-breakdown">
+                <div 
+                  v-for="ability in abilityAssessment.ability_breakdown" 
+                  :key="ability.name"
+                  class="ability-item"
+                >
+                  <div class="ability-header">
+                    <span class="ability-name">{{ ability.name }}</span>
+                    <span class="ability-score">{{ ability.score }}分</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" :style="{ width: ability.score + '%' }"></div>
+                  </div>
+                  <div class="ability-description">{{ ability.description }}</div>
                 </div>
-                <div class="metric-value">{{ abilityAssessment.knowledge_mastery }}/10</div>
-              </div>
-              <div class="metric-item">
-                <div class="metric-label">解题思维</div>
-                <div class="metric-bar">
-                  <div 
-                    class="metric-fill" 
-                    :style="{ width: (abilityAssessment.problem_solving / 10 * 100) + '%' }"
-                  ></div>
-                </div>
-                <div class="metric-value">{{ abilityAssessment.problem_solving }}/10</div>
-              </div>
-              <div class="metric-item">
-                <div class="metric-label">学习专注度</div>
-                <div class="metric-bar">
-                  <div 
-                    class="metric-fill" 
-                    :style="{ width: (abilityAssessment.concentration / 10 * 100) + '%' }"
-                  ></div>
-                </div>
-                <div class="metric-value">{{ abilityAssessment.concentration }}/10</div>
-              </div>
-              <div class="metric-item">
-                <div class="metric-label">知识迁移</div>
-                <div class="metric-bar">
-                  <div 
-                    class="metric-fill" 
-                    :style="{ width: (abilityAssessment.knowledge_transfer / 10 * 100) + '%' }"
-                  ></div>
-                </div>
-                <div class="metric-value">{{ abilityAssessment.knowledge_transfer }}/10</div>
-              </div>
-              <div class="metric-item">
-                <div class="metric-label">学习效率</div>
-                <div class="metric-bar">
-                  <div 
-                    class="metric-fill" 
-                    :style="{ width: (abilityAssessment.learning_efficiency / 10 * 100) + '%' }"
-                  ></div>
-                </div>
-                <div class="metric-value">{{ abilityAssessment.learning_efficiency }}/10</div>
               </div>
             </div>
-          </div>
 
-          <div class="improvement-suggestions">
-            <h3>改进建议</h3>
-            <ul class="suggestions-list">
-              <li 
-                v-for="suggestion in abilityAssessment.improvement_suggestions" 
-                :key="suggestion"
-                class="suggestion-item"
-              >
-                {{ suggestion }}
-              </li>
-            </ul>
+            <div class="detail-section">
+              <h3>🎯 改进建议</h3>
+              <ul class="improvement-list">
+                <li 
+                  v-for="(suggestion, index) in abilityAssessment.improvement_suggestions" 
+                  :key="index"
+                  class="improvement-item"
+                >
+                  {{ suggestion }}
+                </li>
+              </ul>
+            </div>
           </div>
+        </div>
+
+        <div v-else class="no-assessment">
+          <div class="empty-icon">📊</div>
+          <h3>尚未进行学习能力评估</h3>
+          <p>通过能力评估，我们可以为您制定更精准的学习计划</p>
+          <button @click="assessAbility" class="btn btn-primary" :disabled="loading">
+            <span v-if="loading">评估中...</span>
+            <span v-else>开始能力评估</span>
+          </button>
         </div>
       </div>
 
-      <!-- 学习风格分析卡片 -->
+      <!-- 学习风格与模式分析卡片 -->
       <div class="learning-style-card">
         <div class="card-header">
-          <h2>学习风格分析</h2>
-          <button
-            @click="analyzeStyle"
-            class="btn-secondary"
-            :disabled="loading"
-          >
-            分析风格
-          </button>
+          <h2>学习风格与模式分析</h2>
+          <!-- 右上角按钮已移除 -->
         </div>
 
         <div v-if="loading && !learningStyle" class="loading">
@@ -240,243 +267,139 @@
 
         <div v-else-if="learningStyle" class="style-content">
           <div class="style-summary">
-            <h3>学习风格类型</h3>
-            <div class="style-type">{{ learningStyle.style_type }}</div>
-          </div>
-
-          <div class="style-characteristics">
-            <h3>特征描述</h3>
-            <ul class="characteristics-list">
-              <li 
-                v-for="characteristic in learningStyle.characteristics" 
-                :key="characteristic"
-                class="characteristic-item"
-              >
-                {{ characteristic }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="style-suggestions">
-            <h3>学习建议</h3>
-            <ul class="suggestions-list">
-              <li 
-                v-for="suggestion in learningStyle.learning_suggestions" 
-                :key="suggestion"
-                class="suggestion-item"
-              >
-                {{ suggestion }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="study-methods">
-            <h3>推荐学习方法</h3>
-            <div class="methods-grid">
-              <div 
-                v-for="method in learningStyle.study_methods" 
-                :key="method"
-                class="method-item"
-              >
-                {{ method }}
+            <div class="style-type">
+              <div class="style-icon">{{ getStyleIcon(learningStyle.learning_style) }}</div>
+              <div class="style-info">
+                <h3>{{ learningStyle.learning_style }}</h3>
+                <p>{{ learningStyle.style_description }}</p>
               </div>
             </div>
           </div>
+
+          <div class="style-details">
+            <div class="detail-section">
+              <h3>🎨 学习偏好</h3>
+              <div class="preferences-grid">
+                <div 
+                  v-for="preference in learningStyle.learning_preferences" 
+                  :key="preference.name"
+                  class="preference-item"
+                >
+                  <div class="preference-icon">{{ preference.icon }}</div>
+                  <div class="preference-content">
+                    <h4>{{ preference.name }}</h4>
+                    <p>{{ preference.description }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h3>📈 学习模式</h3>
+              <div class="pattern-analysis">
+                <div class="pattern-item">
+                  <h4>学习时间分布</h4>
+                  <div class="time-distribution">
+                    <div 
+                      v-for="(time, period) in learningStyle.time_distribution" 
+                      :key="period"
+                      class="time-item"
+                    >
+                      <span class="time-period">{{ period }}</span>
+                      <span class="time-percentage">{{ time }}%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="pattern-item">
+                  <h4>题目类型偏好</h4>
+                  <div class="question-preferences">
+                    <div 
+                      v-for="(pref, type) in learningStyle.question_type_preference" 
+                      :key="type"
+                      class="question-item"
+                    >
+                      <span class="question-type">{{ getQuestionTypeText(type) }}</span>
+                      <span class="question-percentage">{{ pref }}%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h3>💡 个性化建议</h3>
+              <ul class="personalized-suggestions">
+                <li 
+                  v-for="(suggestion, index) in learningStyle.personalized_recommendations" 
+                  :key="index"
+                  class="suggestion-item"
+                >
+                  {{ suggestion }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="no-style">
+          <div class="empty-icon">🎨</div>
+          <h3>尚未进行学习风格分析</h3>
+          <p>了解您的学习风格，获得更个性化的学习建议</p>
+          <button @click="analyzeStyle" class="btn btn-primary" :disabled="loading">
+            <span v-if="loading">分析中...</span>
+            <span v-else>开始风格分析</span>
+          </button>
         </div>
       </div>
 
       <!-- 智能推荐题目 -->
       <div class="recommended-questions">
-        <div class="section-header">
-          <h2>智能推荐题目</h2>
-          <div class="filter-controls">
-            <select v-model="selectedSubject" class="filter-select">
-              <option value="">全学科</option>
-              <option
-                v-for="subject in subjects"
-                :key="subject"
-                :value="subject"
-              >
-                {{ subject }}
-              </option>
-            </select>
-            <button
-              @click="fetchRecommendedQuestions"
-              class="btn-primary"
-              :disabled="loading"
-            >
-              获取推荐
-            </button>
-          </div>
-        </div>
-
-        <div v-if="recommendedQuestions.length" class="questions-list">
-          <div
-            v-for="question in recommendedQuestions"
-            :key="question.id"
-            class="question-item"
-          >
-            <div class="question-header">
-              <span class="question-type">{{
-                getQuestionTypeText(question.question_type)
-              }}</span>
-              <div class="question-difficulty">
-                <span v-for="n in question.difficulty" :key="n" class="star"
-                  >⭐</span
-                >
-              </div>
-            </div>
-            <div class="question-content">{{ question.content }}</div>
-            <div class="question-actions">
-              <button @click="startPractice(question)" class="btn-secondary">
-                开始练习
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div v-else-if="!loading" class="empty-state">
-          <div class="empty-icon">🤖</div>
-          <p>点击"获取推荐"开始AI智能推荐</p>
-        </div>
-      </div>
-
-      <!-- 学习模式分析 -->
-      <div class="learning-pattern">
-        <div class="section-header">
-          <h2>学习模式分析</h2>
-          <button
-            @click="analyzePattern"
-            class="btn-secondary"
-            :disabled="loading"
-          >
-            分析模式
-          </button>
-        </div>
-
-        <div v-if="learningPattern" class="pattern-content">
-          <div class="pattern-grid">
-            <div class="pattern-card">
-              <h3>学习效率</h3>
-              <div class="pattern-value">
-                {{ learningPattern.learning_efficiency || 0 }}
-              </div>
-              <div class="pattern-label">题目/分钟</div>
-            </div>
-            <div class="pattern-card">
-              <h3>学习会话</h3>
-              <div class="pattern-value">
-                {{ learningPattern.total_study_sessions || 0 }}
-              </div>
-              <div class="pattern-label">总次数</div>
-            </div>
-            <div class="pattern-card">
-              <h3>平均时长</h3>
-              <div class="pattern-value">
-                {{ learningPattern.average_session_duration || 0 }}
-              </div>
-              <div class="pattern-label">分钟/次</div>
-            </div>
-          </div>
-
-          <div
-            v-if="learningPattern.subject_preference"
-            class="subject-preference"
-          >
-            <h3>学科偏好</h3>
-            <div class="preference-list">
-              <div
-                v-for="(time, subject) in learningPattern.subject_preference"
-                :key="subject"
-                class="preference-item"
-              >
-                <div class="preference-subject">{{ subject }}</div>
-                <div class="preference-time">{{ time }}分钟</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 学习动机激励 -->
-      <div class="motivation-card">
         <div class="card-header">
-          <h2>学习动机激励</h2>
+          <h2>智能推荐题目</h2>
           <button
-            @click="getMotivation"
+            @click="fetchRecommendedQuestions"
             class="btn-secondary"
             :disabled="loading"
           >
-            获取激励
+            刷新推荐
           </button>
         </div>
 
-        <div v-if="loading && !motivationPlan" class="loading">
+        <div v-if="loading && recommendedQuestions.length === 0" class="loading">
           <div class="spinner"></div>
-          <p>正在生成激励方案...</p>
+          <p>正在为您推荐题目...</p>
         </div>
 
-        <div v-else-if="motivationPlan" class="motivation-content">
-          <div class="encouragement-message">
-            <h3>鼓励话语</h3>
-            <div class="message-content">
-              {{ motivationPlan.encouragement_message }}
+        <div v-else-if="recommendedQuestions.length > 0" class="questions-content">
+          <div class="questions-grid">
+            <div 
+              v-for="question in recommendedQuestions.slice(0, 3)" 
+              :key="question.id"
+              class="question-card"
+            >
+              <div class="question-header">
+                <span class="question-type">{{ getQuestionTypeText(question.question_type) }}</span>
+                <span class="question-difficulty">难度: {{ question.difficulty }}</span>
+              </div>
+              <div class="question-content">
+                <p>{{ question.content }}</p>
+              </div>
+              <div class="question-footer">
+                <span class="question-subject">{{ question.category || '综合' }}</span>
+                <button @click="startPractice(question)" class="btn btn-sm btn-primary">
+                  开始练习
+                </button>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="motivation-strategies">
-            <div class="strategy-section">
-              <h3>成就认可</h3>
-              <ul class="strategy-list">
-                <li 
-                  v-for="recognition in motivationPlan.achievement_recognition" 
-                  :key="recognition"
-                  class="strategy-item"
-                >
-                  {{ recognition }}
-                </li>
-              </ul>
-            </div>
-
-            <div class="strategy-section">
-              <h3>目标设定</h3>
-              <ul class="strategy-list">
-                <li 
-                  v-for="goal in motivationPlan.goal_setting" 
-                  :key="goal"
-                  class="strategy-item"
-                >
-                  {{ goal }}
-                </li>
-              </ul>
-            </div>
-
-            <div class="strategy-section">
-              <h3>挑战激励</h3>
-              <ul class="strategy-list">
-                <li 
-                  v-for="challenge in motivationPlan.challenge_incentives" 
-                  :key="challenge"
-                  class="strategy-item"
-                >
-                  {{ challenge }}
-                </li>
-              </ul>
-            </div>
-
-            <div class="strategy-section">
-              <h3>情感支持</h3>
-              <ul class="strategy-list">
-                <li 
-                  v-for="support in motivationPlan.emotional_support" 
-                  :key="support"
-                  class="strategy-item"
-                >
-                  {{ support }}
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div v-else class="no-questions">
+          <div class="empty-icon">📝</div>
+          <p>暂无推荐题目</p>
+          <button @click="fetchRecommendedQuestions" class="btn btn-outline">
+            获取推荐
+          </button>
         </div>
       </div>
     </div>
@@ -484,246 +407,344 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useApi } from "@/composables/useApi";
+import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import { 
   getStudyPlan, 
-  getRecommendedQuestions, 
-  getLearningPattern,
-  getDifficultyAnalysis,
-  assessLearningAbility,
-  analyzeLearningStyle,
-  getMotivationPlan
-} from "@/api/ai";
+  assessLearningAbility, 
+  analyzeLearningStyle, 
+  getRecommendedQuestions,
+  getLearningTasks,
+  updateTaskStatus
+} from '@/api/ai'
 
-const api = useApi();
-const loading = ref(false);
-const studyPlan = ref(null);
-const recommendedQuestions = ref([]);
-const learningPattern = ref(null);
-const abilityAssessment = ref(null);
-const learningStyle = ref(null);
-const motivationPlan = ref(null);
-const selectedSubject = ref("");
-const subjects = ["数学", "英语", "物理", "化学", "生物"];
+const router = useRouter()
+const authStore = useAuthStore()
 
+// 响应式数据
+const loading = ref(false)
+const studyPlan = ref<any>(null)
+const abilityAssessment = ref<any>(null)
+const learningStyle = ref<any>(null)
+const recommendedQuestions = ref<any[]>([])
+const todayTasks = ref<any[]>([])
+
+// 计算属性
+const subjects = computed(() => [
+  '数学', '语文', '英语', '物理', '化学', '生物', '历史', '地理', '政治'
+])
+
+// 工具方法
 const getDifficultyText = (difficulty: string) => {
-  const texts = {
-    increase: "建议增加难度",
-    decrease: "建议降低难度",
-    maintain: "保持当前难度",
-  };
-  return texts[difficulty] || "保持当前难度";
-};
+  const difficultyMap: { [key: string]: string } = {
+    increase: '适当提高',
+    decrease: '适当降低',
+    maintain: '保持当前'
+  }
+  return difficultyMap[difficulty] || '保持当前'
+}
 
 const getQuestionTypeText = (type: string) => {
-  const types = {
-    single_choice: "单选题",
-    multiple_choice: "多选题",
-    fill_blank: "填空题",
-    short_answer: "简答题",
-    essay: "论述题",
-  };
-  return types[type] || type;
-};
+  const typeMap: { [key: string]: string } = {
+    single_choice: '单选题',
+    multiple_choice: '多选题',
+    fill_blank: '填空题',
+    short_answer: '简答题',
+    essay: '论述题'
+  }
+  return typeMap[type] || '未知类型'
+}
 
+const getTaskTypeText = (type: string) => {
+  const typeMap: { [key: string]: string } = {
+    practice: '练习',
+    review: '复习',
+    new_concept: '新概念'
+  }
+  return typeMap[type] || '未知类型'
+}
+
+const getStyleIcon = (style: string) => {
+  const iconMap: { [key: string]: string } = {
+    '视觉型': '👁️',
+    '听觉型': '👂',
+    '动觉型': '🏃',
+    '阅读型': '📖',
+    '混合型': '🔄'
+  }
+  return iconMap[style] || '🎨'
+}
+
+// API方法
 const refreshStudyPlan = async () => {
-  loading.value = true;
   try {
-    const response = await getStudyPlan();
-    studyPlan.value = response.data.data;
+    loading.value = true
+    const response = await getStudyPlan()
+    if (response.success) {
+      studyPlan.value = response.data
+      await loadTodayTasks()
+    }
   } catch (error) {
-    console.error("获取学习计划失败:", error);
+    console.error('获取学习计划失败:', error)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
-
-const fetchRecommendedQuestions = async () => {
-  loading.value = true;
-  try {
-    const response = await getRecommendedQuestions(selectedSubject.value, 5);
-    recommendedQuestions.value = response.data.data;
-  } catch (error) {
-    console.error("获取推荐题目失败:", error);
-  } finally {
-    loading.value = false;
-  }
-};
-
-const analyzePattern = async () => {
-  loading.value = true;
-  try {
-    const response = await getLearningPattern();
-    learningPattern.value = response.data.data;
-  } catch (error) {
-    console.error("分析学习模式失败:", error);
-  } finally {
-    loading.value = false;
-  }
-};
+}
 
 const assessAbility = async () => {
-  loading.value = true;
   try {
-    const response = await api.get("/ai/user-ability-assessment");
-    abilityAssessment.value = response.data.data;
+    loading.value = true
+    // 模拟用户数据
+    const assessmentData = {
+      study_time: 120,
+      questions_completed: 50,
+      accuracy: 75,
+      subjects: ['数学', '英语'],
+      wrong_questions_distribution: {
+        '数学': 8,
+        '英语': 4
+      }
+    }
+    const response = await assessLearningAbility(assessmentData)
+    if (response.success) {
+      abilityAssessment.value = response.data
+    }
   } catch (error) {
-    console.error("能力评估失败:", error);
+    console.error('能力评估失败:', error)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
 const analyzeStyle = async () => {
-  loading.value = true;
   try {
-    const response = await api.get("/ai/user-learning-style");
-    learningStyle.value = response.data.data;
-  } catch (error) {
-    console.error("学习风格分析失败:", error);
-  } finally {
-    loading.value = false;
-  }
-};
-
-const getMotivation = async () => {
-  loading.value = true;
-  try {
+    loading.value = true
     // 模拟用户数据
-    const motivationData = {
-      learning_status: "steady",
-      learning_difficulties: ["数学计算", "英语语法"],
-      learning_goals: ["提高数学成绩", "掌握英语语法"],
-      learning_achievements: ["完成100道题目", "连续学习7天"],
-      personal_characteristics: ["认真", "有耐心", "喜欢挑战"]
-    };
-    
-    const response = await getMotivationPlan(motivationData);
-    motivationPlan.value = response.data.data;
+    const styleData = {
+      time_distribution: {
+        '上午': 30,
+        '下午': 40,
+        '晚上': 30
+      },
+      question_type_preference: {
+        'single_choice': 40,
+        'multiple_choice': 30,
+        'fill_blank': 20,
+        'short_answer': 10
+      },
+      learning_mode: 'visual',
+      review_frequency: 3,
+      wrong_question_handling: 'immediate'
+    }
+    const response = await analyzeLearningStyle(styleData)
+    if (response.success) {
+      learningStyle.value = response.data
+    }
   } catch (error) {
-    console.error("获取激励方案失败:", error);
+    console.error('学习风格分析失败:', error)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
+
+const fetchRecommendedQuestions = async () => {
+  try {
+    loading.value = true
+    const response = await getRecommendedQuestions()
+    if (response.success) {
+      recommendedQuestions.value = response.data.slice(0, 3) // 只取前3题
+    }
+  } catch (error) {
+    console.error('获取推荐题目失败:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+const loadTodayTasks = async () => {
+  try {
+    const response = await getLearningTasks()
+    if (response.success) {
+      todayTasks.value = response.data.filter((task: any) => {
+        const today = new Date().toISOString().split('T')[0]
+        return task.scheduled_date === today
+      })
+    }
+  } catch (error) {
+    console.error('加载今日任务失败:', error)
+  }
+}
+
+const startTask = async (taskId: string) => {
+  try {
+    await updateTaskStatus(taskId, 'in_progress')
+    await loadTodayTasks()
+  } catch (error) {
+    console.error('开始任务失败:', error)
+  }
+}
+
+const completeTask = async (taskId: string) => {
+  try {
+    await updateTaskStatus(taskId, 'completed')
+    await loadTodayTasks()
+  } catch (error) {
+    console.error('完成任务失败:', error)
+  }
+}
 
 const startPractice = (question: any) => {
   // 跳转到练习页面
-  console.log("开始练习:", question);
-};
+  router.push(`/question-bank?questionId=${String(question.id)}&mode=practice`)
+}
 
-onMounted(() => {
-  refreshStudyPlan();
-});
+// 生命周期
+onMounted(async () => {
+  await refreshStudyPlan()
+  await fetchRecommendedQuestions()
+})
 </script>
 
 <style scoped>
 .ai-study {
-  max-width: 1200px;
-  margin: 0 auto;
+  min-height: 100vh;
+  background: #f5f6fa;
   padding: 20px;
 }
 
 .page-header {
-  margin-bottom: 30px;
   text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.header-content {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  font-size: 2rem;
-  color: var(--text-primary);
-  margin-bottom: 10px;
+  gap: 15px;
 }
 
 .title-icon {
-  width: 32px;
-  height: 32px;
-  color: var(--primary-color);
+  width: 40px;
+  height: 40px;
+  color: #ffd700;
 }
 
 .page-subtitle {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin: 0;
+  color: #666;
 }
 
 .ai-content {
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
-  gap: 30px;
+  grid-template-columns: 1fr;
+  gap: 25px;
 }
 
+/* 卡片通用样式 */
 .study-plan-card,
 .ability-assessment-card,
 .learning-style-card,
-.motivation-card,
-.recommended-questions,
-.learning-pattern {
+.recommended-questions {
   background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
 }
 
-.card-header,
-.section-header {
+.study-plan-card:hover,
+.ability-assessment-card:hover,
+.learning-style-card:hover,
+.recommended-questions:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  background: #fff;
+  color: #333;
+  padding: 20px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.card-header h2,
-.section-header h2 {
-  font-size: 1.5rem;
-  color: var(--text-primary);
+.card-header h2 {
   margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.refresh-btn {
-  background: none;
-  border: none;
-  color: var(--primary-color);
+.refresh-btn,
+.btn-secondary {
+  background: #f5f6fa;
+  border: 1px solid #e0e0e0;
+  color: #333;
+  padding: 8px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.refresh-btn:hover {
-  background-color: var(--bg-hover);
+.refresh-btn:hover,
+.btn-secondary:hover {
+  background: #e9ecef;
+  color: #222;
 }
 
+.refresh-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 加载状态 */
 .loading {
-  text-align: center;
   padding: 40px;
+  text-align: center;
+  color: #666;
 }
 
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--bg-secondary);
-  border-top: 4px solid var(--primary-color);
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 20px;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 学习计划内容 */
+.plan-content {
+  padding: 25px;
 }
 
 .plan-summary {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 20px;
   margin-bottom: 30px;
 }
@@ -731,29 +752,64 @@ onMounted(() => {
 .summary-item {
   text-align: center;
   padding: 20px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 15px;
+  color: white;
 }
 
 .summary-number {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: 700;
   margin-bottom: 5px;
 }
 
 .summary-label {
-  color: var(--text-secondary);
   font-size: 0.9rem;
+  opacity: 0.9;
 }
 
-.daily-goals {
-  margin-bottom: 30px;
+.plan-details {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
-.daily-goals h3 {
-  margin-bottom: 15px;
-  color: var(--text-primary);
+.plan-section {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.plan-section h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.plan-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: 600;
+  color: #666;
+}
+
+.value {
+  color: #333;
 }
 
 .goals-grid {
@@ -765,444 +821,563 @@ onMounted(() => {
 .goal-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
   padding: 15px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .goal-icon {
-  font-size: 1.5rem;
+  font-size: 2rem;
+}
+
+.goal-content {
+  flex: 1;
 }
 
 .goal-number {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
 }
 
 .goal-label {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: #666;
 }
 
-.recommendations h3 {
-  margin-bottom: 15px;
-  color: var(--text-primary);
-}
-
-.recommendation-list {
+/* 今日任务 */
+.today-tasks {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 
-.recommendation-item {
+.task-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  padding: 12px;
-  background: var(--bg-secondary);
-  border-radius: 6px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #ddd;
+  transition: all 0.3s ease;
 }
 
-.rec-icon {
+.task-item.status-pending {
+  border-left-color: #ffc107;
+}
+
+.task-item.status-in_progress {
+  border-left-color: #17a2b8;
+}
+
+.task-item.status-completed {
+  border-left-color: #28a745;
+  opacity: 0.7;
+}
+
+.task-info {
+  flex: 1;
+}
+
+.task-title {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.task-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.status-badge {
+  background: #28a745;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+}
+
+/* 建议列表 */
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.suggestion-text {
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 能力评估 */
+.assessment-content {
+  padding: 25px;
+}
+
+.assessment-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.assessment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.detail-section {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.detail-section h3 {
+  margin: 0 0 15px 0;
+  color: #333;
   font-size: 1.2rem;
 }
 
-/* 能力评估样式 */
-.ability-summary {
-  margin-bottom: 30px;
-}
-
-.ability-level {
-  text-align: center;
-}
-
-.level-badge {
-  display: inline-block;
-  padding: 8px 16px;
-  background: var(--primary-color);
-  color: white;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-top: 10px;
-}
-
-.ability-metrics {
-  margin-bottom: 30px;
-}
-
-.metrics-grid {
+.ability-breakdown {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.metric-item {
+.ability-item {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ability-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  margin-bottom: 10px;
 }
 
-.metric-label {
-  min-width: 100px;
-  font-weight: 500;
-  color: var(--text-primary);
+.ability-name {
+  font-weight: 600;
+  color: #333;
 }
 
-.metric-bar {
-  flex: 1;
+.ability-score {
+  font-weight: 700;
+  color: #667eea;
+}
+
+.progress-bar {
+  width: 100%;
   height: 8px;
-  background: var(--bg-secondary);
+  background: #eee;
   border-radius: 4px;
   overflow: hidden;
+  margin-bottom: 10px;
 }
 
-.metric-fill {
+.progress-fill {
   height: 100%;
-  background: var(--primary-color);
-  border-radius: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
   transition: width 0.3s ease;
 }
 
-.metric-value {
-  min-width: 50px;
-  text-align: right;
-  font-weight: 500;
-  color: var(--text-secondary);
+.ability-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
 }
 
-.improvement-suggestions h3 {
-  margin-bottom: 15px;
-  color: var(--text-primary);
-}
-
-.suggestions-list {
+.improvement-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.suggestion-item {
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-secondary);
+.improvement-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  line-height: 1.5;
 }
 
-.suggestion-item:last-child {
+.improvement-item:last-child {
   border-bottom: none;
 }
 
-/* 学习风格样式 */
+.improvement-item::before {
+  content: "💡";
+  margin-right: 10px;
+}
+
+/* 空状态 */
+.no-assessment,
+.no-style,
+.no-questions {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.no-assessment h3,
+.no-style h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.no-assessment p,
+.no-style p {
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+/* 学习风格 */
+.style-content {
+  padding: 25px;
+}
+
 .style-summary {
   margin-bottom: 30px;
-  text-align: center;
 }
 
 .style-type {
-  display: inline-block;
-  padding: 10px 20px;
-  background: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
   color: white;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-top: 10px;
 }
 
-.style-characteristics,
-.style-suggestions,
-.study-methods {
-  margin-bottom: 30px;
+.style-icon {
+  font-size: 3rem;
 }
 
-.characteristics-list,
-.suggestions-list {
-  list-style: none;
-  padding: 0;
+.style-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+}
+
+.style-info p {
   margin: 0;
+  opacity: 0.9;
+  line-height: 1.5;
 }
 
-.characteristic-item,
-.suggestion-item {
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-secondary);
+.style-details {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
-.characteristic-item:last-child,
-.suggestion-item:last-child {
-  border-bottom: none;
-}
-
-.methods-grid {
+.preferences-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 15px;
 }
 
-.method-item {
-  padding: 12px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 500;
-  color: var(--text-primary);
+.preference-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 学习动机样式 */
-.encouragement-message {
-  margin-bottom: 30px;
-  text-align: center;
+.preference-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
 }
 
-.message-content {
-  padding: 20px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
-  font-size: 1.1rem;
-  color: var(--text-primary);
-  line-height: 1.6;
+.preference-content h4 {
+  margin: 0 0 8px 0;
+  color: #333;
 }
 
-.motivation-strategies {
+.preference-content p {
+  margin: 0;
+  color: #666;
+  line-height: 1.4;
+}
+
+.pattern-analysis {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-.strategy-section h3 {
-  margin-bottom: 15px;
-  color: var(--text-primary);
+.pattern-item {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.strategy-list {
+.pattern-item h4 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.time-distribution,
+.question-preferences {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.time-item,
+.question-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.time-item:last-child,
+.question-item:last-child {
+  border-bottom: none;
+}
+
+.time-period,
+.question-type {
+  color: #333;
+  font-weight: 500;
+}
+
+.time-percentage,
+.question-percentage {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.personalized-suggestions {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.strategy-item {
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-secondary);
+.personalized-suggestions .suggestion-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  line-height: 1.5;
 }
 
-.strategy-item:last-child {
+.personalized-suggestions .suggestion-item:last-child {
   border-bottom: none;
 }
 
-.filter-controls {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+.personalized-suggestions .suggestion-item::before {
+  content: "💡";
+  margin-right: 10px;
 }
 
-.filter-select {
-  padding: 8px 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+/* 推荐题目 */
+.questions-content {
+  padding: 25px;
+}
+
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.question-card {
   background: white;
-}
-
-.questions-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.question-item {
+  border-radius: 15px;
   padding: 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background: var(--bg-secondary);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.question-card:hover {
+  transform: translateY(-5px);
 }
 
 .question-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .question-type {
-  background: var(--primary-color);
+  background: #667eea;
   color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 5px 12px;
+  border-radius: 15px;
   font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .question-difficulty {
-  display: flex;
-  gap: 2px;
-}
-
-.star {
-  font-size: 0.8rem;
+  color: #666;
+  font-size: 0.9rem;
 }
 
 .question-content {
   margin-bottom: 15px;
+}
+
+.question-content p {
+  margin: 0;
+  color: #333;
   line-height: 1.6;
 }
 
-.question-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 40px;
-  color: var(--text-secondary);
-}
-
-.empty-icon {
-  font-size: 3rem;
-  margin-bottom: 15px;
-}
-
-.pattern-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.pattern-card {
-  text-align: center;
-  padding: 20px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
-}
-
-.pattern-card h3 {
-  margin-bottom: 10px;
-  color: var(--text-primary);
-  font-size: 1rem;
-}
-
-.pattern-value {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--primary-color);
-  margin-bottom: 5px;
-}
-
-.pattern-label {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.subject-preference h3 {
-  margin-bottom: 15px;
-  color: var(--text-primary);
-}
-
-.preference-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.preference-item {
+.question-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background: var(--bg-secondary);
-  border-radius: 6px;
 }
 
-.preference-subject {
-  font-weight: 500;
-  color: var(--text-primary);
+.question-subject {
+  color: #666;
+  font-size: 0.9rem;
 }
 
-.preference-time {
-  color: var(--text-secondary);
-}
-
-.btn-primary,
-.btn-secondary {
+/* 按钮样式 */
+.btn {
   padding: 8px 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: all 0.2s;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-primary {
-  background: var(--primary-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
 .btn-secondary {
-  background: var(--secondary-color);
+  background: #6c757d;
   color: white;
 }
 
 .btn-secondary:hover {
-  background: var(--secondary-hover);
+  background: #5a6268;
 }
 
-.btn-primary:disabled,
-.btn-secondary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.btn-success {
+  background: #28a745;
+  color: white;
 }
 
+.btn-success:hover {
+  background: #218838;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #667eea;
+  color: #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+/* 响应式设计 */
 @media (max-width: 768px) {
   .ai-study {
     padding: 15px;
   }
-
-  .plan-summary {
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .ai-content {
+    gap: 20px;
+  }
+  
+  .plan-summary,
+  .assessment-summary {
     grid-template-columns: 1fr;
   }
-
+  
   .goals-grid {
     grid-template-columns: 1fr;
   }
-
-  .pattern-grid {
+  
+  .questions-grid {
     grid-template-columns: 1fr;
   }
-
-  .motivation-strategies {
+  
+  .preferences-grid {
     grid-template-columns: 1fr;
   }
-
-  .methods-grid {
+  
+  .pattern-analysis {
     grid-template-columns: 1fr;
   }
-
-  .filter-controls {
+  
+  .task-meta {
     flex-direction: column;
-    align-items: stretch;
+    gap: 5px;
   }
-
-  .metric-item {
+  
+  .task-actions {
     flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .metric-label {
-    min-width: auto;
-  }
-
-  .metric-value {
-    min-width: auto;
-    text-align: left;
+    gap: 5px;
   }
 }
 </style>

@@ -1,7 +1,7 @@
-import axios from "axios";
+import { useApi } from "@/composables/useApi";
 import type { AxiosResponse } from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "/";
+const api = useApi();
 
 // 题目推荐接口
 export interface RecommendedQuestion {
@@ -22,16 +22,12 @@ export interface QuestionRecommendationResponse {
 export const getRecommendedQuestions = async (
   subject?: string,
   count: number = 10
-): Promise<AxiosResponse<QuestionRecommendationResponse>> => {
+): Promise<QuestionRecommendationResponse> => {
   const params = new URLSearchParams();
   if (subject) params.append("subject", subject);
   params.append("count", count.toString());
 
-  return axios.get(`/api/v1/ai/recommendations?${params.toString()}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  return api.get(`/api/v1/ai/recommendations?${params.toString()}`);
 };
 
 // 学习计划接口
@@ -81,12 +77,8 @@ export interface StudyPlanResponse {
   message: string;
 }
 
-export const getStudyPlan = async (): Promise<AxiosResponse<StudyPlanResponse>> => {
-  return axios.get("/api/v1/ai/study-plan", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const getStudyPlan = async (): Promise<StudyPlanResponse> => {
+  return api.get("/api/v1/ai/study-plan");
 };
 
 // 学习模式分析接口
@@ -105,12 +97,8 @@ export interface LearningPatternResponse {
   message: string;
 }
 
-export const getLearningPattern = async (): Promise<AxiosResponse<LearningPatternResponse>> => {
-  return axios.get("/api/v1/ai/learning-pattern", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const getLearningPattern = async (): Promise<LearningPatternResponse> => {
+  return api.get("/api/v1/ai/learning-pattern");
 };
 
 // 难度分析接口
@@ -128,12 +116,8 @@ export interface DifficultyAnalysisResponse {
   message: string;
 }
 
-export const getDifficultyAnalysis = async (): Promise<AxiosResponse<DifficultyAnalysisResponse>> => {
-  return axios.get("/api/v1/ai/difficulty-analysis", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const getDifficultyAnalysis = async (): Promise<DifficultyAnalysisResponse> => {
+  return api.get("/api/v1/ai/difficulty-analysis");
 };
 
 // AI生成题目接口（教师/管理员）
@@ -160,17 +144,13 @@ export interface GenerateQuestionsResponse {
 
 export const generateQuestions = async (
   data: GenerateQuestionRequest
-): Promise<AxiosResponse<GenerateQuestionsResponse>> => {
+): Promise<GenerateQuestionsResponse> => {
   const params = new URLSearchParams();
   params.append("subject", data.subject);
   params.append("difficulty", data.difficulty.toString());
   params.append("count", data.count.toString());
 
-  return axios.post(`/api/v1/ai/generate-questions?${params.toString()}`, null, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  return api.post(`/api/v1/ai/generate-questions?${params.toString()}`, null);
 };
 
 // 智能评分接口
@@ -200,12 +180,8 @@ export interface SmartGradingResponse {
 
 export const smartGrading = async (
   data: SmartGradingRequest
-): Promise<AxiosResponse<SmartGradingResponse>> => {
-  return axios.post("/api/v1/ai/smart-grading", data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+): Promise<SmartGradingResponse> => {
+  return api.post("/api/v1/ai/smart-grading", data);
 };
 
 // 学习能力评估接口
@@ -235,12 +211,8 @@ export interface AbilityAssessmentResponse {
 
 export const assessLearningAbility = async (
   data: AbilityAssessmentRequest
-): Promise<AxiosResponse<AbilityAssessmentResponse>> => {
-  return axios.post("/api/v1/ai/ability-assessment", data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+): Promise<AbilityAssessmentResponse> => {
+  return api.post("/api/v1/ai/ability-assessment", data);
 };
 
 // 学习风格分析接口
@@ -267,12 +239,8 @@ export interface LearningStyleResponse {
 
 export const analyzeLearningStyle = async (
   data: LearningStyleRequest
-): Promise<AxiosResponse<LearningStyleResponse>> => {
-  return axios.post("/api/v1/ai/learning-style", data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+): Promise<LearningStyleResponse> => {
+  return api.post("/api/v1/ai/learning-style", data);
 };
 
 // 学习动机激励接口
@@ -300,62 +268,56 @@ export interface MotivationResponse {
 
 export const getMotivationPlan = async (
   data: MotivationRequest
-): Promise<AxiosResponse<MotivationResponse>> => {
-  return axios.post("/api/v1/ai/motivation", data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
+): Promise<MotivationResponse> => {
+  return api.post("/api/v1/ai/motivation", data);
+};
+
+// 学习任务接口
+export interface LearningTask {
+  id: string;
+  title: string;
+  description: string;
+  task_type: string;
+  subject: string;
+  estimated_time: number;
+  status: 'pending' | 'in_progress' | 'completed';
+  scheduled_date: string;
+  created_at: string;
+  started_at?: string;
+  completed_at?: string;
+}
+
+export interface LearningTasksResponse {
+  success: boolean;
+  data: LearningTask[];
+  message: string;
+}
+
+export const getLearningTasks = async (): Promise<LearningTasksResponse> => {
+  return api.get("/api/v1/learning/tasks");
+};
+
+export const updateTaskStatus = async (
+  taskId: string, 
+  status: 'pending' | 'in_progress' | 'completed'
+): Promise<any> => {
+  return api.put(`/api/v1/learning/tasks/${taskId}/status`, {
+    status,
+    updated_at: new Date().toISOString()
   });
 };
 
-// 智能组卷
-export const generateExam = async (formData: FormData) => {
-  return await axios.post('/ai/generate-exam', formData)
-}
-
-// 题目推荐
-export const recommendQuestions = async (params: { subject?: string; count: number }) => {
-  return await axios.get('/ai/recommend-questions', { params })
-}
-
-// 创建学习计划
-export const createStudyPlan = async (data: { subject: string; goal: string; duration: number }) => {
-  return await axios.post('/ai/create-study-plan', data)
-}
-
-// 分析学习模式
-export const analyzeLearningPattern = async () => {
-  return await axios.get('/ai/analyze-learning-pattern')
-}
-
-// 学习分析报告
-export const generateLearningReport = async () => {
-  return await axios.get('/ai/learning-report')
-}
-
-// 错题分析讲解
-export const analyzeWrongQuestion = async (formData: FormData) => {
-  return await axios.post('/ai/analyze-wrong-question', formData)
-}
-
-// 学习激励
-export const generateLearningMotivation = async () => {
-  return await axios.get('/ai/learning-motivation')
-}
-
-// 学习风格识别
-export const identifyLearningStyle = async () => {
-  return await axios.get('/ai/learning-style')
-}
-
 // 导出所有AI API方法
 export const aiApi = {
-  generateExam,
-  recommendQuestions,
-  createStudyPlan,
-  analyzeLearningPattern,
-  generateLearningReport,
-  analyzeWrongQuestion,
-  generateLearningMotivation,
-  identifyLearningStyle
+  getRecommendedQuestions,
+  getStudyPlan,
+  getLearningPattern,
+  getDifficultyAnalysis,
+  generateQuestions,
+  smartGrading,
+  assessLearningAbility,
+  analyzeLearningStyle,
+  getMotivationPlan,
+  getLearningTasks,
+  updateTaskStatus
 } 

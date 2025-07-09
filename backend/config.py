@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     # 应用配置
     app_name: str = "AI智能教育平台"
     app_version: str = "1.0.0"
-    debug: bool = False
+    debug: bool = True
 
     # 数据库配置
     database_url: str = "sqlite:///./sql_app.db"
@@ -18,7 +18,18 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 30
 
     # CORS配置
-    allowed_origins: list = ["http://localhost:3000", "http://localhost:5173"]
+    allowed_origins: list = [
+        "http://localhost:3000", 
+        "http://localhost:5173",
+        "http://localhost:4173",
+        "http://localhost:8080",
+        "http://localhost:3001",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:4173",
+        "http://127.0.0.1:8080",
+        "http://127.0.0.1:3001"
+    ]
 
     # 文件上传配置
     upload_dir: str = "uploads"

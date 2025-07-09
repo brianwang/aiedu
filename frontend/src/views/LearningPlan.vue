@@ -51,6 +51,11 @@
         <LearningCalendar />
       </div>
 
+      <!-- 任务提醒 -->
+      <div class="reminder-section">
+        <TaskReminder />
+      </div>
+
       <!-- 成就系统 -->
       <div class="achievement-section">
         <AchievementSystem />
@@ -258,6 +263,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useApi } from '@/composables/useApi'
 import LearningCalendar from '@/components/LearningCalendar.vue'
 import AchievementSystem from '@/components/AchievementSystem.vue'
+import TaskReminder from '@/components/TaskReminder.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -424,6 +430,10 @@ onMounted(() => {
 }
 
 .calendar-section {
+  margin-bottom: 30px;
+}
+
+.reminder-section {
   margin-bottom: 30px;
 }
 

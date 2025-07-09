@@ -49,9 +49,12 @@ app = FastAPI(
 )
 
 # 中间件配置
+# CORS配置 - 开发环境允许所有本地源
+cors_origins = ["*"] if settings.debug else settings.allowed_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_origins,
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -168,18 +168,90 @@ const todayTasks = computed(() => {
 // 方法
 const loadTasks = async () => {
   try {
-    const response = await api.get('/api/v1/learning/plans')
-    const allTasks = []
-    
-    for (const plan of response) {
-      const tasksResponse = await api.get(`/api/v1/learning/plans/${plan.id}/tasks`)
-      allTasks.push(...tasksResponse)
+    // 首先尝试从AI学习计划获取任务
+    const aiResponse = await api.get('/ai/study-plan')
+    if (aiResponse.data && aiResponse.data.tasks) {
+      tasks.value = aiResponse.data.tasks.map(task => ({
+        ...task,
+        due_date: task.due_date || new Date().toISOString().split('T')[0],
+        status: task.status || 'pending'
+      }))
     }
     
-    tasks.value = allTasks
+    // 然后从学习计划API获取任务
+    try {
+      const plansResponse = await api.get('/api/v1/learning/plans')
+      if (plansResponse && Array.isArray(plansResponse)) {
+        const allTasks = []
+        
+        for (const plan of plansResponse) {
+          try {
+            const tasksResponse = await api.get(`/api/v1/learning/plans/${plan.id}/tasks`)
+            if (Array.isArray(tasksResponse)) {
+              allTasks.push(...tasksResponse)
+            }
+          } catch (error) {
+            console.warn(`获取计划 ${plan.id} 的任务失败:`, error)
+          }
+        }
+        
+        // 合并任务，避免重复
+        const existingTaskIds = new Set(tasks.value.map(t => t.id))
+        const newTasks = allTasks.filter(task => !existingTaskIds.has(task.id))
+        tasks.value.push(...newTasks)
+      }
+    } catch (error) {
+      console.warn('获取学习计划任务失败:', error)
+    }
+    
+    // 如果没有任务，创建一些示例任务
+    if (tasks.value.length === 0) {
+      tasks.value = createSampleTasks()
+    }
   } catch (error) {
     console.error('加载任务失败:', error)
+    // 使用示例任务作为降级方案
+    tasks.value = createSampleTasks()
   }
+}
+
+const createSampleTasks = () => {
+  const today = new Date()
+  const tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  
+  return [
+    {
+      id: 1,
+      title: '数学基础练习',
+      description: '完成10道基础数学题目',
+      task_type: 'practice',
+      subject: '数学',
+      estimated_time: 30,
+      due_date: today.toISOString().split('T')[0],
+      status: 'pending'
+    },
+    {
+      id: 2,
+      title: '英语语法复习',
+      description: '复习过去时态语法规则',
+      task_type: 'review',
+      subject: '英语',
+      estimated_time: 45,
+      due_date: today.toISOString().split('T')[0],
+      status: 'in_progress'
+    },
+    {
+      id: 3,
+      title: '物理概念学习',
+      description: '学习牛顿运动定律',
+      task_type: 'new_concept',
+      subject: '物理',
+      estimated_time: 60,
+      due_date: tomorrow.toISOString().split('T')[0],
+      status: 'pending'
+    }
+  ]
 }
 
 const previousMonth = () => {
@@ -200,13 +272,42 @@ const nextMonth = () => {
 
 const selectDate = (day) => {
   selectedDate.value = day
-  // 这里可以添加日期选择逻辑，比如显示该日期的任务详情
+  // 可以在这里显示选中日期的任务详情
+  console.log('选中日期:', day.date, '任务:', day.tasks)
 }
 
 const startTask = async (taskId) => {
   try {
-    await api.put(`/api/v1/learning/tasks/${taskId}/status`, { status: 'in_progress' })
-    await loadTasks()
+    // 更新本地状态
+    const task = tasks.value.find(t => t.id === taskId)
+    if (task) {
+      task.status = 'in_progress'
+    }
+    
+    // 调用API更新任务状态
+    try {
+      const response = await api.put(`/api/v1/learning/tasks/${taskId}/status`, { 
+        status: 'in_progress',
+        started_at: new Date().toISOString()
+      })
+      
+      // 如果API调用成功，使用返回的数据更新本地状态
+      if (response && response.status === 'in_progress') {
+        const taskIndex = tasks.value.findIndex(t => t.id === taskId)
+        if (taskIndex >= 0) {
+          tasks.value[taskIndex] = { ...tasks.value[taskIndex], ...response }
+        }
+      }
+      
+      console.log('任务状态已同步到数据库:', response)
+    } catch (error) {
+      console.error('更新任务状态失败:', error)
+      // 如果API调用失败，恢复本地状态
+      if (task) {
+        task.status = 'pending'
+      }
+      alert('更新任务状态失败，请重试')
+    }
   } catch (error) {
     console.error('开始任务失败:', error)
   }
@@ -214,26 +315,89 @@ const startTask = async (taskId) => {
 
 const completeTask = async (taskId) => {
   try {
-    await api.put(`/api/v1/learning/tasks/${taskId}/status`, { status: 'completed' })
-    await loadTasks()
+    // 更新本地状态
+    const task = tasks.value.find(t => t.id === taskId)
+    if (task) {
+      task.status = 'completed'
+    }
+    
+    // 调用API更新任务状态
+    try {
+      const response = await api.put(`/api/v1/learning/tasks/${taskId}/status`, { 
+        status: 'completed',
+        completed_at: new Date().toISOString()
+      })
+      
+      // 如果API调用成功，使用返回的数据更新本地状态
+      if (response && response.status === 'completed') {
+        const taskIndex = tasks.value.findIndex(t => t.id === taskId)
+        if (taskIndex >= 0) {
+          tasks.value[taskIndex] = { ...tasks.value[taskIndex], ...response }
+        }
+      }
+      
+      // 记录学习进度
+      try {
+        await api.post('/api/v1/learning/progress', {
+          task_id: taskId,
+          study_time: task.estimated_time || 30,
+          questions_answered: 1,
+          correct_answers: 1,
+          completed_at: new Date().toISOString()
+        })
+        console.log('学习进度已记录')
+      } catch (progressError) {
+        console.warn('记录学习进度失败:', progressError)
+      }
+      
+      // 检查是否解锁新成就
+      try {
+        await checkAchievementUnlock()
+      } catch (achievementError) {
+        console.warn('检查成就解锁失败:', achievementError)
+      }
+      
+      console.log('任务完成状态已同步到数据库:', response)
+    } catch (error) {
+      console.error('更新任务状态失败:', error)
+      // 如果API调用失败，恢复本地状态
+      if (task) {
+        task.status = 'in_progress'
+      }
+      alert('更新任务状态失败，请重试')
+    }
   } catch (error) {
     console.error('完成任务失败:', error)
   }
 }
 
+// 检查成就解锁
+const checkAchievementUnlock = async () => {
+  try {
+    // 获取用户学习统计
+    const statsResponse = await api.get('/api/v1/learning/statistics')
+    if (statsResponse) {
+      // 这里可以添加成就解锁逻辑
+      console.log('检查成就解锁:', statsResponse)
+    }
+  } catch (error) {
+    console.error('检查成就解锁失败:', error)
+  }
+}
+
 const createTask = () => {
-  // 跳转到创建任务页面或打开创建任务弹窗
+  // 跳转到创建任务页面或打开创建任务对话框
   console.log('创建新任务')
 }
 
-const getTaskTypeText = (taskType) => {
-  const typeMap = {
-    'study': '学习',
+const getTaskTypeText = (type) => {
+  const types = {
     'practice': '练习',
     'review': '复习',
-    'assessment': '测试'
+    'new_concept': '新概念',
+    'assessment': '评估'
   }
-  return typeMap[taskType] || taskType
+  return types[type] || type
 }
 
 // 生命周期
@@ -245,74 +409,81 @@ onMounted(() => {
 <style scoped>
 .learning-calendar {
   background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .calendar-header h3 {
-  color: #2c3e50;
   margin: 0;
+  font-size: 1rem;
+  color: var(--text-primary);
 }
 
 .calendar-controls {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.current-month {
-  font-weight: 600;
-  color: #2c3e50;
-  min-width: 100px;
-  text-align: center;
+  gap: 8px;
 }
 
 .btn-icon {
   background: none;
   border: none;
+  color: var(--text-secondary);
   cursor: pointer;
-  padding: 8px;
-  border-radius: 6px;
-  color: #6c757d;
-  transition: all 0.3s;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-icon:hover {
-  background: #f8f9fa;
-  color: #007bff;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .btn-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
+}
+
+.current-month {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  min-width: 60px;
+  text-align: center;
 }
 
 .calendar-grid {
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 1px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .weekday {
   text-align: center;
-  padding: 10px;
-  font-weight: 600;
-  color: #6c757d;
-  background: #f8f9fa;
-  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 4px 0;
 }
 
 .calendar-days {
@@ -323,12 +494,13 @@ onMounted(() => {
 
 .calendar-day {
   aspect-ratio: 1;
-  padding: 5px;
-  border: 1px solid #e9ecef;
-  border-radius: 6px;
+  min-height: 28px;
+  font-size: 0.75rem;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.2s;
   position: relative;
+  padding: 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -336,90 +508,97 @@ onMounted(() => {
 }
 
 .calendar-day:hover {
-  background: #f8f9fa;
-  border-color: #007bff;
+  background-color: var(--bg-secondary);
 }
 
 .calendar-day.other-month {
-  color: #adb5bd;
-  background: #f8f9fa;
+  color: var(--text-tertiary);
 }
 
 .calendar-day.today {
-  background: #e3f2fd;
-  border-color: #2196f3;
+  background-color: var(--primary-color);
+  color: white;
   font-weight: bold;
 }
 
 .calendar-day.has-task {
-  background: #fff3cd;
-  border-color: #ffc107;
+  background-color: rgba(52, 152, 219, 0.08);
+  border: 1px solid rgba(52, 152, 219, 0.15);
 }
 
 .calendar-day.task-completed {
-  background: #d4edda;
-  border-color: #28a745;
+  background-color: rgba(46, 204, 113, 0.08);
+  border: 1px solid rgba(46, 204, 113, 0.15);
 }
 
 .day-number {
-  font-size: 14px;
+  font-size: 0.75rem;
   font-weight: 500;
+  margin-bottom: 0;
 }
 
 .task-indicator {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
+  bottom: 1px;
+  right: 1px;
 }
 
 .task-dot {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  font-size: 8px;
+  font-size: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
 }
 
 .task-dot.pending {
-  background: #ffc107;
+  background-color: var(--warning-color);
 }
 
 .task-dot.completed {
-  background: #28a745;
+  background-color: var(--success-color);
+  color: white;
 }
 
 .today-reminder {
-  border-top: 1px solid #e9ecef;
-  padding-top: 20px;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  padding: 6px;
+  margin-top: 6px;
 }
 
 .today-reminder h4 {
-  color: #2c3e50;
-  margin-bottom: 15px;
+  margin: 0 0 4px 0;
+  font-size: 0.8rem;
+  color: var(--text-primary);
 }
 
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
 }
 
 .task-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border-left: 4px solid #007bff;
+  padding: 4px 8px;
+  background: white;
+  border-radius: 3px;
+  border-left: 2px solid var(--primary-color);
+  font-size: 0.75rem;
 }
 
 .task-item.status-completed {
-  border-left-color: #28a745;
-  background: #f8fff9;
+  border-left-color: var(--success-color);
+  opacity: 0.7;
+}
+
+.task-item.status-in_progress {
+  border-left-color: var(--warning-color);
 }
 
 .task-info {
@@ -427,108 +606,112 @@ onMounted(() => {
 }
 
 .task-title {
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0;
 }
 
 .task-meta {
   display: flex;
-  gap: 15px;
-  font-size: 12px;
-  color: #6c757d;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.task-time {
+  color: var(--primary-color);
+}
+
+.task-type {
+  background: var(--primary-color);
+  color: white;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 0.7rem;
 }
 
 .task-actions {
   display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
+  gap: 2px;
 }
 
 .btn-sm {
-  padding: 4px 8px;
-  font-size: 11px;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .btn-primary {
-  background: #007bff;
+  background: var(--primary-color);
   color: white;
 }
 
 .btn-primary:hover {
-  background: #0056b3;
+  background: var(--primary-hover);
 }
 
 .btn-success {
-  background: #28a745;
+  background: var(--success-color);
   color: white;
 }
 
 .btn-success:hover {
-  background: #1e7e34;
+  background: var(--success-hover);
 }
 
 .btn-outline {
-  background: transparent;
-  color: #007bff;
-  border: 1px solid #007bff;
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .btn-outline:hover {
-  background: #007bff;
-  color: white;
+  background: var(--bg-secondary);
 }
 
 .status-badge {
-  font-size: 11px;
-  color: #28a745;
+  font-size: 0.7rem;
+  color: var(--success-color);
   font-weight: 500;
 }
 
 .empty-state {
   text-align: center;
-  padding: 40px 20px;
-  color: #6c757d;
+  padding: 10px;
+  color: var(--text-secondary);
 }
 
 .empty-icon {
-  font-size: 3rem;
-  margin-bottom: 15px;
+  font-size: 20px;
+  margin-bottom: 4px;
 }
 
 .empty-state p {
-  margin-bottom: 20px;
+  margin: 0 0 6px 0;
+  font-size: 0.8rem;
 }
 
 @media (max-width: 768px) {
-  .calendar-header {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
+  .learning-calendar {
+    padding: 4px;
   }
-  
+  .calendar-header h3 {
+    font-size: 0.95rem;
+  }
+  .current-month {
+    font-size: 0.8rem;
+    min-width: 50px;
+  }
   .calendar-day {
-    padding: 2px;
+    min-height: 22px;
+    font-size: 0.7rem;
   }
-  
   .day-number {
-    font-size: 12px;
-  }
-  
-  .task-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    font-size: 0.7rem;
   }
 }
 </style> 
