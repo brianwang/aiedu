@@ -27,7 +27,7 @@
           </router-link>
 
           <router-link
-            to="/questions"
+            to="/question-bank"
             class="nav-link"
             @click="closeMobileMenu"
             v-if="isAuthenticated"
@@ -52,6 +52,20 @@
               />
             </svg>
             <span>AI学习</span>
+          </router-link>
+
+          <router-link
+            to="/analytics"
+            class="nav-link"
+            @click="closeMobileMenu"
+            v-if="isAuthenticated"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"
+              />
+            </svg>
+            <span>数据分析</span>
           </router-link>
 
           <router-link
@@ -139,6 +153,22 @@
                 退出登录
               </button>
             </div>
+          </div>
+          
+          <!-- 未登录状态显示登录/注册链接 -->
+          <div v-else class="auth-links">
+            <router-link to="/login" class="auth-link login-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+                <path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5z"/>
+              </svg>
+              登录
+            </router-link>
+            <router-link to="/register" class="auth-link register-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+                <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+              </svg>
+              注册
+            </router-link>
           </div>
         </div>
       </div>
@@ -305,6 +335,43 @@ export default defineComponent({
 /* 用户菜单 */
 .user-menu {
   position: relative;
+}
+
+/* 认证链接样式 */
+.auth-links {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.auth-link {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.login-link {
+  color: var(--text-secondary);
+}
+
+.login-link:hover {
+  color: var(--primary-color);
+  background: rgba(74, 144, 226, 0.1);
+}
+
+.register-link {
+  background: var(--primary-color);
+  color: white;
+}
+
+.register-link:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .profile-button {

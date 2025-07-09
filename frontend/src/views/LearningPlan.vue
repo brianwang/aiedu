@@ -14,8 +14,14 @@
         </div>
       </div>
 
+      <!-- 加载状态 -->
+      <div v-if="loading" class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>正在加载学习计划...</p>
+      </div>
+
       <!-- 学习统计概览 -->
-      <div class="statistics-overview" v-if="statistics">
+      <div v-else-if="statistics" class="statistics-overview">
         <div class="stat-card">
           <div class="stat-icon">📚</div>
           <div class="stat-content">
@@ -75,6 +81,16 @@
 
       <!-- 计划内容 -->
       <div class="plan-content">
+        <!-- 空状态 -->
+        <div v-if="!loading && plans.length === 0" class="empty-state">
+          <div class="empty-icon">📋</div>
+          <h3>暂无学习计划</h3>
+          <p>您还没有学习计划，点击下方按钮生成个性化学习计划。</p>
+          <button @click="showProfileWizard" class="btn btn-primary">
+            生成学习计划
+          </button>
+        </div>
+
         <!-- 短期计划 -->
         <div v-if="activePlanType === 'short_term' && shortTermPlan" class="plan-section">
           <div class="plan-info">
@@ -324,6 +340,9 @@ const loadPlans = async () => {
     }
   } catch (error) {
     console.error('加载学习计划失败:', error)
+    plans.value = []
+    statistics.value = null
+    tasks.value = []
   } finally {
     loading.value = false
   }
@@ -420,6 +439,24 @@ onMounted(() => {
 .header-actions {
   display: flex;
   gap: 10px;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e9ecef;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
 }
 
 .statistics-overview {

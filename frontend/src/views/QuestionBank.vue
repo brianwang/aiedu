@@ -24,8 +24,14 @@
       </div>
     </div>
 
+    <!-- 加载状态 -->
+    <div v-if="loading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>正在加载题库数据...</p>
+    </div>
+
     <!-- 筛选和操作区域 -->
-    <div class="filter-section">
+    <div v-else class="filter-section">
       <div class="filter-controls">
         <div class="filter-group">
           <label class="filter-label">
@@ -80,7 +86,15 @@
       </div>
 
       <div class="action-buttons">
-        <button @click="startRandomPractice" class="btn-primary action-btn">
+        <button @click="getRecommendedQuestions" class="btn-primary action-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="btn-icon">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            <path d="M12 6l1.09 2.26L15.5 9l-2.41 2.35.57 3.32L12 13.77l-1.66.9.57-3.32L8.5 9l2.41-.74L12 6z"/>
+          </svg>
+          获取推荐
+        </button>
+        
+        <button @click="startRandomPractice" class="btn-secondary action-btn">
           <svg viewBox="0 0 24 24" fill="currentColor" class="btn-icon">
             <path d="M19.07 4.93l-1.41 1.41C19.1 7.79 20 9.79 20 12c0 4.42-3.58 8-8 8s-8-3.58-8-8c0-4.42 3.58-8 8-8 1.57 0 3.04.46 4.28 1.26l1.45-1.45C16.1 2.67 14.13 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-2.76-1.12-5.26-2.93-7.07z"/>
             <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
@@ -186,6 +200,15 @@
 
     <!-- 题目列表模式 -->
     <div v-else class="questions-grid">
+      <div v-if="filteredQuestions.length === 0" class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h3>暂无题目</h3>
+        <p>当前没有可用的题目，请稍后再试或联系管理员添加题目。</p>
+        <button v-if="canManageQuestions" @click="showCreateDialog = true" class="btn-primary">
+          添加题目
+        </button>
+      </div>
+      
       <div v-for="question in filteredQuestions" :key="question.id" class="question-item">
         <div class="question-card-small">
           <div class="question-meta">
@@ -328,6 +351,7 @@ import {
   getQuestionsByCategory,
   getCategories,
 } from "@/api/question";
+import { getRecommendedQuestions as getAIRecommendedQuestions } from "@/api/ai";
 
 interface Question {
   id: number;
@@ -355,6 +379,7 @@ export default defineComponent({
     const selectedType = ref("");
     const showCreateDialog = ref(false);
     const currentQuestion = ref<Question | null>(null);
+    const loading = ref(true);
     
     // 练习模式相关状态
     const practiceMode = ref(false);
@@ -436,29 +461,9 @@ export default defineComponent({
         questions.value = response.data;
       } catch (error) {
         console.error('Failed to fetch questions:', error);
-        // 模拟数据用于演示
-        questions.value = [
-          {
-            id: 1,
-            question_type: "single_choice",
-            content: "Vue.js 是什么？",
-            options: ["一个JavaScript框架", "一个CSS框架", "一个HTML模板", "一个数据库"],
-            answer: "一个JavaScript框架",
-            explanation: "Vue.js是一个用于构建用户界面的渐进式JavaScript框架",
-            difficulty: 2,
-            category_id: 1
-          },
-          {
-            id: 2,
-            question_type: "multiple_choice",
-            content: "以下哪些是Vue.js的特性？",
-            options: ["响应式数据绑定", "组件系统", "虚拟DOM", "服务端渲染"],
-            answer: "响应式数据绑定,组件系统,虚拟DOM",
-            explanation: "Vue.js具有响应式数据绑定、组件系统和虚拟DOM等特性",
-            difficulty: 3,
-            category_id: 1
-          }
-        ];
+        questions.value = [];
+      } finally {
+        loading.value = false;
       }
     };
 
@@ -468,13 +473,13 @@ export default defineComponent({
         categories.value = response.data;
       } catch (error) {
         console.error('Failed to fetch categories:', error);
-        // 模拟数据用于演示
-        categories.value = [
-          { id: 1, name: "前端开发" },
-          { id: 2, name: "后端开发" },
-          { id: 3, name: "数据库" }
-        ];
+        categories.value = [];
       }
+    };
+
+    const initializeData = async () => {
+      loading.value = true;
+      await Promise.all([fetchQuestions(), fetchCategories()]);
     };
 
     const startRandomPractice = () => {
@@ -603,8 +608,39 @@ export default defineComponent({
       };
     };
 
+    const getRecommendedQuestions = async () => {
+      try {
+        // 使用AI推荐API获取智能推荐题目
+        const response = await getAIRecommendedQuestions(undefined, 10);
+        if (response.success && response.data.length > 0) {
+          practiceQuestions.value = response.data;
+          practiceMode.value = true;
+          currentQuestionIndex.value = 0;
+          userAnswer.value = "";
+          showResult.value = false;
+        } else {
+          // 如果AI推荐失败，使用随机题目作为备选
+          const shuffled = [...filteredQuestions.value].sort(() => Math.random() - 0.5);
+          practiceQuestions.value = shuffled.slice(0, Math.min(10, shuffled.length));
+          practiceMode.value = true;
+          currentQuestionIndex.value = 0;
+          userAnswer.value = "";
+          showResult.value = false;
+        }
+      } catch (error) {
+        console.error('Failed to get recommended questions:', error);
+        // 如果API调用失败，使用随机题目作为备选
+        const shuffled = [...filteredQuestions.value].sort(() => Math.random() - 0.5);
+        practiceQuestions.value = shuffled.slice(0, Math.min(10, shuffled.length));
+        practiceMode.value = true;
+        currentQuestionIndex.value = 0;
+        userAnswer.value = "";
+        showResult.value = false;
+      }
+    };
+
     onMounted(async () => {
-      await Promise.all([fetchQuestions(), fetchCategories()]);
+      await initializeData();
     });
 
     return {
@@ -615,6 +651,7 @@ export default defineComponent({
       selectedType,
       showCreateDialog,
       currentQuestion,
+      loading,
       questionTypes,
       questionForm,
       canManageQuestions,
@@ -641,6 +678,7 @@ export default defineComponent({
       deleteQuestionConfirm,
       submitQuestion,
       cancelEdit,
+      getRecommendedQuestions,
     };
   },
 });
@@ -1379,6 +1417,65 @@ export default defineComponent({
   margin-top: var(--spacing-xl);
   padding-top: var(--spacing-lg);
   border-top: 1px solid var(--border-color);
+}
+
+/* 加载状态 */
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--spacing-md);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xxl);
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--border-color);
+  margin: var(--spacing-xl) 0;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.5rem;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+  font-size: 1rem;
 }
 
 /* 响应式设计 */

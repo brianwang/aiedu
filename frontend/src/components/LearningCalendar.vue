@@ -203,15 +203,9 @@ const loadTasks = async () => {
     } catch (error) {
       console.warn('获取学习计划任务失败:', error)
     }
-    
-    // 如果没有任务，创建一些示例任务
-    if (tasks.value.length === 0) {
-      tasks.value = createSampleTasks()
-    }
   } catch (error) {
     console.error('加载任务失败:', error)
-    // 使用示例任务作为降级方案
-    tasks.value = createSampleTasks()
+    tasks.value = []
   }
 }
 
@@ -409,9 +403,9 @@ onMounted(() => {
 <style scoped>
 .learning-calendar {
   background: white;
-  border-radius: 8px;
-  padding: 8px 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
@@ -421,184 +415,197 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .calendar-header h3 {
   margin: 0;
-  font-size: 1rem;
-  color: var(--text-primary);
+  font-size: 1.2rem;
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 .calendar-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .btn-icon {
-  background: none;
+  background: #f8f9fa;
   border: none;
-  color: var(--text-secondary);
+  color: #6c757d;
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .btn-icon:hover {
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
+  background-color: #e9ecef;
+  color: #495057;
 }
 
 .btn-icon svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 .current-month {
   font-weight: 500;
-  color: var(--text-primary);
-  font-size: 0.85rem;
-  min-width: 60px;
+  color: #2c3e50;
+  font-size: 1rem;
+  min-width: 80px;
   text-align: center;
 }
 
 .calendar-grid {
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  margin-bottom: 4px;
+  gap: 4px;
+  margin-bottom: 8px;
 }
 
 .weekday {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text-secondary);
-  padding: 4px 0;
+  color: #6c757d;
+  padding: 8px 0;
 }
 
 .calendar-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
+  gap: 4px;
 }
 
 .calendar-day {
   aspect-ratio: 1;
-  min-height: 28px;
-  font-size: 0.75rem;
-  border-radius: 4px;
+  min-height: 36px;
+  font-size: 0.9rem;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
-  padding: 2px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #f8f9fa;
+  border: 1px solid transparent;
 }
 
 .calendar-day:hover {
-  background-color: var(--bg-secondary);
+  background-color: #e9ecef;
+  border-color: #dee2e6;
 }
 
 .calendar-day.other-month {
-  color: var(--text-tertiary);
+  color: #adb5bd;
+  background: #f8f9fa;
 }
 
 .calendar-day.today {
-  background-color: var(--primary-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   font-weight: bold;
+  border-color: #667eea;
 }
 
 .calendar-day.has-task {
-  background-color: rgba(52, 152, 219, 0.08);
-  border: 1px solid rgba(52, 152, 219, 0.15);
+  background-color: #e3f2fd;
+  border: 1px solid #bbdefb;
 }
 
 .calendar-day.task-completed {
-  background-color: rgba(46, 204, 113, 0.08);
-  border: 1px solid rgba(46, 204, 113, 0.15);
+  background-color: #e8f5e8;
+  border: 1px solid #c8e6c9;
 }
 
 .day-number {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  margin-bottom: 0;
+  margin-bottom: 2px;
 }
 
 .task-indicator {
   position: absolute;
-  bottom: 1px;
-  right: 1px;
+  bottom: 2px;
+  right: 2px;
 }
 
 .task-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  font-size: 5px;
+  font-size: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .task-dot.pending {
-  background-color: var(--warning-color);
+  background-color: #ffc107;
 }
 
 .task-dot.completed {
-  background-color: var(--success-color);
+  background-color: #28a745;
   color: white;
 }
 
 .today-reminder {
-  background: var(--bg-secondary);
-  border-radius: 4px;
-  padding: 6px;
-  margin-top: 6px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
 }
 
 .today-reminder h4 {
-  margin: 0 0 4px 0;
-  font-size: 0.8rem;
-  color: var(--text-primary);
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .task-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 8px;
+  padding: 12px;
   background: white;
-  border-radius: 3px;
-  border-left: 2px solid var(--primary-color);
-  font-size: 0.75rem;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+  font-size: 0.9rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.task-item:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .task-item.status-completed {
-  border-left-color: var(--success-color);
-  opacity: 0.7;
+  border-left-color: #28a745;
+  opacity: 0.8;
 }
 
 .task-item.status-in_progress {
-  border-left-color: var(--warning-color);
+  border-left-color: #ffc107;
 }
 
 .task-info {
@@ -606,112 +613,131 @@ onMounted(() => {
 }
 
 .task-title {
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: var(--text-primary);
-  margin-bottom: 0;
+  color: #2c3e50;
+  margin-bottom: 4px;
 }
 
 .task-meta {
   display: flex;
-  gap: 4px;
-  font-size: 0.7rem;
-  color: var(--text-secondary);
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #6c757d;
 }
 
 .task-time {
-  color: var(--primary-color);
+  color: #667eea;
+  font-weight: 500;
 }
 
 .task-type {
-  background: var(--primary-color);
+  background: #667eea;
   color: white;
-  padding: 1px 4px;
-  border-radius: 2px;
-  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .task-actions {
   display: flex;
-  gap: 2px;
+  gap: 6px;
 }
 
 .btn-sm {
-  padding: 2px 6px;
-  font-size: 0.7rem;
+  padding: 6px 12px;
+  font-size: 0.8rem;
   border: none;
-  border-radius: 2px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
+  font-weight: 500;
 }
 
 .btn-primary {
-  background: var(--primary-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
 }
 
 .btn-success {
-  background: var(--success-color);
+  background: #28a745;
   color: white;
 }
 
 .btn-success:hover {
-  background: var(--success-hover);
+  background: #218838;
+  transform: translateY(-1px);
 }
 
 .btn-outline {
   background: none;
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
+  border: 1px solid #dee2e6;
+  color: #6c757d;
 }
 
 .btn-outline:hover {
-  background: var(--bg-secondary);
+  background: #f8f9fa;
+  border-color: #adb5bd;
 }
 
 .status-badge {
-  font-size: 0.7rem;
-  color: var(--success-color);
+  font-size: 0.8rem;
+  color: #28a745;
   font-weight: 500;
 }
 
 .empty-state {
   text-align: center;
-  padding: 10px;
-  color: var(--text-secondary);
+  padding: 20px;
+  color: #6c757d;
 }
 
 .empty-icon {
-  font-size: 20px;
-  margin-bottom: 4px;
+  font-size: 2rem;
+  margin-bottom: 8px;
 }
 
 .empty-state p {
-  margin: 0 0 6px 0;
-  font-size: 0.8rem;
+  margin: 0 0 12px 0;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
   .learning-calendar {
-    padding: 4px;
+    padding: 12px;
   }
+  
   .calendar-header h3 {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
   }
+  
   .current-month {
-    font-size: 0.8rem;
-    min-width: 50px;
+    font-size: 0.9rem;
+    min-width: 70px;
   }
+  
   .calendar-day {
-    min-height: 22px;
-    font-size: 0.7rem;
+    min-height: 32px;
+    font-size: 0.85rem;
   }
+  
   .day-number {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
+  }
+  
+  .task-item {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+  
+  .task-title {
+    font-size: 0.9rem;
   }
 }
 </style> 

@@ -87,6 +87,26 @@ app.include_router(question.router, prefix="/api/v1")
 app.include_router(exam.router, prefix="/api/v1")
 app.include_router(learning.router, prefix="/api/v1")
 
+# 尝试导入题库路由（如果存在）
+try:
+    from app.api import question_bank
+    app.include_router(question_bank.router, prefix="/api/v1")
+    logger.info("题库路由加载成功")
+except ImportError as e:
+    logger.warning(f"题库路由未找到，跳过加载: {e}")
+except Exception as e:
+    logger.warning(f"题库路由加载失败，跳过加载: {e}")
+
+# 尝试导入分析路由（如果存在）
+try:
+    from app.api import analytics
+    app.include_router(analytics.router, prefix="/api/v1")
+    logger.info("分析路由加载成功")
+except ImportError as e:
+    logger.warning(f"分析路由未找到，跳过加载: {e}")
+except Exception as e:
+    logger.warning(f"分析路由加载失败，跳过加载: {e}")
+
 # 尝试导入AI路由（如果存在）
 try:
     from app.api import ai

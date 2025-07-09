@@ -335,6 +335,17 @@ async def get_plan_tasks(
 
 
 # 学习任务相关接口
+@router.get("/tasks", response_model=List[LearningTaskSchema], summary="获取学习任务列表")
+async def get_learning_tasks(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """获取用户的学习任务列表"""
+    # 通过LearningPlan的user_id来查询任务
+    tasks = db.query(LearningTask).join(LearningPlan).filter(LearningPlan.user_id == current_user.id).all()
+    return tasks
+
+
 @router.post("/tasks", response_model=LearningTaskSchema, summary="创建学习任务")
 async def create_learning_task(
     task: LearningTaskCreate,
@@ -368,30 +379,62 @@ async def update_task_status(
     db: Session = Depends(get_db)
 ):
     """更新任务状态"""
+    # 查找任务并确保属于当前用户
     task = db.query(LearningTask).join(LearningPlan).filter(
         LearningTask.id == task_id,
-        LearningPlan.user_id == current_user.id
+        LearningPlan.user_id == getattr(current_user, 'id', None)
     ).first()
+    
     if not task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="任务不存在"
+            detail=f"任务ID {task_id} 不存在或不属于当前用户"
         )
     
+    # 验证状态值
     new_status = status_update.get("status")
-    if new_status not in ["pending", "in_progress", "completed", "overdue"]:
+    valid_statuses = ["pending", "in_progress", "completed", "overdue"]
+    
+    if not new_status:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="无效的状态值"
+            detail="缺少status字段"
         )
     
-    task.status = new_status
-    if new_status == "completed":
-        task.completed_at = datetime.utcnow()
+    if new_status not in valid_statuses:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"无效的状态值: {new_status}。有效值: {', '.join(valid_statuses)}"
+        )
     
-    db.commit()
-    db.refresh(task)
-    return task
+    # 更新任务状态
+    old_status = getattr(task, 'status', None)
+    task.status = new_status
+    
+    # 如果状态变为completed，设置完成时间
+    if new_status == "completed" and old_status != "completed":
+        setattr(task, 'completed_at', datetime.utcnow())
+    
+    # 如果状态变为in_progress，设置开始时间
+    if new_status == "in_progress" and old_status == "pending":
+        setattr(task, 'started_at', datetime.utcnow())
+    
+    # 更新其他可选字段
+    if "started_at" in status_update:
+        setattr(task, 'started_at', status_update["started_at"])
+    if "completed_at" in status_update:
+        setattr(task, 'completed_at', status_update["completed_at"])
+    
+    try:
+        db.commit()
+        db.refresh(task)
+        return task
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"更新任务状态失败: {str(e)}"
+        )
 
 
 # 学习进度相关接口
@@ -514,3 +557,183 @@ async def create_achievement(
     db.commit()
     db.refresh(db_achievement)
     return db_achievement 
+
+
+@router.post("/test-task", response_model=LearningTaskSchema, summary="创建测试任务")
+async def create_test_task(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """创建测试任务用于测试"""
+    user_id = getattr(current_user, 'id', None)
+    
+    # 直接使用SQL插入，避免模型字段问题
+    from sqlalchemy import text
+    
+    # 插入学习计划
+    plan_result = db.execute(text("""
+        INSERT INTO learning_plans (user_id, plan_type, title, description, start_date, end_date, status, ai_generated, created_at)
+        VALUES (:user_id, :plan_type, :title, :description, :start_date, :end_date, :status, :ai_generated, :created_at)
+        RETURNING id
+    """), {
+        "user_id": user_id,
+        "plan_type": "short_term",
+        "title": "测试计划",
+        "description": "用于测试的计划",
+        "start_date": datetime.now().date(),
+        "end_date": datetime.now().date() + timedelta(days=7),
+        "status": "active",
+        "ai_generated": False,
+        "created_at": datetime.utcnow()
+    })
+    
+    plan_row = plan_result.fetchone()
+    if not plan_row:
+        raise HTTPException(status_code=500, detail="创建计划失败")
+    
+    plan_id = plan_row[0]
+    
+    # 插入测试任务
+    task_result = db.execute(text("""
+        INSERT INTO learning_tasks (plan_id, title, description, task_type, difficulty, estimated_time, due_date, status, created_at)
+        VALUES (:plan_id, :title, :description, :task_type, :difficulty, :estimated_time, :due_date, :status, :created_at)
+        RETURNING id, plan_id, title, description, task_type, difficulty, estimated_time, due_date, status, created_at
+    """), {
+        "plan_id": plan_id,
+        "title": "测试任务",
+        "description": "这是一个测试任务",
+        "task_type": "study",
+        "difficulty": 1,
+        "estimated_time": 30,
+        "due_date": datetime.now().date(),
+        "status": "pending",
+        "created_at": datetime.utcnow()
+    })
+    
+    task_data = task_result.fetchone()
+    if not task_data:
+        raise HTTPException(status_code=500, detail="创建任务失败")
+    
+    db.commit()
+    
+    # 构造返回对象
+    task = LearningTask(
+        id=task_data[0],
+        plan_id=task_data[1],
+        title=task_data[2],
+        description=task_data[3],
+        task_type=task_data[4],
+        difficulty=task_data[5],
+        estimated_time=task_data[6],
+        due_date=task_data[7],
+        status=task_data[8],
+        created_at=task_data[9]
+    )
+    
+    return task 
+
+
+@router.post("/learning-path", summary="获取个性化学习路径")
+async def get_learning_path(
+    target_skill: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """获取个性化学习路径推荐"""
+    try:
+        from app.services.ai_service import AIService
+        ai_service = AIService()
+        
+        learning_path = await ai_service.recommend_learning_path(
+            db=db,
+            user_id=getattr(current_user, 'id', None),
+            target_skill=target_skill
+        )
+        
+        return {
+            "success": True,
+            "data": learning_path
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"获取学习路径失败: {str(e)}"
+        )
+
+
+@router.get("/learning-report", summary="生成学习报告")
+async def generate_learning_report(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """生成个性化学习报告"""
+    try:
+        from app.services.ai_service import AIService
+        ai_service = AIService()
+        
+        report = await ai_service.generate_learning_report(
+            user_id=getattr(current_user, 'id', None),
+            db=db
+        )
+        
+        return {
+            "success": True,
+            "data": report
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"生成学习报告失败: {str(e)}"
+        )
+
+
+@router.get("/learning-style", summary="分析学习风格")
+async def analyze_learning_style(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """分析用户学习风格"""
+    try:
+        from app.services.ai_service import AIService
+        ai_service = AIService()
+        
+        learning_style = await ai_service.identify_learning_style(
+            user_id=getattr(current_user, 'id', None),
+            db=db
+        )
+        
+        return {
+            "success": True,
+            "data": learning_style
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"分析学习风格失败: {str(e)}"
+        )
+
+
+@router.get("/motivation-plan", summary="获取学习激励方案")
+async def get_motivation_plan(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """获取个性化学习激励方案"""
+    try:
+        from app.services.ai_service import AIService
+        ai_service = AIService()
+        
+        motivation = await ai_service.generate_learning_motivation(
+            user_id=getattr(current_user, 'id', None),
+            db=db
+        )
+        
+        return {
+            "success": True,
+            "data": motivation
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"获取激励方案失败: {str(e)}"
+        ) 

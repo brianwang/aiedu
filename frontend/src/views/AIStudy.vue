@@ -319,7 +319,7 @@
                       class="question-item"
                     >
                       <span class="question-type">{{ getQuestionTypeText(type) }}</span>
-                      <span class="question-percentage">{{ pref }}%</span>
+                      <span class="question-percentage">{{ String(pref) }}%</span>
                     </div>
                   </div>
                 </div>
@@ -358,9 +358,14 @@
           <h2>智能推荐题目</h2>
           <button
             @click="fetchRecommendedQuestions"
-            class="btn-secondary"
+            class="refresh-btn"
             :disabled="loading"
           >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+              />
+            </svg>
             刷新推荐
           </button>
         </div>
@@ -374,7 +379,7 @@
           <div class="questions-grid">
             <div 
               v-for="question in recommendedQuestions.slice(0, 3)" 
-              :key="question.id"
+              :key="String(question.id)"
               class="question-card"
             >
               <div class="question-header">
@@ -397,7 +402,11 @@
         <div v-else class="no-questions">
           <div class="empty-icon">📝</div>
           <p>暂无推荐题目</p>
-          <button @click="fetchRecommendedQuestions" class="btn btn-outline">
+          <button @click="fetchRecommendedQuestions" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="btn-icon">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              <path d="M12 6l1.09 2.26L15.5 9l-2.41 2.35.57 3.32L12 13.77l-1.66.9.57-3.32L8.5 9l2.41-.74L12 6z"/>
+            </svg>
             获取推荐
           </button>
         </div>
@@ -1289,6 +1298,11 @@ onMounted(async () => {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
 }
 
 .btn-primary {
