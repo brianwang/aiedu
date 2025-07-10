@@ -6,10 +6,7 @@ import Auth from "@/views/Auth.vue";
 import QuestionBank from "@/views/QuestionBank.vue";
 import Exam from "@/views/Exam.vue";
 import MemberCenter from "@/views/MemberCenter.vue";
-import Teachers from "@/views/Teachers.vue";
-import TeacherList from "@/views/TeacherList.vue";
-import TeacherDetail from "@/views/TeacherDetail.vue";
-import TeacherDashboard from "@/views/TeacherDashboard.vue";
+
 import CourseList from "@/views/CourseList.vue";
 import CourseDetail from "@/views/CourseDetail.vue";
 import Community from "@/views/Community.vue";
@@ -18,10 +15,9 @@ import AI from "@/views/AI.vue";
 // 扩展路由元数据类型
 declare module "vue-router" {
   interface RouteMeta {
-    requiresAuth?: boolean;
-    guestOnly?: boolean;
-    requiresTeacher?: boolean;
-  }
+  requiresAuth?: boolean;
+  guestOnly?: boolean;
+}
 }
 
 const router = createRouter({
@@ -65,27 +61,7 @@ const router = createRouter({
       component: MemberCenter,
       meta: { requiresAuth: true },
     },
-    {
-      path: "/teachers",
-      name: "teachers",
-      component: Teachers,
-    },
-    {
-      path: "/teacher-list",
-      name: "teacher-list",
-      component: TeacherList,
-    },
-    {
-      path: "/teacher/:id",
-      name: "teacher-detail",
-      component: TeacherDetail,
-    },
-    {
-      path: "/teacher-dashboard",
-      name: "teacher-dashboard",
-      component: TeacherDashboard,
-      meta: { requiresAuth: true, requiresTeacher: true },
-    },
+    
     {
       path: "/courses",
       name: "courses",
@@ -118,15 +94,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.requiresAuth && !token) {
     next("/login");
-  } else if (
-    to.meta.requiresTeacher &&
-    userRole !== "teacher" &&
-    userRole !== "admin"
-  ) {
-    next("/");
-  } else {
-    next();
-  }
+  } else   next();
 });
 
 export default router;

@@ -25,7 +25,7 @@ class User(Base):
     is_superuser = Column(Boolean, default=False)
 
     # 角色管理
-    role = Column(String(50), default="student")  # student, teacher, admin
+    role = Column(String(50), default="student")  # student, admin
 
     # 时间戳
     created_at = Column(DateTime, default=datetime.utcnow)

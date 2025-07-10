@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { NCard, NButton, NSpace, NRate } from "naive-ui";
 import { ref } from "vue";
 
-const route = useRoute();
-const courseId = route.params.id;
+const router = useRouter();
 const course = ref({
-  id: courseId,
+  id: 1,
   title: "AI基础课程",
   description: "学习人工智能基础知识",
   price: 299,
   rating: 4.8,
-  teacher: "张教授",
+  instructor: "AI智能导师",
   videoUrl: "https://example.com/video.mp4",
 });
 </script>
@@ -26,7 +25,7 @@ const course = ref({
         <NRate readonly :value="course.rating" />
         <span>{{ course.rating }}</span>
       </NSpace>
-      <p>讲师：{{ course.teacher }}</p>
+      <p>导师：{{ course.instructor }}</p>
       <p>价格：¥{{ course.price }}</p>
       <template #footer>
         <NSpace justify="end">

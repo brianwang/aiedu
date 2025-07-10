@@ -46,14 +46,12 @@ def create_user_interactive():
     # 选择角色
     print("\n请选择用户角色:")
     print("1. 学生 (student)")
-    print("2. 教师 (teacher)")
-    print("3. 管理员 (admin)")
+    print("2. 管理员 (admin)")
     
-    role_choice = input("请输入选择 (1-3): ").strip()
+    role_choice = input("请输入选择 (1-2): ").strip()
     role_map = {
         "1": "student",
-        "2": "teacher", 
-        "3": "admin"
+        "2": "admin"
     }
     role = role_map.get(role_choice, "student")
     

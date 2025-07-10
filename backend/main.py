@@ -34,9 +34,27 @@ async def lifespan(app: FastAPI):
     logger.info("应用启动中...")
     Base.metadata.create_all(bind=engine)
     logger.info("数据库初始化完成")
+    
+    # 启动定时任务服务
+    try:
+        from app.services.scheduler_service import scheduler
+        scheduler.start()
+        logger.info("定时任务服务启动成功")
+    except Exception as e:
+        logger.warning(f"定时任务服务启动失败: {e}")
+    
     yield
+    
     # 关闭时执行
     logger.info("应用关闭中...")
+    
+    # 停止定时任务服务
+    try:
+        from app.services.scheduler_service import scheduler
+        scheduler.stop()
+        logger.info("定时任务服务已停止")
+    except Exception as e:
+        logger.warning(f"定时任务服务停止失败: {e}")
 
 
 app = FastAPI(
@@ -116,6 +134,16 @@ except ImportError as e:
     logger.warning(f"AI路由未找到，跳过加载: {e}")
 except Exception as e:
     logger.warning(f"AI路由加载失败，跳过加载: {e}")
+
+# 尝试导入仪表板路由（如果存在）
+try:
+    from app.api import dashboard
+    app.include_router(dashboard.router, prefix="/api/v1")
+    logger.info("仪表板路由加载成功")
+except ImportError as e:
+    logger.warning(f"仪表板路由未找到，跳过加载: {e}")
+except Exception as e:
+    logger.warning(f"仪表板路由加载失败，跳过加载: {e}")
 
 
 @app.get("/")

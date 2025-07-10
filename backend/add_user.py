@@ -60,13 +60,7 @@ def create_test_users():
     db = next(get_db())
     
     test_users = [
-        {
-            "username": "teacher1",
-            "email": "teacher1@aiedu.com",
-            "password": "teacher123",
-            "full_name": "张老师",
-            "role": "teacher"
-        },
+
         {
             "username": "student1",
             "email": "student1@aiedu.com",

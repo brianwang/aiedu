@@ -13,7 +13,7 @@
         <router-link to="/question-bank" class="nav-link">题库</router-link>
         <router-link to="/exam" class="nav-link">考试</router-link>
         <router-link to="/ai" class="nav-link">AI学习</router-link>
-        <router-link to="/teachers" class="nav-link">教师</router-link>
+
         <router-link to="/courses" class="nav-link">课程</router-link>
         <router-link to="/community" class="nav-link">社区</router-link>
       </div>
@@ -30,15 +30,7 @@
                 <span class="icon">👤</span>
                 个人中心
               </router-link>
-              <router-link
-                v-if="isTeacher"
-                to="/teacher-dashboard"
-                class="dropdown-item"
-              >
-                <span class="icon">📊</span>
-                教师面板
-              </router-link>
-              <div class="dropdown-divider"></div>
+
               <button @click="logout" class="dropdown-item logout-btn">
                 <span class="icon">🚪</span>
                 退出登录
@@ -83,9 +75,7 @@ const userInitials = computed(() => {
   const name = authStore.user?.username || "";
   return name.substring(0, 2).toUpperCase();
 });
-const isTeacher = computed(
-  () => authStore.user?.role === "teacher" || authStore.user?.role === "admin"
-);
+
 
 // 方法
 const toggleMenu = () => {

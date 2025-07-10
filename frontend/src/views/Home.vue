@@ -1,39 +1,36 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useApi } from "@/composables/useApi";
+
+const api = useApi();
 
 const stats = ref({
-  totalQuestions: 1250,
-  completedExams: 15,
-  studyHours: 48,
-  accuracy: 85,
+  totalQuestions: 0,
+  completedExams: 0,
+  studyHours: 0,
+  accuracy: 0,
 });
 
-const recentActivity = ref([
-  {
-    id: 1,
-    type: "exam",
-    title: "数学基础测试",
-    score: 88,
-    date: "2024-01-15",
-    status: "completed",
-  },
-  {
-    id: 2,
-    type: "practice",
-    title: "英语语法练习",
-    score: 92,
-    date: "2024-01-14",
-    status: "completed",
-  },
-  {
-    id: 3,
-    type: "exam",
-    title: "物理力学测试",
-    score: null,
-    date: "2024-01-16",
-    status: "pending",
-  },
-]);
+interface Activity {
+  id: number;
+  type: string;
+  title: string;
+  score?: number;
+  date: string;
+  status: string;
+}
+
+interface Subject {
+  name: string;
+  questions: number;
+  icon: string;
+  difficulty: string;
+  progress: number;
+}
+
+const recentActivity = ref<Activity[]>([]);
+const featuredSubjects = ref<Subject[]>([]);
+const loading = ref(true);
 
 const quickActions = [
   {
@@ -66,46 +63,37 @@ const quickActions = [
   },
 ];
 
-const featuredSubjects = [
-  {
-    name: "数学",
-    questions: 320,
-    icon: "📊",
-    difficulty: "medium",
-    progress: 65,
-  },
-  {
-    name: "英语",
-    questions: 280,
-    icon: "🔤",
-    difficulty: "easy",
-    progress: 78,
-  },
-  {
-    name: "物理",
-    questions: 245,
-    icon: "⚛️",
-    difficulty: "hard",
-    progress: 42,
-  },
-  {
-    name: "化学",
-    questions: 195,
-    icon: "🧪",
-    difficulty: "medium",
-    progress: 58,
-  },
-  {
-    name: "生物",
-    questions: 210,
-    icon: "🧬",
-    difficulty: "easy",
-    progress: 73,
-  },
-];
+const fetchHomeData = async () => {
+  try {
+    loading.value = true;
+    
+    // 获取首页统计数据
+    const statsResponse = await api.get("/dashboard/home-stats") as any;
+    if (statsResponse?.success) {
+      stats.value = statsResponse.data;
+    }
+    
+    // 获取最近活动
+    const activityResponse = await api.get("/dashboard/recent-activity") as any;
+    if (activityResponse?.success) {
+      recentActivity.value = activityResponse.data || [];
+    }
+    
+    // 获取学科进度
+    const subjectsResponse = await api.get("/dashboard/subject-progress") as any;
+    if (subjectsResponse?.success) {
+      featuredSubjects.value = subjectsResponse.data || [];
+    }
+    
+  } catch (error) {
+    console.error("获取首页数据失败:", error);
+  } finally {
+    loading.value = false;
+  }
+};
 
 onMounted(() => {
-  // 这里可以添加获取用户数据的API调用
+  fetchHomeData();
 });
 </script>
 

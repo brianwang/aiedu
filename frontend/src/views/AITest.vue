@@ -360,7 +360,7 @@ const learningAnalysis = ref(null)
 
 // 生成试卷
 const generateExam = async () => {
-  if (!authStore.isTeacher) {
+  if (!authStore.isAuthenticated) {
     alert('只有教师可以生成试卷')
     return
   }

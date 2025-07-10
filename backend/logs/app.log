@@ -8656,3 +8656,2372 @@ FROM questions
 2025-07-10 01:17:51,998 - main - INFO - AI路由加载成功
 2025-07-10 01:17:51,999 - main - INFO - 应用启动中...
 2025-07-10 01:17:52,007 - main - INFO - 数据库初始化完成
+2025-07-10 17:06:06,802 - __main__ - INFO - 题库路由加载成功
+2025-07-10 17:06:06,811 - __main__ - INFO - 分析路由加载成功
+2025-07-10 17:06:06,818 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:06:06,834 - __main__ - INFO - AI路由加载成功
+2025-07-10 17:06:08,892 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:06:08,898 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:06:08,899 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:06:08,914 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:06:09,076 - main - INFO - 题库路由加载成功
+2025-07-10 17:06:09,081 - main - INFO - 分析路由加载成功
+2025-07-10 17:06:09,087 - main - INFO - AI路由加载成功
+2025-07-10 17:06:09,088 - main - INFO - 应用启动中...
+2025-07-10 17:06:09,116 - main - INFO - 数据库初始化完成
+2025-07-10 17:14:34,000 - __main__ - INFO - 题库路由加载成功
+2025-07-10 17:14:34,009 - __main__ - INFO - 分析路由加载成功
+2025-07-10 17:14:34,010 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:14:34,025 - __main__ - INFO - AI路由加载成功
+2025-07-10 17:14:35,837 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:14:35,841 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:14:35,842 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:14:35,855 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:14:35,983 - main - INFO - 题库路由加载成功
+2025-07-10 17:14:35,984 - main - INFO - 分析路由加载成功
+2025-07-10 17:14:35,989 - main - INFO - AI路由加载成功
+2025-07-10 17:14:35,990 - main - INFO - 应用启动中...
+2025-07-10 17:14:36,013 - main - INFO - 数据库初始化完成
+2025-07-10 17:20:26,411 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:24:31,365 - main - INFO - 应用关闭中...
+2025-07-10 17:24:31,381 - main - INFO - 应用关闭中...
+2025-07-10 17:24:35,334 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:24:35,339 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:24:35,340 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:24:35,366 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:24:35,577 - main - INFO - 题库路由加载成功
+2025-07-10 17:24:35,583 - main - INFO - 分析路由加载成功
+2025-07-10 17:24:35,590 - main - INFO - AI路由加载成功
+2025-07-10 17:24:35,591 - main - INFO - 应用启动中...
+2025-07-10 17:24:35,630 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:24:35,678 - main - INFO - 数据库初始化完成
+2025-07-10 17:24:35,687 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:24:35,692 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:24:35,733 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:24:35,906 - main - INFO - 题库路由加载成功
+2025-07-10 17:24:35,908 - main - INFO - 分析路由加载成功
+2025-07-10 17:24:35,917 - main - INFO - AI路由加载成功
+2025-07-10 17:24:35,919 - main - INFO - 应用启动中...
+2025-07-10 17:24:35,925 - main - INFO - 数据库初始化完成
+2025-07-10 17:27:17,335 - main - INFO - 应用关闭中...
+2025-07-10 17:27:17,556 - main - INFO - 应用关闭中...
+2025-07-10 17:27:21,660 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:27:21,668 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:27:21,669 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:27:21,692 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:27:21,827 - main - INFO - 题库路由加载成功
+2025-07-10 17:27:21,831 - main - INFO - 分析路由加载成功
+2025-07-10 17:27:21,837 - main - INFO - AI路由加载成功
+2025-07-10 17:27:21,839 - main - INFO - 应用启动中...
+2025-07-10 17:27:21,844 - main - INFO - 数据库初始化完成
+2025-07-10 17:27:22,075 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:27:22,083 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:27:22,085 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:27:22,108 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:27:22,290 - main - INFO - 题库路由加载成功
+2025-07-10 17:27:22,294 - main - INFO - 分析路由加载成功
+2025-07-10 17:27:22,304 - main - INFO - AI路由加载成功
+2025-07-10 17:27:22,306 - main - INFO - 应用启动中...
+2025-07-10 17:27:22,314 - main - INFO - 数据库初始化完成
+2025-07-10 17:27:26,551 - main - INFO - 应用关闭中...
+2025-07-10 17:27:26,630 - main - INFO - 应用关闭中...
+2025-07-10 17:27:30,185 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:27:30,198 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:27:30,200 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:27:30,239 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:27:30,419 - main - INFO - 题库路由加载成功
+2025-07-10 17:27:30,423 - main - INFO - 分析路由加载成功
+2025-07-10 17:27:30,432 - main - INFO - AI路由加载成功
+2025-07-10 17:27:30,434 - main - INFO - 应用启动中...
+2025-07-10 17:27:30,439 - main - INFO - 数据库初始化完成
+2025-07-10 17:27:30,481 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:27:30,487 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:27:30,488 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:27:30,506 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:27:30,664 - main - INFO - 题库路由加载成功
+2025-07-10 17:27:30,668 - main - INFO - 分析路由加载成功
+2025-07-10 17:27:30,677 - main - INFO - AI路由加载成功
+2025-07-10 17:27:30,679 - main - INFO - 应用启动中...
+2025-07-10 17:27:30,686 - main - INFO - 数据库初始化完成
+2025-07-10 17:27:31,115 - main - INFO - 应用关闭中...
+2025-07-10 17:27:31,207 - main - INFO - 应用关闭中...
+2025-07-10 17:27:41,900 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:27:41,969 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:27:41,990 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:27:42,036 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:27:42,368 - main - INFO - 题库路由加载成功
+2025-07-10 17:27:42,373 - main - INFO - 分析路由加载成功
+2025-07-10 17:27:42,388 - main - INFO - AI路由加载成功
+2025-07-10 17:27:42,391 - main - INFO - 应用启动中...
+2025-07-10 17:27:42,401 - main - INFO - 数据库初始化完成
+2025-07-10 17:27:42,551 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:27:42,561 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:27:42,562 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:27:42,603 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:27:42,836 - main - INFO - 题库路由加载成功
+2025-07-10 17:27:42,840 - main - INFO - 分析路由加载成功
+2025-07-10 17:27:42,857 - main - INFO - AI路由加载成功
+2025-07-10 17:27:42,860 - main - INFO - 应用启动中...
+2025-07-10 17:27:42,867 - main - INFO - 数据库初始化完成
+2025-07-10 17:28:06,923 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:28:08,708 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:28:09,492 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:28:41,342 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:28:46,549 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:31:51,899 - main - INFO - 应用关闭中...
+2025-07-10 17:31:51,916 - main - INFO - 应用关闭中...
+2025-07-10 17:31:56,849 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:31:56,858 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:31:56,859 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:31:56,879 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:31:57,003 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:31:57,010 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:31:57,011 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:31:57,021 - main - INFO - 题库路由加载成功
+2025-07-10 17:31:57,026 - main - INFO - 分析路由加载成功
+2025-07-10 17:31:57,032 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:31:57,034 - main - INFO - AI路由加载成功
+2025-07-10 17:31:57,036 - main - INFO - 应用启动中...
+2025-07-10 17:31:57,044 - main - INFO - 数据库初始化完成
+2025-07-10 17:31:57,185 - main - INFO - 题库路由加载成功
+2025-07-10 17:31:57,187 - main - INFO - 分析路由加载成功
+2025-07-10 17:31:57,196 - main - INFO - AI路由加载成功
+2025-07-10 17:31:57,198 - main - INFO - 应用启动中...
+2025-07-10 17:31:57,205 - main - INFO - 数据库初始化完成
+2025-07-10 17:32:07,208 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:32:08,644 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:32:16,040 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:33:33,898 - main - INFO - 应用关闭中...
+2025-07-10 17:33:33,898 - main - INFO - 应用关闭中...
+2025-07-10 17:33:37,042 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:33:37,049 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:33:37,050 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:33:37,071 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:33:37,198 - main - INFO - 题库路由加载成功
+2025-07-10 17:33:37,201 - main - INFO - 分析路由加载成功
+2025-07-10 17:33:37,212 - main - INFO - AI路由加载成功
+2025-07-10 17:33:37,215 - main - INFO - 应用启动中...
+2025-07-10 17:33:37,224 - main - INFO - 数据库初始化完成
+2025-07-10 17:33:37,309 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:33:37,314 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:33:37,316 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:33:37,341 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:33:37,490 - main - INFO - 题库路由加载成功
+2025-07-10 17:33:37,492 - main - INFO - 分析路由加载成功
+2025-07-10 17:33:37,498 - main - INFO - AI路由加载成功
+2025-07-10 17:33:37,500 - main - INFO - 应用启动中...
+2025-07-10 17:33:37,505 - main - INFO - 数据库初始化完成
+2025-07-10 17:33:50,081 - main - INFO - 应用关闭中...
+2025-07-10 17:33:50,141 - main - INFO - 应用关闭中...
+2025-07-10 17:33:53,335 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:33:53,342 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:33:53,344 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:33:53,367 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:33:53,376 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:33:53,526 - main - INFO - 题库路由加载成功
+2025-07-10 17:33:53,530 - main - INFO - 分析路由加载成功
+2025-07-10 17:33:53,542 - main - INFO - AI路由加载成功
+2025-07-10 17:33:53,544 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:33:53,547 - main - INFO - 应用启动中...
+2025-07-10 17:33:53,554 - main - INFO - 数据库初始化完成
+2025-07-10 17:33:53,718 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:33:53,730 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:33:53,732 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:33:53,757 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:33:53,764 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:33:53,971 - main - INFO - 题库路由加载成功
+2025-07-10 17:33:53,974 - main - INFO - 分析路由加载成功
+2025-07-10 17:33:53,984 - main - INFO - AI路由加载成功
+2025-07-10 17:33:53,986 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:33:53,993 - main - INFO - 应用启动中...
+2025-07-10 17:33:54,003 - main - INFO - 数据库初始化完成
+2025-07-10 17:34:01,505 - main - INFO - 应用关闭中...
+2025-07-10 17:34:01,627 - main - INFO - 应用关闭中...
+2025-07-10 17:34:04,785 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:34:04,793 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:34:04,795 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:34:04,824 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:34:04,832 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:34:04,988 - main - INFO - 题库路由加载成功
+2025-07-10 17:34:04,991 - main - INFO - 分析路由加载成功
+2025-07-10 17:34:05,001 - main - INFO - AI路由加载成功
+2025-07-10 17:34:05,003 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:34:05,005 - main - INFO - 应用启动中...
+2025-07-10 17:34:05,013 - main - INFO - 数据库初始化完成
+2025-07-10 17:34:05,038 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:34:05,288 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:34:05,300 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:34:05,302 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:34:05,337 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:34:05,346 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:34:05,539 - main - INFO - 题库路由加载成功
+2025-07-10 17:34:05,543 - main - INFO - 分析路由加载成功
+2025-07-10 17:34:05,552 - main - INFO - AI路由加载成功
+2025-07-10 17:34:05,554 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:34:05,555 - main - INFO - 应用启动中...
+2025-07-10 17:34:05,562 - main - INFO - 数据库初始化完成
+2025-07-10 17:34:05,565 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:42:41,988 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:42:48,018 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:44:11,408 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:44:12,539 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:46:43,780 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:46:46,673 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:46:56,867 - main - INFO - 应用关闭中...
+2025-07-10 17:46:56,871 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:46:57,083 - main - INFO - 应用关闭中...
+2025-07-10 17:46:57,088 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:01,445 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:01,454 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:01,456 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:01,485 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:01,490 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:01,669 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:01,673 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:01,689 - main - INFO - AI路由加载成功
+2025-07-10 17:47:01,692 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:01,695 - main - INFO - 应用启动中...
+2025-07-10 17:47:01,709 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:01,718 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:01,789 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:01,798 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:01,800 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:01,828 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:01,837 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:02,085 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:02,089 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:02,100 - main - INFO - AI路由加载成功
+2025-07-10 17:47:02,101 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:02,103 - main - INFO - 应用启动中...
+2025-07-10 17:47:02,109 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:02,117 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:07,817 - main - INFO - 应用关闭中...
+2025-07-10 17:47:07,818 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:07,879 - main - INFO - 应用关闭中...
+2025-07-10 17:47:07,882 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:10,596 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:10,601 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:10,602 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:10,619 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:10,624 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:10,767 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:10,770 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:10,779 - main - INFO - AI路由加载成功
+2025-07-10 17:47:10,783 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:10,785 - main - INFO - 应用启动中...
+2025-07-10 17:47:10,795 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:10,802 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:10,940 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:10,945 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:10,947 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:10,965 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:10,970 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:11,112 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:11,114 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:11,120 - main - INFO - AI路由加载成功
+2025-07-10 17:47:11,122 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:11,123 - main - INFO - 应用启动中...
+2025-07-10 17:47:11,129 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:11,133 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:12,546 - main - INFO - 应用关闭中...
+2025-07-10 17:47:12,548 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:12,654 - main - INFO - 应用关闭中...
+2025-07-10 17:47:12,657 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:15,798 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:15,805 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:15,806 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:15,835 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:15,843 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:16,026 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:16,029 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:16,039 - main - INFO - AI路由加载成功
+2025-07-10 17:47:16,044 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:16,046 - main - INFO - 应用启动中...
+2025-07-10 17:47:16,055 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:16,061 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:16,153 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:16,162 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:16,164 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:16,200 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:16,207 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:16,406 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:16,410 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:16,421 - main - INFO - AI路由加载成功
+2025-07-10 17:47:16,423 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:16,424 - main - INFO - 应用启动中...
+2025-07-10 17:47:16,433 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:16,437 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:27,215 - main - INFO - 应用关闭中...
+2025-07-10 17:47:27,218 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:27,497 - main - INFO - 应用关闭中...
+2025-07-10 17:47:27,499 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:30,490 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:30,497 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:30,499 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:30,520 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:30,530 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:30,532 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:30,533 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:30,541 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:30,561 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:30,568 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:30,748 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:30,750 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:30,753 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:30,761 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:30,764 - main - INFO - AI路由加载成功
+2025-07-10 17:47:30,767 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:30,768 - main - INFO - 应用启动中...
+2025-07-10 17:47:30,772 - main - INFO - AI路由加载成功
+2025-07-10 17:47:30,775 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:30,777 - main - INFO - 应用启动中...
+2025-07-10 17:47:30,777 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:30,782 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:30,783 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:30,787 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:37,762 - main - INFO - 应用关闭中...
+2025-07-10 17:47:37,765 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:37,870 - main - INFO - 应用关闭中...
+2025-07-10 17:47:37,873 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:40,689 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:40,697 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:40,699 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:40,728 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:40,734 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:40,879 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:40,887 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:40,889 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:40,890 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:40,894 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:40,904 - main - INFO - AI路由加载成功
+2025-07-10 17:47:40,907 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:40,909 - main - INFO - 应用启动中...
+2025-07-10 17:47:40,917 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:40,917 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:40,923 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:40,925 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:41,088 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:41,091 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:41,099 - main - INFO - AI路由加载成功
+2025-07-10 17:47:41,100 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:41,103 - main - INFO - 应用启动中...
+2025-07-10 17:47:41,110 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:41,115 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:47:55,155 - main - INFO - 应用关闭中...
+2025-07-10 17:47:55,158 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:55,170 - main - INFO - 应用关闭中...
+2025-07-10 17:47:55,173 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:47:59,544 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:47:59,586 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:47:59,589 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:47:59,638 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:47:59,651 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:47:59,910 - main - INFO - 题库路由加载成功
+2025-07-10 17:47:59,913 - main - INFO - 分析路由加载成功
+2025-07-10 17:47:59,925 - main - INFO - AI路由加载成功
+2025-07-10 17:47:59,928 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:47:59,930 - main - INFO - 应用启动中...
+2025-07-10 17:47:59,939 - main - INFO - 数据库初始化完成
+2025-07-10 17:47:59,947 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:48:00,122 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:48:00,134 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:48:00,136 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:48:00,168 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:48:00,176 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:48:00,410 - main - INFO - 题库路由加载成功
+2025-07-10 17:48:00,412 - main - INFO - 分析路由加载成功
+2025-07-10 17:48:00,419 - main - INFO - AI路由加载成功
+2025-07-10 17:48:00,422 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:48:00,423 - main - INFO - 应用启动中...
+2025-07-10 17:48:00,430 - main - INFO - 数据库初始化完成
+2025-07-10 17:48:00,436 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:48:04,673 - main - INFO - 应用关闭中...
+2025-07-10 17:48:04,677 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:48:04,735 - main - INFO - 应用关闭中...
+2025-07-10 17:48:04,737 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 17:48:09,942 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:48:09,954 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:48:09,956 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:48:09,995 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:48:10,005 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:48:10,381 - main - INFO - 题库路由加载成功
+2025-07-10 17:48:10,388 - main - INFO - 分析路由加载成功
+2025-07-10 17:48:10,406 - main - INFO - AI路由加载成功
+2025-07-10 17:48:10,417 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:48:10,423 - main - INFO - 应用启动中...
+2025-07-10 17:48:10,442 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 17:48:10,445 - main - INFO - 数据库初始化完成
+2025-07-10 17:48:10,470 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 17:48:10,482 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 17:48:10,482 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:48:10,526 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 17:48:10,535 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 17:48:10,760 - main - INFO - 题库路由加载成功
+2025-07-10 17:48:10,766 - main - INFO - 分析路由加载成功
+2025-07-10 17:48:10,780 - main - INFO - AI路由加载成功
+2025-07-10 17:48:10,782 - main - INFO - 仪表板路由加载成功
+2025-07-10 17:48:10,784 - main - INFO - 应用启动中...
+2025-07-10 17:48:10,792 - main - INFO - 数据库初始化完成
+2025-07-10 17:48:10,799 - main - WARNING - 定时任务服务启动失败: No module named 'schedule'
+2025-07-10 17:56:51,648 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 17:56:55,362 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 18:06:40,224 - main - INFO - 应用关闭中...
+2025-07-10 18:06:40,230 - main - WARNING - 定时任务服务停止失败: No module named 'schedule'
+2025-07-10 18:07:02,935 - __main__ - INFO - 题库路由加载成功
+2025-07-10 18:07:02,941 - __main__ - INFO - 分析路由加载成功
+2025-07-10 18:07:02,942 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 18:07:02,959 - __main__ - INFO - AI路由加载成功
+2025-07-10 18:07:02,966 - __main__ - INFO - 仪表板路由加载成功
+2025-07-10 18:07:05,645 - __mp_main__ - INFO - 题库路由加载成功
+2025-07-10 18:07:05,651 - __mp_main__ - INFO - 分析路由加载成功
+2025-07-10 18:07:05,653 - app.services.ai_service - WARNING - 未配置任何AI API Key，将使用本地模拟数据
+2025-07-10 18:07:05,672 - __mp_main__ - INFO - AI路由加载成功
+2025-07-10 18:07:05,677 - __mp_main__ - INFO - 仪表板路由加载成功
+2025-07-10 18:07:05,840 - main - INFO - 题库路由加载成功
+2025-07-10 18:07:05,842 - main - INFO - 分析路由加载成功
+2025-07-10 18:07:05,850 - main - INFO - AI路由加载成功
+2025-07-10 18:07:05,852 - main - INFO - 仪表板路由加载成功
+2025-07-10 18:07:05,854 - main - INFO - 应用启动中...
+2025-07-10 18:07:05,860 - main - INFO - 数据库初始化完成
+2025-07-10 18:07:05,870 - app.services.scheduler_service - INFO - 定时任务服务启动成功
+2025-07-10 18:07:05,870 - main - INFO - 定时任务服务启动成功
+2025-07-10 18:08:06,264 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-07-10 18:08:14,408 - main - ERROR - 未处理的异常: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: questions.source
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\projects\aiedu-2\backend\app\api\question.py", line 38, in read_questions
+    return db.query(Question).offset(skip).limit(limit).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\brian\anaconda3\envs\edu\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: questions.source
+[SQL: SELECT questions.id AS questions_id, questions.question_type AS questions_question_type, questions.content AS questions_content, questions.options AS questions_options, questions.answer AS questions_answer, questions.explanation AS questions_explanation, questions.difficulty AS questions_difficulty, questions.source AS questions_source, questions.tags AS questions_tags, questions.estimated_time AS questions_estimated_time, questions.success_rate AS questions_success_rate, questions.usage_count AS questions_usage_count, questions.is_active AS questions_is_active, questions.created_at AS questions_created_at, questions.updated_at AS questions_updated_at, questions.category_id AS questions_category_id, questions.created_by AS questions_created_by 
+FROM questions
+ LIMIT ? OFFSET ?]
+[parameters: (100, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)

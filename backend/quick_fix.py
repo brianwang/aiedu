@@ -39,7 +39,7 @@ def fix_database():
         test_users = [
             ("testuser", "test@example.com", "test123", "student", "测试用户"),
             ("admin", "admin@example.com", "admin123", "admin", "管理员"),
-            ("teacher", "teacher@example.com", "teacher123", "teacher", "教师用户")
+            
         ]
         
         for username, email, password, role, full_name in test_users:
