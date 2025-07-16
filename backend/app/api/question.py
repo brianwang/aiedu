@@ -108,3 +108,14 @@ def add_exam_question(exam_id: int,
                                 question_id=question_id,
                                 score=score,
                                 sequence=sequence)
+
+
+@router.get("/skills", response_model=List[str], summary="获取所有技能点")
+def get_all_skills(db: Session = Depends(get_db)):
+    skills = set()
+    for q in db.query(Question).filter(Question.skill.isnot(None)).all():
+        if isinstance(q.skill, list):
+            skills.update(q.skill)
+        elif isinstance(q.skill, str):
+            skills.add(q.skill)
+    return list(skills)

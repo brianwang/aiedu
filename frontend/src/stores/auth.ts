@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { login } from "../api/auth";
+import { login, logout } from "../api/auth";
 
 export const useAuthStore = defineStore("auth", () => {
   const token = ref<string | null>(null);
@@ -63,8 +63,15 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  const logoutUser = () => {
-    clearToken();
+  const logoutUser = async () => {
+    try {
+      await logout();
+      clearToken();
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Even if API call fails, clear local storage
+      clearToken();
+    }
   };
 
   return {

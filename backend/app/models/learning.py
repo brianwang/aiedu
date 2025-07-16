@@ -124,3 +124,10 @@ class LearningProgress(Base):
     
     # 关系
     learning_task = relationship("LearningTask", back_populates="learning_progress") 
+
+
+class SkillPoint(Base):
+    __tablename__ = "skill_point"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(64), unique=True, nullable=False)
+    description = Column(Text) 

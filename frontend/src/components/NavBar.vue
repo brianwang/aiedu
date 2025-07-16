@@ -8,12 +8,19 @@
         </router-link>
       </div>
 
-      <div class="nav-menu" :class="{ active: isMenuOpen }">
+      <div class="nav-menu" :class="{ active: isMenuOpen }" v-if="isAuthenticated">
         <router-link to="/" class="nav-link">首页</router-link>
         <router-link to="/question-bank" class="nav-link">题库</router-link>
-        <router-link to="/exam" class="nav-link">考试</router-link>
+        <div class="nav-link exam-dropdown" @mouseenter="handleExamMouseEnter" @mouseleave="handleExamMouseLeave">
+          <span>考试</span>
+          <span class="dropdown-arrow">▼</span>
+          <div class="dropdown-menu" v-if="showExamMenu" @mouseenter="handleExamMouseEnter" @mouseleave="handleExamMouseLeave">
+            <router-link to="/exam" class="dropdown-item">考试首页</router-link>
+            <router-link to="/exam/generate" class="dropdown-item">智能组卷</router-link>
+            <router-link to="/exam/history" class="dropdown-item">历史试卷</router-link>
+          </div>
+        </div>
         <router-link to="/ai" class="nav-link">AI学习</router-link>
-
         <router-link to="/courses" class="nav-link">课程</router-link>
         <router-link to="/community" class="nav-link">社区</router-link>
       </div>
@@ -67,6 +74,7 @@ const authStore = useAuthStore();
 // 响应式数据
 const isMenuOpen = ref(false);
 const showUserMenu = ref(false);
+const showExamMenu = ref(false);
 
 // 计算属性
 const isAuthenticated = computed(() => authStore.isAuthenticated);
@@ -88,7 +96,7 @@ const toggleUserMenu = () => {
 
 const logout = async () => {
   try {
-    await authStore.logout();
+    await authStore.logoutUser();
     showUserMenu.value = false;
     router.push("/login");
   } catch (error) {
@@ -102,6 +110,18 @@ const handleClickOutside = (event) => {
   if (userMenu && !userMenu.contains(event.target)) {
     showUserMenu.value = false;
   }
+};
+
+// 优化 hover 事件
+const examMenuTimer = ref(null);
+const handleExamMouseEnter = () => {
+  if (examMenuTimer.value) clearTimeout(examMenuTimer.value);
+  showExamMenu.value = true;
+};
+const handleExamMouseLeave = () => {
+  examMenuTimer.value = setTimeout(() => {
+    showExamMenu.value = false;
+  }, 180); // 延迟隐藏，防止闪烁
 };
 
 // 生命周期
@@ -323,6 +343,36 @@ onUnmounted(() => {
   background: white;
   border-radius: 2px;
   transition: all 0.3s ease;
+}
+
+.exam-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+.exam-dropdown .dropdown-arrow {
+  margin-left: 4px;
+  font-size: 0.8em;
+}
+.exam-dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 140px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border-radius: 6px;
+  z-index: 1001;
+  padding: 4px 0;
+}
+.exam-dropdown .dropdown-item {
+  display: block;
+  padding: 6px 14px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.exam-dropdown .dropdown-item:hover {
+  background: #f5f5f5;
 }
 
 /* 响应式设计 */

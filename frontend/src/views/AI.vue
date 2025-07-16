@@ -55,12 +55,12 @@
       <!-- 智能问答 -->
       <div v-if="activeTab === 'qa'" class="qa-section">
         <div class="chat-container">
-          <div class="chat-messages" ref="chatMessages">
+          <div class="chat-messages" ref="chatMessagesdiv">
             <div
               v-for="(message, index) in chatMessages"
               :key="index"
               class="message"
-              :class="message.type"
+              :class="[message.type, { loading: message.loading }]"
             >
               <div class="message-content">
                 <div class="message-text">{{ message.content }}</div>
@@ -310,11 +310,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
-import aiApi from "@/api/ai";
+import { ref, onMounted, nextTick, watch } from "vue";
+import axios from 'axios';
+import { ElMessage } from 'element-plus';
+import { useApi } from '@/composables/useApi';
+const api = useApi();
 
 // 响应式数据
 const activeTab = ref("qa");
+const loading = ref(false);
 const aiStatus = ref({
   ai_available: false,
   clients_count: 0,
@@ -325,6 +329,15 @@ const aiStatus = ref({
 // 聊天相关
 const chatMessages = ref([]);
 const questionInput = ref("");
+
+// 自动滚动到底部
+const chatMessagesdiv = ref(null);
+watch(chatMessages, async () => {
+  await nextTick();
+  if (chatMessagesdiv.value) {
+    chatMessagesdiv.value.scrollTop = chatMessagesdiv.value.scrollHeight;
+  }
+});
 
 // 语音相关
 const isRecording = ref(false);
@@ -350,116 +363,118 @@ const gradingResult = ref(null);
 // 方法
 const checkAIStatus = async () => {
   try {
-    const response = await aiApi.getStatus();
-    aiStatus.value = response;
+    const response = await api.get('/api/ai/status');
+    if (response.data.success) {
+      aiStatus.value = response.data.data;
+    } else {
+      console.error("AI状态检查失败:", response.data.message);
+    }
   } catch (error) {
     console.error("检查AI状态失败:", error);
+    // 设置默认状态
+    aiStatus.value = {
+      ai_available: false,
+      clients_count: 0,
+      cache_enabled: false,
+      cache_size: 0,
+    };
   }
 };
 
+// 智能问答
 const sendQuestion = async () => {
   if (!questionInput.value.trim()) return;
-
-  const question = questionInput.value;
-  questionInput.value = "";
-
-  // 添加用户消息
+  const content = questionInput.value.trim();
   chatMessages.value.push({
-    type: "user",
-    content: question,
-    timestamp: new Date(),
+    type: 'user',
+    content,
+    timestamp: Date.now(),
+    loading: false
   });
-
+  questionInput.value = '';
+  chatMessages.value.push({
+    type: 'ai',
+    content: 'AI正在思考...',
+    timestamp: Date.now(),
+    loading: true
+  });
   try {
-    const response = await aiApi.realTimeQA({
-      question: question,
-      context: "",
-      user_level: "intermediate",
+    const res = await api.post('/api/v1/ai/real-time-qa', {
+      question: content
     });
-
-    // 添加AI回复
-    chatMessages.value.push({
-      type: "ai",
-      content: response.answer,
-      timestamp: new Date(),
-    });
-  } catch (error) {
-    chatMessages.value.push({
-      type: "ai",
-      content: "抱歉，AI服务暂时不可用，请稍后重试。",
-      timestamp: new Date(),
-    });
-  }
-
-  // 滚动到底部
-  await nextTick();
-  const chatContainer = document.querySelector(".chat-messages");
-  if (chatContainer) {
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+    chatMessages.value[chatMessages.value.length - 1] = {
+      type: 'ai',
+      content: res.data || res.message || 'AI暂无回复',
+      timestamp: Date.now(),
+      loading: false
+    };
+  } catch (e) {
+    chatMessages.value[chatMessages.value.length - 1] = {
+      type: 'ai',
+      content: 'AI服务异常',
+      timestamp: Date.now(),
+      loading: false
+    };
   }
 };
 
-const startRecording = () => {
-  isRecording.value = true;
-  // 这里应该实现实际的录音功能
-  setTimeout(() => {
-    stopRecording();
-  }, 5000); // 5秒后自动停止
-};
-
-const stopRecording = async () => {
-  isRecording.value = false;
-  // 模拟语音识别结果
-  transcribedText.value = "这是语音识别的示例文本";
-};
-
-const textToSpeech = async () => {
-  try {
-    const response = await aiApi.textToSpeech({
-      text: ttsText.value,
-      voice: "zh-CN-XiaoxiaoNeural",
-    });
-
-    // 这里应该处理音频数据
-    audioUrl.value = "data:audio/wav;base64," + response.audio_data;
-  } catch (error) {
-    console.error("文字转语音失败:", error);
-  }
-};
-
+// 学习分析
 const generateLearningReport = async () => {
   try {
-    const response = await aiApi.generateLearningReport();
-    learningReport.value = response;
-  } catch (error) {
-    console.error("生成学习报告失败:", error);
+    const res = await api.get('/api/ai/learning-report');
+    learningReport.value = res.data.data;
+    ElMessage.success('学习报告生成成功');
+  } catch (e) {
+    ElMessage.error('学习报告生成失败');
   }
 };
-
 const analyzeLearningStyle = async () => {
   try {
-    const response = await aiApi.analyzeLearningStyle();
-    learningStyle.value = response;
-  } catch (error) {
-    console.error("分析学习风格失败:", error);
+    const res = await api.get('/api/ai/learning-style');
+    learningStyle.value = res.data.data;
+    ElMessage.success('学习风格分析完成');
+  } catch (e) {
+    ElMessage.error('学习风格分析失败');
   }
 };
-
 const getLearningMotivation = async () => {
   try {
-    const response = await aiApi.getLearningMotivation();
-    learningMotivation.value = response;
-  } catch (error) {
-    console.error("获取学习激励失败:", error);
+    const res = await api.get('/api/ai/learning-motivation');
+    learningMotivation.value = res.data.data;
+    ElMessage.success('学习激励获取成功');
+  } catch (e) {
+    ElMessage.error('学习激励获取失败');
   }
 };
 
+// 智能评分
 const performGrading = async () => {
   try {
-    const response = await aiApi.smartGrading(gradingData.value);
-    gradingResult.value = response;
-  } catch (error) {
-    console.error("智能评分失败:", error);
+    const res = await api.post('/api/ai/smart-grading', gradingData.value);
+    gradingResult.value = res.data.data;
+    ElMessage.success('评分完成');
+  } catch (e) {
+    ElMessage.error('评分失败');
+  }
+};
+
+// 语音交互
+const startRecording = () => {/* 录音实现略 */};
+const stopRecording = () => {/* 录音实现略 */};
+const textToSpeech = async () => {
+  try {
+    const res = await api.post('/api/ai/text-to-speech', {
+      text: ttsText.value,
+      voice: 'zh-CN-XiaoxiaoNeural'
+    });
+    if (res.data.data && res.data.data.audio_data) {
+      audioUrl.value = 'data:audio/wav;base64,' + res.data.data.audio_data;
+      ElMessage.success('文字转语音成功');
+    } else {
+      ElMessage.error('语音数据为空');
+    }
+  } catch (e) {
+    ElMessage.error('文字转语音失败');
   }
 };
 
@@ -623,6 +638,13 @@ onMounted(() => {
 .message.ai .message-content {
   background: white;
   border: 1px solid #e9ecef;
+}
+
+.message.ai.loading .message-content {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #6c757d;
+  font-style: italic;
 }
 
 .message-time {

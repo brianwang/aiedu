@@ -115,3 +115,23 @@ async def register_user(form_data: RegisterForm,
         logger.error(f"Registration error: {str(e)}", exc_info=True)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Internal server error")
+
+
+@router.post("/logout", summary="退出登录")
+async def logout_user(current_user: User = Depends(get_current_user)):
+    """退出登录接口"""
+    try:
+        logger.info(f"User {current_user.username} logged out successfully")
+        return {
+            "success": True,
+            "message": "退出登录成功"
+        }
+    except Exception as e:
+        logger.error(f"Logout error: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail={
+                "error": "Internal server error",
+                "message": "退出登录失败"
+            }
+        )

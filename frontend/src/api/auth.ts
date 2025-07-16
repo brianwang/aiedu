@@ -20,7 +20,23 @@ export const login = async (credentials: {
 };
 
 export const logout = async (): Promise<void> => {
-  // Add logout logic if needed
+  try {
+    const token = localStorage.getItem("token");
+    if (token) {
+      await axios.post("/api/v1/logout", {}, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Logout API call failed:", error);
+  } finally {
+    // Always clear local storage regardless of API call success
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
 };
 
 export const refreshToken = async (): Promise<string> => {

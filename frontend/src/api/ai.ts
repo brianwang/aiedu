@@ -102,22 +102,22 @@ export interface TextToSpeechResult {
 export const aiApi = {
   // 获取AI服务状态
   getStatus(): Promise<AIStatus> {
-    return apiClient.get("/ai/ai-status");
+    return apiClient.get("/api/v1/ai/ai-status");
   },
 
   // 生成题目
   generateQuestions(request: QuestionGenerationRequest): Promise<any[]> {
-    return apiClient.post("/ai/generate-questions", request);
+    return apiClient.post("/api/v1/ai/generate-questions", request);
   },
 
   // 智能评分
   smartGrading(request: SmartGradingRequest): Promise<GradingResult> {
-    return apiClient.post("/ai/smart-grading", request);
+    return apiClient.post("/api/v1/ai/smart-grading", request);
   },
 
   // 实时问答
   realTimeQA(request: RealTimeQARequest): Promise<QAResult> {
-    return apiClient.post("/ai/real-time-qa", request);
+    return apiClient.post("/api/v1/ai/real-time-qa", request);
   },
 
   // 语音转文字
@@ -128,7 +128,7 @@ export const aiApi = {
     const formData = new FormData();
     formData.append("audio_file", audioFile);
     formData.append("language", language);
-    return apiClient.post("/ai/speech-to-text", formData, {
+    return apiClient.post("/api/v1/ai/speech-to-text", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -137,7 +137,7 @@ export const aiApi = {
 
   // 文字转语音
   textToSpeech(request: TextToSpeechRequest): Promise<TextToSpeechResult> {
-    return apiClient.post("/ai/text-to-speech", request);
+    return apiClient.post("/api/v1/ai/text-to-speech", request);
   },
 
   // 获取推荐题目
@@ -145,22 +145,22 @@ export const aiApi = {
     const params = new URLSearchParams();
     if (subject) params.append("subject", subject);
     params.append("count", count.toString());
-    return apiClient.get(`/ai/recommendations?${params.toString()}`);
+    return apiClient.get(`/api/v1/ai/recommendations?${params.toString()}`);
   },
 
   // 生成学习报告
   generateLearningReport(): Promise<LearningReport> {
-    return apiClient.get("/ai/learning-report");
+    return apiClient.get("/api/v1/ai/learning-report");
   },
 
   // 分析学习风格
   analyzeLearningStyle(): Promise<LearningStyle> {
-    return apiClient.get("/ai/learning-style");
+    return apiClient.get("/api/v1/ai/learning-style");
   },
 
   // 获取学习激励
   getLearningMotivation(): Promise<LearningMotivation> {
-    return apiClient.get("/ai/learning-motivation");
+    return apiClient.get("/api/v1/ai/learning-motivation");
   },
 
   // 错题分析
@@ -170,7 +170,7 @@ export const aiApi = {
     correctAnswer: string,
     subject: string
   ): Promise<any> {
-    return apiClient.post("/ai/analyze-wrong-question", {
+    return apiClient.post("/api/v1/ai/analyze-wrong-question", {
       question_content: questionContent,
       user_answer: userAnswer,
       correct_answer: correctAnswer,

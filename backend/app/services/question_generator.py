@@ -201,33 +201,47 @@ class QuestionGenerator:
         
         return questions
     
-    async def generate_daily_questions(self) -> Dict[str, int]:
-        """为所有用户生成每日题目"""
-        try:
-            # 获取所有活跃用户
-            active_users = self.db.query(User).filter(User.is_active == True).all()
-            
-            # 获取用户感兴趣的学科
-            user_subjects = {}
-            for user in active_users:
-                profile = self.db.query(UserProfile).filter(UserProfile.user_id == user.id).first()
-                if profile and profile.interested_subjects:
-                    subjects = json.loads(profile.interested_subjects)
-                    user_subjects[user.id] = subjects[:3]  # 取前3个学科
-            
-            # 为每个用户生成题目
-            total_generated = 0
-            for user_id, subjects in user_subjects.items():
-                for subject in subjects:
-                    questions = await self.generate_questions_for_user(user_id, subject, 5)
-                    total_generated += len(questions)
-            
-            logger.info(f"每日题目生成完成，共生成 {total_generated} 道题目")
-            return {"total_generated": total_generated, "users_processed": len(user_subjects)}
-            
-        except Exception as e:
-            logger.error(f"每日题目生成失败: {str(e)}")
-            return {"total_generated": 0, "users_processed": 0}
+    async def generate_questions_by_tags_and_skills(self, tags: list, skills: list, count_per_skill: int = 5, difficulty: int = 3) -> int:
+        """遍历所有标签和技能点，批量生成题目并写入 skill 字段"""
+        total_generated = 0
+        for tag in tags:
+            for skill in skills:
+                try:
+                    questions = await self.ai_service.generate_questions_with_skill(
+                        subject=tag,
+                        skill=skill,
+                        difficulty=difficulty,
+                        count=count_per_skill
+                    )
+                    for q_data in questions:
+                        question = Question(
+                            content=q_data.get("content"),
+                            question_type=q_data.get("question_type"),
+                            options=q_data.get("options"),
+                            answer=q_data.get("answer"),
+                            explanation=q_data.get("explanation"),
+                            difficulty=q_data.get("difficulty", difficulty),
+                            tags=q_data.get("tags"),
+                            skill=q_data.get("skill"),
+                            source="ai_generated",
+                            is_active=True
+                        )
+                        self.db.add(question)
+                        total_generated += 1
+                    self.db.commit()
+                except Exception as e:
+                    logger.error(f"生成题目失败: tag={tag}, skill={skill}, 错误: {e}")
+                    self.db.rollback()
+        logger.info(f"批量生成题目完成，共生成 {total_generated} 道题目")
+        return total_generated
+
+    async def generate_daily_questions(self) -> dict:
+        """为所有标签和技能点批量生成每日题目"""
+        # 示例：假设标签和技能点列表可从数据库或配置获取
+        tags = ["数学", "英语", "编程基础"]
+        skills = ["四则运算", "阅读理解", "循环结构", "条件判断"]
+        total_generated = await self.generate_questions_by_tags_and_skills(tags, skills, count_per_skill=5, difficulty=3)
+        return {"total_generated": total_generated, "tags": tags, "skills": skills}
     
     async def generate_subject_questions(self, subject: str, difficulty: str = "medium", count: int = 20) -> List[Dict]:
         """为特定学科生成题目"""

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from database import get_db
-from app.models.learning import UserProfile, LearningGoal, LearningPlan, LearningTask, LearningReminder, Achievement, LearningProgress
+from app.models.learning import UserProfile, LearningGoal, LearningPlan, LearningTask, LearningReminder, Achievement, LearningProgress, SkillPoint
 from app.schemas.learning import (
     UserProfileCreate, UserProfileUpdate, UserProfile as UserProfileSchema,
     LearningGoalCreate, LearningGoalUpdate, LearningGoal as LearningGoalSchema,
@@ -737,3 +737,17 @@ async def get_motivation_plan(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"获取激励方案失败: {str(e)}"
         ) 
+
+skill_router = APIRouter(prefix="/skills", tags=["技能点"])
+
+@skill_router.get("/", summary="获取所有技能点")
+def get_skills(db: Session = Depends(get_db)):
+    skills = db.query(SkillPoint).all()
+    return [s.name for s in skills]
+
+@skill_router.post("/", summary="新增技能点")
+def add_skill(name: str, db: Session = Depends(get_db)):
+    skill = SkillPoint(name=name)
+    db.add(skill)
+    db.commit()
+    return {"success": True, "id": skill.id} 

@@ -14,6 +14,7 @@ sys.path.append(str(Path(__file__).parent))
 
 # 导入所有模型以确保SQLAlchemy关系正确配置
 from app.models import *
+from app.api.learning import skill_router
 
 # 配置日志
 logging.basicConfig(
@@ -104,6 +105,7 @@ app.include_router(auth.router, prefix="/api/v1")
 app.include_router(question.router, prefix="/api/v1")
 app.include_router(exam.router, prefix="/api/v1")
 app.include_router(learning.router, prefix="/api/v1")
+app.include_router(skill_router, prefix="/api/v1")
 
 # 尝试导入题库路由（如果存在）
 try:

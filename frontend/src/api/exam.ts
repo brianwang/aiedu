@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
+import { useApi } from "@/composables/useApi";
 
 interface ExamResult {
   examId: string;
@@ -18,3 +19,15 @@ export const submitExamResult = async (
 export const getExam = async (examId: string): Promise<AxiosResponse> => {
   return axios.get(`/api/v1/exam/${examId}`);
 };
+
+export async function generateExam(params: {
+  subject: string;
+  difficulty: number;
+  exam_type?: string;
+  question_distribution?: Record<string, number>;
+  skill?: string;
+  tags?: string[];
+}) {
+  const api = useApi();
+  return api.post("/api/v1/exam/generate", params);
+}

@@ -40,6 +40,7 @@ class Question(Base):
     difficulty = Column(String(20), default=QuestionDifficulty.MEDIUM)
     source = Column(String(20), default=QuestionSource.MANUAL)
     tags = Column(JSON, nullable=True)  # 知识点标签
+    skill = Column(JSON, nullable=True)  # 技能点
     estimated_time = Column(Integer, default=2)  # 预估答题时间(分钟)
     success_rate = Column(Float, default=0.0)  # 正确率
     usage_count = Column(Integer, default=0)  # 使用次数

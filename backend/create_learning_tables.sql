@@ -99,6 +99,20 @@ CREATE TABLE IF NOT EXISTS learning_progress (
     FOREIGN KEY (task_id) REFERENCES learning_tasks(id) ON DELETE CASCADE
 );
 
+-- 技能点表
+CREATE TABLE IF NOT EXISTS skill_point (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(64) NOT NULL UNIQUE,
+  description TEXT
+);
+
+INSERT OR IGNORE INTO skill_point (name, description) VALUES
+  ('阅读理解', '提升阅读理解能力'),
+  ('算法', '基础算法技能'),
+  ('英语单词', '英语词汇记忆'),
+  ('写作', '写作表达能力'),
+  ('数学思维', '数学逻辑与推理能力');
+
 -- 创建索引
 CREATE INDEX IF NOT EXISTS idx_user_profiles_user_id ON user_profiles(user_id);
 CREATE INDEX IF NOT EXISTS idx_learning_goals_user_id ON learning_goals(user_id);

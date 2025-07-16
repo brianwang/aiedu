@@ -6,6 +6,8 @@ import Auth from "@/views/Auth.vue";
 import QuestionBank from "@/views/QuestionBank.vue";
 import Exam from "@/views/Exam.vue";
 import MemberCenter from "@/views/MemberCenter.vue";
+import ExamGenerate from "@/views/ExamGenerate.vue";
+import ExamHistory from "@/views/ExamHistory.vue";
 
 import CourseList from "@/views/CourseList.vue";
 import CourseDetail from "@/views/CourseDetail.vue";
@@ -50,9 +52,21 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: "/exam",
+      path: "/exam/generate",
+      name: "exam-generate",
+      component: ExamGenerate,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/exam/:examId",
       name: "exam",
       component: Exam,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/exam/history",
+      name: "exam-history",
+      component: ExamHistory,
       meta: { requiresAuth: true },
     },
     {

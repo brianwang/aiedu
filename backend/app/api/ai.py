@@ -6,6 +6,7 @@ from app.services.ai_service import AIService
 from app.services.auth_service import get_current_user
 from app.models.user import User
 from database import get_db
+from config import settings
 import json
 import logging
 
@@ -74,7 +75,7 @@ async def generate_questions(
             subject=request.subject,
             difficulty=request.difficulty,
             count=request.count,
-            question_types=request.question_types
+            question_types=request.question_types or []
         )
         return {
             "success": True,
@@ -179,7 +180,10 @@ async def get_recommendations(
 ):
     """获取智能推荐题目"""
     try:
-        questions = await ai_service.recommend_questions(db, current_user.id, subject, count)
+        user_id = getattr(current_user, 'id', None)
+        if user_id is None:
+            raise HTTPException(status_code=400, detail="用户ID无效")
+        questions = await ai_service.recommend_questions(db, user_id, subject or "", count)
         return {
             "success": True,
             "data": questions,
@@ -196,7 +200,10 @@ async def get_learning_report(
 ):
     """获取学习分析报告"""
     try:
-        report = await ai_service.generate_learning_report(current_user.id, db)
+        user_id = getattr(current_user, 'id', None)
+        if user_id is None:
+            raise HTTPException(status_code=400, detail="用户ID无效")
+        report = await ai_service.generate_learning_report(user_id, db)
         return {
             "success": True,
             "data": report,
@@ -213,7 +220,10 @@ async def get_learning_motivation(
 ):
     """获取学习激励信息"""
     try:
-        motivation = await ai_service.generate_learning_motivation(current_user.id, db)
+        user_id = getattr(current_user, 'id', None)
+        if user_id is None:
+            raise HTTPException(status_code=400, detail="用户ID无效")
+        motivation = await ai_service.generate_learning_motivation(user_id, db)
         return {
             "success": True,
             "data": motivation,
@@ -230,7 +240,10 @@ async def get_learning_style(
 ):
     """获取学习风格分析"""
     try:
-        style = await ai_service.identify_learning_style(current_user.id, db)
+        user_id = getattr(current_user, 'id', None)
+        if user_id is None:
+            raise HTTPException(status_code=400, detail="用户ID无效")
+        style = await ai_service.identify_learning_style(user_id, db)
         return {
             "success": True,
             "data": style,
@@ -264,6 +277,22 @@ async def analyze_wrong_question(
 
 @router.get("/ai-status")
 async def get_ai_status():
+    """获取AI服务状态"""
+    try:
+        status = {
+            "ai_available": ai_service._ai_available,
+            "clients_count": len(ai_service._clients),
+            "cache_enabled": settings.ai_cache_enabled,
+            "cache_size": len(ai_service._cache),
+            "available_models": list(ai_service._clients.keys()) if ai_service._clients else []
+        }
+        return {
+            "success": True,
+            "data": status,
+            "message": "AI服务状态正常" if ai_service._ai_available else "AI服务不可用"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"获取AI状态失败: {str(e)}")
     """获取AI服务状态"""
     try:
         status = {
